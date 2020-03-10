@@ -142,7 +142,7 @@
 					)
 					.then(res => {
 						vm.items = res.outlets.data;
-						console.log(res);
+						console.log(res.data);
 					})
 					.catch(err => {
 						console.log(err);
@@ -150,11 +150,11 @@
 			},
 
 			editItem(id) {
-				this.$router.push(`/outlet/outlet-list/${id}/edit`);
+				this.$router.push(`/outlet/${id}/edit`);
 			},
 
 			viewItem(id) {
-				this.$router.push(`/outlet/outlet-list/${id}`);
+				this.$router.push(`/outlet/${id}/detail`);
 			},
 
 			deleteItem(item) {

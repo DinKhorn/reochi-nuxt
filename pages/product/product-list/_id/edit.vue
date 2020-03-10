@@ -83,12 +83,12 @@
 </template>
 
 <script>
-	import moment from 'moment';
+	import moment from "moment";
 	export default {
 		name: "EditProduct",
 		created() {
-			this.fetchData()
-			this.fetchBrand()
+			this.fetchData();
+			this.fetchBrand();
 		},
 
 		data() {
@@ -100,77 +100,85 @@
 				brands: [],
 				url: null,
 				itemsPerPage: 5,
-				barcodes: ['Code 128', 'Code 39', 'UPC-A', 'UPC-E', 'EAN-8', 'EAN-13'],
-			}
+				barcodes: [
+					"Code 128",
+					"Code 39",
+					"UPC-A",
+					"UPC-E",
+					"EAN-8",
+					"EAN-13"
+				]
+			};
 		},
-		
 
-    	methods: {
-		    randomNumber() {
-		     	return this.form.code = Math.floor(1000000 + Math.random() * 90000000)
-		    },
-
-			fetchBrand() {
-				this.$axios.$get(`api/brand`)
-				.then(res => {
-					this.$set(this.$data, 'brands', res.brands.data);
-					console.log(res);
-				})
-				.catch(err => {
-					console.log(err.response);
-					
-				});
+		methods: {
+			randomNumber() {
+				return (this.form.code = Math.floor(
+					1000000 + Math.random() * 90000000
+				));
 			},
 
-		    fetchData() {
-		    	this.$axios.$get(`api/product/` + this.$route.params.id)
-		    	.then(res => {
-                    // this.form = res.products.data;
-                    this.$set(this.$data, 'form', res.product);
-		    		console.log(res);
-                })
-                .catch(err => {
-                    console.log(err.response);
-                })
-		    },
+			fetchBrand() {
+				this.$axios
+					.$get(`api/brand`)
+					.then(res => {
+						this.$set(this.$data, "brands", res.brands.data);
+						console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
 
-		    updateItem() {
-		    	this.$axios.$patch(`api/product/` + this.form.id, {
-					name: this.form.name,
-					code: this.form.code,
-					barcode: this.form.barcode,
-					unit: this.form.unit,
-					price: this.form.price,
-					brand: this.form.brand,
-					image: this.form.image,
-				})
-		    	.then(res => {
-		    		this.items = res.data;
-		    		this.$toast.info('Succeessfully created');
-		    		this.$router.push('/product/product-list');
-		    	})
-		    	.catch(err => {
-					console.log(err.response);
-					this.$refs.form.validate(
-						err.response.data.errors
-					);
-		    	})
-		    },
+			fetchData() {
+				this.$axios
+					.$get(`api/product/` + this.$route.params.id)
+					.then(res => {
+						// this.form = res.products.data;
+						this.$set(this.$data, "form", res.product);
+						console.log(this.$route.params.id);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
 
-		    uploadImage(e) {
-                const images = e.target.files[0];
-                const reader = new FileReader();
+			updateItem() {
+				this.$axios
+					.$patch(`api/product/` + this.form.id, {
+						name: this.form.name,
+						code: this.form.code,
+						barcode: this.form.barcode,
+						unit: this.form.unit,
+						price: this.form.price,
+						brand: this.form.brand,
+						image: this.form.image
+					})
+					.then(res => {
+						this.items = res.data;
+						this.$toast.info("Succeessfully created");
+						this.$router.push("/product/product-list");
+					})
+					.catch(err => {
+						console.log(err.response);
+						this.$refs.form.validate(err.response.data.errors);
+					});
+			},
 
-                reader.readAsDataURL(images);
-                reader.onload = e =>  {
-                    this.form.image = e.target.result;
-                    console.log(this.form);
-                }
+			uploadImage(e) {
+				const images = e.target.files[0];
+				const reader = new FileReader();
 
-                this.url = URL.createObjectURL(images)
-            },
-    	}
-	}
+				reader.readAsDataURL(images);
+				reader.onload = e => {
+					this.form.image = e.target.result;
+					console.log(this.form);
+				};
+
+				this.url = URL.createObjectURL(images);
+			}
+		}
+	};
 </script>
 
 <style lang="scss">

@@ -5,21 +5,36 @@
 				Role
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/outlet/add-outlet">
-					<v-icon left>mdi-plus-circle</v-icon>Add
-				</v-btn>
+				<v-dialog v-model="dialog" max-width="700px" v-permission="'add expense'" persistent>
+					<template v-slot:activator="{ on }">
+						<v-btn class="primary white--text" dark v-on="on">
+							<v-icon left>mdi-plus-circle</v-icon>Add
+						</v-btn>
+					</template>
+
+					<!-- Form Modal -->
+					<v-card>
+						<v-card-title class="headline font-weight-light">Create Role</v-card-title>
+						<v-divider></v-divider>
+						<v-col sm="12" cols="12" class="px-5">
+							<label class="font-weight-bold" for="name">
+								Role Name
+								<span class="red--text">*</span>
+							</label>
+							<validation-provider name="Role Name" rules="required" v-slot="{ errors }">
+								<v-text-field outlined solo dense label="Role Name" v-model="form.name"></v-text-field>
+								<span class="red--text">{{ errors[0] }}</span>
+							</validation-provider>
+						</v-col>
+						<v-card-actions class="px-5 pb-5">
+							<v-spacer></v-spacer>
+							<v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
+							<v-btn color="primary" @click="createItem">Save</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</v-card-title>
 			<div class="pa-4">
-				<!-- <div class="d-flex justify-space-between">
-					<v-col md="3" cols="12">
-						<v-text-field outlined dense solo v-model="term" label="Search By na"></v-text-field>
-					</v-col>
-					<div>
-						<v-btn class="red darken-1">PDF</v-btn>
-						<v-btn class="lime lighten-1">CSV</v-btn>
-						<v-btn class="blue lighten-1">Print</v-btn>
-					</div>
-				</div>-->
 				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
 					<template v-slot:item.action="{item}">
 						<v-tooltip top v-permission="'edit users'">
@@ -48,55 +63,22 @@
 <script>
 	export default {
 		name: "UserField",
-		watch: {
-			name: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			email: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			term: {
-				handler() {
-					this.searchItems();
-				}
-			},
-			immediate: true
-		},
 
 		data() {
 			return {
 				dialog: false,
 				items: [],
-				form: {},
-				name: "",
-				email: "",
-				term: "",
+				form: {
+					name: ""
+				},
 				headers: [
 					{
 						text: "ID",
-						value: "id",
-						sortable: false
+						value: "id"
 					},
 					{
-						text: "Name",
-						value: "name",
-						sortable: false
-					},
-					{
-						text: "Email",
-						value: "email",
-						sortable: false
-					},
-					{
-						text: "Phone",
-						sortable: false,
-						value: "phone"
+						text: "Role Name",
+						value: "name"
 					},
 					{
 						text: "Action",
@@ -111,22 +93,10 @@
 		methods: {
 			getItems() {
 				this.$axios
-					.$get(`/api/user?name=${this.name}&email=${this.email}`)
+					.$get(`/api/roles`)
 					.then(res => {
-						this.items = res.users.data;
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			searchItems() {
-				this.$axios
-					.$get(`/api/user?term=${this.term}`)
-					.then(res => {
-						this.items = res.users.data;
-						console.log(res);
+						this.items = res.role.data;
+						// console.log(res.role.data);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -139,16 +109,11 @@
 				this.dialog = true;
 			},
 
-			addUser() {
+			createItem() {
 				if (this.editedIndex > -1) {
 					this.$axios
-						.$patch(`/api/role/` + this.form.id, {
-							name: this.form.name,
-							email: this.form.email,
-							phone: this.form.phone,
-							address: this.form.address,
-							role: this.form.role,
-							password: this.form.password
+						.$patch(`/api/roles/` + this.form.id, {
+							name: this.form.name
 						})
 						.then(res => {
 							this.getItems();
@@ -156,24 +121,26 @@
 							this.$toast.info("Succeessfully Updated");
 						})
 						.catch(err => {
-							this.$refs.nameOfObserver.validate(
-								err.response.data.errors
-							);
+							// this.$refs.nameOfObserver.validate(
+							err.response.data.errors;
+							// );
 						});
 				} else {
 					this.$axios
-						.$post(`/api/user`, this.form)
+						.$post(`/api/roles`, this.form)
 						.then(res => {
+							// alert("hi;");
 							this.form = res;
+							console.log(res);
 							this.getItems();
 							this.$toast.info("Succeessfully Created");
 							this.closeDialog();
 						})
 						.catch(err => {
-							this.$refs.nameOfObserver.validate(
-								err.response.data.errors
-							);
-							console.log(err.response.data.errors);
+							// this.$refs.nameOfObserver.validate(
+							err.response.data.errors;
+							// );
+							// console.log(err.response.data.errors);
 						});
 				}
 			},
@@ -187,7 +154,7 @@
 			deleteItem(item) {
 				if (confirm("Are u sure to delete it?")) {
 					this.$axios
-						.$delete(`/api/user/` + item.id)
+						.$delete(`/api/roles/` + item.id)
 						.then(res => {
 							this.getItems();
 						})
