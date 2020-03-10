@@ -1,19 +1,15 @@
 <template>
-	<v-app class="pa-5">
-		<v-card class="card">
-			<v-card-title class="blue-grey lighten-4">Create Order</v-card-title>
+	<v-app>
+		<v-card class="mx-5 my-5">
+			<div class="purple lighten-1">
+				<v-card-title class="white--text">Add Purchase</v-card-title>
+			</div>
 			<v-divider></v-divider>
-			<p class="px-5 pt-3 font-italic grey--text">
-				The field labels marked with
-				<span class="red--text">*</span> are required input fields.
-			</p>
 			<div class="px-5">
+				<p class="caption font-italic pt-5">The field labels marked with * are required input fields.</p>
 				<v-row>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">
-							Location
-							<span class="red--text">*</span>
-						</label>
+						<label class="font-weight-bold">Location*</label>
 						<v-autocomplete
 							item-value="name"
 							item-text="name"
@@ -221,7 +217,7 @@
 				this.$axios
 					.$get(`/api/product`)
 					.then(res => {
-						Vue.set(this.$data, "products", res.products.data);
+						Vue.set(this.$data, 'products', res.products.data);
 						console.log(res);
 					})
 					.catch(err => {
@@ -253,6 +249,7 @@
 					});
 			},
 
+
 			createPurchase() {
 				this.$axios
 					.$post(`api/purchase`, this.form)
@@ -274,8 +271,8 @@
 					this.form.items.push(item);
 					console.log(item);
 				}
-				Vue.set(item, "quantity", 1);
-				Vue.set(item, "discount", 0);
+				Vue.set(item, 'quantity', 1);
+				Vue.set(item, 'discount', 0);
 			},
 
 			removeItem(index) {

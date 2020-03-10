@@ -1,55 +1,11 @@
 <template>
 	<v-app class="pa-5">
 		<v-card class="card">
-			<!-- <div class="d-flex">
-				<div class="pb-5 pr-3">
-					<nuxt-link to="/product/add-product" class="nuxt--link grey--text text--lighten-4">
-						<v-btn class="teal darken-1" dark v-permission="'add sales'">
-							<v-icon left>mdi-plus-circle</v-icon>Add Product
-						</v-btn>
-					</nuxt-link>
-				</div>
-				<div class="pb-5">
-					<v-dialog v-model="dialog" max-width="700px" v-permission="'add sales'">
-						<template v-slot:activator="{ on }">
-							<v-btn class="purple darken-1" dark v-on="on">
-								<v-icon left>mdi-file</v-icon>Import Product
-							</v-btn>
-						</template>
-						<v-card>
-							<v-card-title class="headline font-weight-light">IMPORT PRODUCT</v-card-title>
-							<v-divider></v-divider>
-							<v-col cols="12">
-								<p
-									class="mt-5"
-								>The correct column order is (name*, parent_category) and you must follow this.</p>
-							</v-col>
-							<v-row class="px-4">
-								<v-col cols="12" sm="6">
-									<label class="font-weight-bold">Upload CSV File</label>
-									<input type="file" class="form-control" @change="uploadCsv($event)" />
-								</v-col>
-								<v-col cols="12" sm="6" class="d-flex flex-column">
-									<label class="font-weight-bold">Sample File</label>
-									<v-btn class="teal darken-2 grey--text text--lighten-2">
-										<v-icon left>mdi-download</v-icon>Download
-									</v-btn>
-								</v-col>
-							</v-row>
-							<v-card-actions>
-								<v-spacer></v-spacer>
-								<v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
-								<v-btn color="primary">Save</v-btn>
-							</v-card-actions>
-						</v-card>
-					</v-dialog>
-				</div>
-			</div>-->
 			<v-card-title class="blue-grey lighten-4">
-				Product
+				Outlet
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/product/add-product">
+				<v-btn class="primary white--text" to="/outlet/add-outlet">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -64,25 +20,15 @@
 						<v-btn class="blue lighten-1">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table
-					:headers="headers"
-					:items="items"
-					:items-per-page="itemsPerPage"
-					:options.sync="options"
-					:server-items-length="total"
-				>
+				<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage">
 					<template v-slot:item="{ item }">
 						<tr>
-							<td v-if="item.image">
-								<img :src="'http://127.0.0.1:8000/image/' + item.image" class="product-img" />
-							</td>
-							<td v-else>
-								<span>No Image</span>
-							</td>
+							<td>{{ item.id }}</td>
 							<td>{{ item.name }}</td>
-							<td>{{ item.code }}</td>
-							<td>{{ item.unit }}</td>
-							<td>USD {{ item.price |formatNumber }}</td>
+							<td>{{ item.location }}</td>
+							<td>{{ item.phone }}</td>
+							<td>{{ item.create_by }}</td>
+							<td>{{ item.status }}</td>
 							<td>
 								<v-tooltip top v-permission="'edit sales'">
 									<template v-slot:activator="{ on }">
@@ -127,7 +73,7 @@
 	});
 
 	export default {
-		name: "Product",
+		name: "Outlet",
 
 		created() {
 			this.fetchData();
@@ -143,19 +89,10 @@
 
 		data() {
 			return {
-				barcode: [
-					"Code 128",
-					"Code 39",
-					"UPC-A",
-					"UPC-E",
-					"EAN-8",
-					"EAN-13"
-				],
 				items: [],
 				search: "",
 				form: {},
 				page: 1,
-				total: 0,
 				options: {},
 				itemsPerPage: 5,
 				editedIndex: -1,
@@ -164,27 +101,28 @@
 				dialog2: false,
 				headers: [
 					{
-						text: "Image",
-						sortable: false
+						text: "No.",
+						value: "id"
 					},
 					{
 						text: "Name",
 						value: "name"
 					},
 					{
-						text: "Code",
-						sortable: false,
-						value: "code"
+						text: "Location",
+						value: "location"
 					},
 					{
-						text: "Unit",
-						sortable: false,
-						value: "unit"
+						text: "phone",
+						value: "phone"
 					},
 					{
-						text: "Price",
-						sortable: false,
-						value: "price"
+						text: "Create By",
+						value: "create_by"
+					},
+					{
+						text: "Status",
+						value: "status"
 					},
 					{
 						text: "Actions",
@@ -200,11 +138,10 @@
 				let vm = this;
 				this.$axios
 					.$get(
-						`/api/product?temsPerPage=${this.options.itemsPerPage}&page=${this.options.page}`
+						`/api/outlets?temsPerPage=${this.options.itemsPerPage}&page=${this.options.page}`
 					)
 					.then(res => {
-						vm.items = res.products.data;
-						vm.total = res.products.total;
+						vm.items = res.outlets.data;
 						console.log(res);
 					})
 					.catch(err => {
@@ -213,21 +150,21 @@
 			},
 
 			editItem(id) {
-				this.$router.push(`/product/product-list/${id}/edit`);
+				this.$router.push(`/outlet/outlet-list/${id}/edit`);
 			},
 
 			viewItem(id) {
-				this.$router.push(`/product/product-list/${id}`);
+				this.$router.push(`/outlet/outlet-list/${id}`);
 			},
 
 			deleteItem(item) {
 				this.$axios
-					.$delete(`api/product/` + item.id)
+					.$delete(`api/outlets/` + item.id)
 					.then(res => {
 						this.fetchData();
 					})
 					.catch(err => {
-						console.log(err.response);
+						// console.log(err.response);
 					});
 			}
 		}
@@ -253,19 +190,5 @@
 		outline: none;
 		border-radius: 5px;
 		border: 1px solid #616161;
-	}
-
-	.dialog2 {
-		display: none;
-	}
-
-	.product-img {
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: contain;
-		border: 1px solid rgba(0, 0, 0, 0.125);
-		width: 50px;
-		height: 50px;
-		margin-top: 5px;
 	}
 </style>

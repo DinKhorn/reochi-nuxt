@@ -1,19 +1,19 @@
 <template>
-	<v-app class="pa-5">
-		<v-card class="card">
-			<v-card-title class="blue-grey lighten-4">Create Order</v-card-title>
+	<v-app>
+		<v-card class="mx-5 my-5">
+			<div class="purple lighten-1">
+				<v-card-title class="white--text">Edit Purchase</v-card-title>
+			</div>
 			<v-divider></v-divider>
-			<p class="px-5 pt-3 font-italic grey--text">
-				The field labels marked with
-				<span class="red--text">*</span> are required input fields.
-			</p>
 			<div class="px-5">
+				<p class="caption font-italic pt-5">The field labels marked with * are required input fields.</p>
 				<v-row>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">
-							Location
-							<span class="red--text">*</span>
-						</label>
+						<label for="reference_no" class="font-weight-bold">Reference No</label>
+						<v-text-field solo outlined dense v-model="form.reference_no"></v-text-field>
+					</v-col>
+					<v-col md="6" cols="12">
+						<label class="font-weight-bold">Location*</label>
 						<v-autocomplete
 							item-value="name"
 							item-text="name"
@@ -22,7 +22,7 @@
 							dense
 							label="Business Location"
 							return-object
-							v-model="form.location"
+							v-model="form.branch"
 							:items="locations"
 						></v-autocomplete>
 					</v-col>
@@ -40,7 +40,7 @@
 							label="Please select Supplier"
 						></v-autocomplete>
 					</v-col>
-					<v-col md="4" cols="12">
+					<v-col md="6" cols="12">
 						<label class="font-weight-bold">Purchase Status</label>
 						<v-select
 							solo
@@ -51,7 +51,7 @@
 							v-model="form.purchase_status"
 						></v-select>
 					</v-col>
-					<v-col md="4" cols="12">
+					<v-col md="6" cols="12">
 						<label for class="font-weight-bold">Shipping Cost</label>
 						<v-text-field
 							solo
@@ -62,7 +62,7 @@
 							placeholder="0.00"
 						></v-text-field>
 					</v-col>
-					<v-col md="4" cols="12">
+					<v-col md="6" cols="12">
 						<label for class="font-weight-bold">Payment Status</label>
 						<v-select solo outlined dense v-model="form.payment_status" :items="payment_status" required></v-select>
 					</v-col>
@@ -82,7 +82,7 @@
 					</v-col>
 				</v-row>
 				<div>
-					<label class="font-weight-bold mb-3">Order Table</label>
+					<label class="font-weight-bold mb-3">Product Table</label>
 					<table class="tablePurchase">
 						<thead>
 							<tr class="tablePurchase--header">
@@ -96,26 +96,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="tablePurchase--td" v-for="(item, index) in form.items" :key="index">
+							<tr class="tablePurchase--td" v-for="(item, index) in form.products" :key="index">
 								<td>{{item.name}}</td>
 								<td>{{item.code}}</td>
 								<td>
-									<validation-provider rules="required" v-slot="{ errors }">
-										<input
-											type="number"
-											class="table-quantity"
-											name="form.items[index].quantity"
-											v-model.number="form.items[index].quantity"
-										/>
-										<span>{{ errors[0] }}</span>
-									</validation-provider>
+									<input type="number" class="table-quantity" v-model="form.products[index].quantity" />
 								</td>
 								<td>
 									<input
 										type="number"
 										class="table-quantity"
-										name="form.items[index].unit_price"
-										v-model.number="form.items[index].unit_price"
+										v-model="form.products[index].unit_price"
 										placeholder="0.00"
 									/>
 								</td>
@@ -123,8 +114,7 @@
 									<input
 										type="number"
 										class="table-quantity"
-										name="form.items[index].discount"
-										v-model.number="form.items[index].discount"
+										v-model="form.products[index].discount"
 										placeholder="0.00"
 									/>
 								</td>
@@ -138,7 +128,7 @@
 							<tr>
 								<td class="py-3" colspan="2">Total</td>
 								<td colspan="3">{{ calculateQty }}</td>
-								<td>USD {{ calculateTotal | formatMoney }}</td>
+								<td>USD {{ GrandTotal | formatMoney }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -149,10 +139,10 @@
 				</div>
 			</div>
 			<v-btn
-				@click.prevent="createPurchase"
+				@click.prevent="updatePurchase"
 				class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4"
 			>
-				<v-icon>mdi-check</v-icon>Submit
+				<v-icon>mdi-check</v-icon>Update
 			</v-btn>
 		</v-card>
 	</v-app>
@@ -161,51 +151,51 @@
 <script>
 	import Vue from "vue";
 
-	var numeral = require("numeral");
+	let numeral = require('numeral');
 
-	Vue.filter("formatMoney", function(value) {
-		return numeral(value).format("0,0.00");
+	Vue.filter('formatMoney', function(value) {
+		return numeral(value).format('00,00.00')
 	});
 
 	export default {
-		name: "AddPurchase",
+		name: "EditPurchase",
 		created() {
-			this.fetchData();
-			// this.fetchPurchase();
+			this.fetchProduct();
+			this.fetchPurchase();
 			this.fetchSupplier();
 			this.fetchLocation();
+
 		},
 
 		data() {
 			return {
 				form: {
-					items: []
+					products: []
 				},
 				products: [],
 				purchases: [],
-				purchase_status: ["Received", "Pending", "Ordered"],
+				purchase_status: ["Received", "Partial", "Pending", "Ordered"],
 				payment_status: ["Paid", "Due"],
 				suppliers: [],
-				locations: []
+				locations: [],
 			};
 		},
 
 		computed: {
+
 			calculateQty() {
-				return this.form.items.reduce((total, item) => {
-					return total + item.quantity;
+				return this.form.products.reduce((total, item) => {
+					return total + Number(item.quantity);
 				}, 0);
 			},
 
-			calculateTotal() {
-				return this.form.items.reduce((total, item) => {
-					let s =
-						(item.unit_price -
-							(item.unit_price * item.discount) / 100) *
-						item.quantity;
+			GrandTotal() {
+				return this.form.products.reduce((total,item) => {
+					let s = (item.unit_price - (item.unit_price * item.discount) / 100) * item.quantity
 					return total + s;
-				}, 0);
-			}
+					// console.log(total + s);
+				}, 0)
+			}	
 		},
 
 		methods: {
@@ -217,27 +207,23 @@
 				);
 			},
 
-			fetchData() {
+			fetchPurchase() {
 				this.$axios
-					.$get(`/api/product`)
+					.$get(`api/purchase/` + this.$route.params.id)
 					.then(res => {
-						Vue.set(this.$data, "products", res.products.data);
+						// this.form = res[1];
+						this.$set(this.$data, 'form', res[1]);
 						console.log(res);
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			},
 
-			fetchSupplier() {
-				this.$axios
-					.$get(`api/supplier`)
-					.then(res => {
-						console.log(res);
-						this.suppliers = res.suppliers.data;
+						// Initial value = pivot
+						for (let i in this.form.products) {
+							Vue.set(this.form.products[i], 'quantity', this.form.products[i].pivot.quantity);
+							Vue.set(this.form.products[i], 'unit_price', this.form.products[i].pivot.unit_price);
+							Vue.set(this.form.products[i], 'discount', this.form.products[i].pivot.discount);
+						}
 					})
 					.catch(err => {
-						console.log(err.response);
+						console.log(res.response);
 					});
 			},
 
@@ -245,7 +231,8 @@
 				this.$axios
 					.$get(`api/location`)
 					.then(res => {
-						this.locations = res.locations.data;
+						// this.locations = res.locations.data;
+						this.$set(this.$data, "locations", res.locations.data);
 						console.log(res);
 					})
 					.catch(err => {
@@ -253,13 +240,46 @@
 					});
 			},
 
-			createPurchase() {
+			fetchSupplier() {
 				this.$axios
-					.$post(`api/purchase`, this.form)
+					.$get(`api/supplier`)
+					.then(res => {
+						// this.suppliers = res.suppliers.data;
+						this.$set(this.$data, "suppliers", res.suppliers.data);
+						console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
+			fetchProduct() {
+				this.$axios
+					.$get(`/api/product`)
+					.then(res => {
+						// this.products = res.products.data;
+						this.$set(this.$data, "products", res.products.data);
+						console.log(res);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			},
+
+			updatePurchase() {
+				this.$axios
+					.$patch(`api/purchase/` + this.form.id, {
+						payment_status: this.form.payment_status,
+						purchase_status: this.form.purchase_status,
+						description: this.form.description,
+						shipping_cost: this.form.shipping_cost,
+						branch: this.form.branch,
+						products: this.form.products,
+						supplier: this.form.supplier
+					})
 					.then(res => {
 						// this.purchases = res.data;
 						this.$set(this.$data, "purchases", res.data);
-						this.$router.push(`/purchase/purchase-list`);
 						console.log(res);
 					})
 					.catch(err => {
@@ -268,18 +288,18 @@
 			},
 
 			addTocart(item) {
-				if (this.form.items.includes(item)) {
+				if (this.form.products.includes(item)) {
 					alert("already there");
 				} else {
-					this.form.items.push(item);
-					console.log(item);
+					// Vue.set(item, 'quantity', 1);
+					this.form.products.push(item);
 				}
-				Vue.set(item, "quantity", 1);
-				Vue.set(item, "discount", 0);
+				Vue.set(item, 'quantity', 1);
+				Vue.set(item, 'discount', 1);
 			},
 
 			removeItem(index) {
-				this.form.items.splice(index, 1);
+				this.form.products.splice(index, 1);
 			}
 		}
 	};
