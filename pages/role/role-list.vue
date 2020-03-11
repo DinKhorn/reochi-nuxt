@@ -129,9 +129,7 @@
 					this.$axios
 						.$post(`/api/roles`, this.form)
 						.then(res => {
-							// alert("hi;");
 							this.form = res;
-							console.log(res);
 							this.getItems();
 							this.$toast.info("Succeessfully Created");
 							this.closeDialog();

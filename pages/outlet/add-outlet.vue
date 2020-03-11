@@ -2,7 +2,6 @@
 	<v-app class="pa-5">
 		<v-card class="card">
 			<v-card-title class="blue-grey lighten-4">Create Outlet</v-card-title>
-			<v-divider></v-divider>
 			<p class="px-5 pt-3 font-italic grey--text">
 				The field labels marked with
 				<span class="red--text">*</span> are required input fields.
@@ -61,7 +60,7 @@
 					</v-col>
 				</v-row>
 			</ValidationObserver>
-			<v-card-actions class="px-5">
+			<v-card-actions class="px-5 pb-5">
 				<v-btn color="primary" @click.prevent="createItem">
 					<v-icon>mdi-check</v-icon>Create
 				</v-btn>

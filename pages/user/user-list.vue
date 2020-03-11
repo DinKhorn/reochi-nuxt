@@ -5,9 +5,57 @@
 				User
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/outlet/add-outlet">
+				<!-- <v-btn class="primary white--text" to="/user/add-user">
 					<v-icon left>mdi-plus-circle</v-icon>Add
-				</v-btn>
+				</v-btn>-->
+				<v-dialog v-model="dialog" max-width="600px">
+					<template v-slot:activator="{ on }">
+						<v-btn v-permission="'add users'" v-on="on" class="primary white--text">
+							<v-icon left>mdi-plus-circle</v-icon>Add
+						</v-btn>
+					</template>
+					<v-card>
+						<v-card-title>Add User</v-card-title>
+						<v-divider></v-divider>
+						<v-card-text>
+							<ValidationObserver ref="nameOfObserver">
+								<div class="AddUserForm">
+									<label class="font-weight-bold" for="name">Name</label>
+									<validation-provider name="Name" rules="required" v-slot="{ errors }">
+										<input type="text" class="AddUserForm--input" v-model="form.name" />
+										<span class="red--text">{{ errors[0] }}</span>
+									</validation-provider>
+								</div>
+								<div class="AddUserForm">
+									<validation-provider name="Email" rules="required|email" v-slot="{ errors }">
+										<label class="font-weight-bold" for="email">Email</label>
+										<input type="email" class="AddUserForm--input" v-model="form.email" />
+										<span class="red--text">{{ errors[0] }}</span>
+									</validation-provider>
+								</div>
+								<div class="AddUserForm">
+									<label class="font-weight-bold" for="password">Password</label>
+									<validation-provider name="Password" rules="required" v-slot="{ errors }">
+										<input type="password" class="AddUserForm--input" v-model="form.password" />
+										<span class="red--text">{{ errors[0] }}</span>
+									</validation-provider>
+								</div>
+							</ValidationObserver>
+						</v-card-text>
+						<v-divider></v-divider>
+
+						<v-card-actions class="text-center">
+							<v-spacer>
+								<v-btn color="primary" @click="closeDialog" text>
+									<v-icon left>mdi-close</v-icon>Close
+								</v-btn>
+								<v-btn color="green" dark @click.prevent="addUser">
+									<v-icon left>mdi-content-save</v-icon>Save
+								</v-btn>
+							</v-spacer>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</v-card-title>
 			<div class="pa-4">
 				<div class="d-flex justify-space-between">
@@ -139,15 +187,51 @@
 				this.dialog = true;
 			},
 
+			// addUser() {
+			// 	if (this.editedIndex > -1) {
+			// 		this.$axios
+			// 			.$patch(`/api/user/` + this.form.id, {
+			// 				name: this.form.name,
+			// 				email: this.form.email,
+			// 				phone: this.form.phone,
+			// 				address: this.form.address,
+			// 				role: this.form.role,
+			// 				password: this.form.password
+			// 			})
+			// 			.then(res => {
+			// 				this.getItems();
+			// 				this.closeDialog();
+			// 				this.$toast.info("Succeessfully Updated");
+			// 			})
+			// 			.catch(err => {
+			// 				this.$refs.nameOfObserver.validate(
+			// 					err.response.data.errors
+			// 				);
+			// 			});
+			// 	} else {
+			// 		this.$axios
+			// 			.$post(`/api/user`, this.form)
+			// 			.then(res => {
+			// 				this.form = res;
+			// 				this.getItems();
+			// 				this.$toast.info("Succeessfully Created");
+			// 				this.closeDialog();
+			// 			})
+			// 			.catch(err => {
+			// 				this.$refs.nameOfObserver.validate(
+			// 					err.response.data.errors
+			// 				);
+			// 				console.log(err.response.data.errors);
+			// 			});
+			// 	}
+			// },
+
 			addUser() {
 				if (this.editedIndex > -1) {
 					this.$axios
 						.$patch(`/api/user/` + this.form.id, {
 							name: this.form.name,
 							email: this.form.email,
-							phone: this.form.phone,
-							address: this.form.address,
-							role: this.form.role,
 							password: this.form.password
 						})
 						.then(res => {

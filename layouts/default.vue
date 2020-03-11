@@ -94,22 +94,28 @@
 					{
 						name: "User",
 						icon: "mdi-account",
-						permission: "view product",
-						children: [
-							{
-								name: "User List",
-								to: "/user/user-list",
-								icon: "mdi-view-list",
-								permission: "view product"
-							},
-							{
-								name: "Add User",
-								to: "/user/add-user",
-								icon: "mdi-plus-circle",
-								permission: "view product"
-							}
-						]
+						to: "/user/user-list",
+						permission: "view users"
 					},
+					// {
+					// 	name: "User",
+					// 	icon: "mdi-account",
+					// 	permission: "view product",
+					// 	children: [
+					// 		{
+					// 			name: "User List",
+					// 			to: "/user/user-list",
+					// 			icon: "mdi-view-list",
+					// 			permission: "view product"
+					// 		}
+					// {
+					// 	name: "Add User",
+					// 	to: "/user/add-user",
+					// 	icon: "mdi-plus-circle",
+					// 	permission: "view product"
+					// }
+					// 	]
+					// },
 					{
 						name: "Outlet",
 						icon: "mdi-storefront",
@@ -155,13 +161,13 @@
 						children: [
 							{
 								name: "Order List",
-								to: "/purchase/purchase-list",
+								to: "/order/order-list",
 								icon: "mdi-view-list",
 								permission: "view purchase"
 							},
 							{
 								name: "Add Order",
-								to: "/purchase/add_purchase",
+								to: "/order/add-order",
 								icon: "mdi-plus-circle",
 								permission: "view purchase"
 							}
@@ -170,14 +176,40 @@
 					{
 						name: "Stock In",
 						icon: "mdi-clipboard-arrow-down-outline",
-						to: "/stock-in",
-						permission: "view users"
+						permission: "view users",
+						children: [
+							{
+								name: "Stockin List",
+								to: "/stock-in/list",
+								icon: "mdi-view-list",
+								permission: "view users"
+							},
+							{
+								name: "Add Stock",
+								to: "/stock-in/add",
+								icon: "mdi-plus-circle",
+								permission: "view users"
+							}
+						]
 					},
 					{
 						name: "Stock Out",
 						icon: "mdi-clipboard-arrow-up-outline",
-						to: "/stock-out",
-						permission: "view users"
+						permission: "view users",
+						children: [
+							{
+								name: "Stock-out List",
+								to: "/stock-out/list",
+								icon: "mdi-view-list",
+								permission: "view users"
+							},
+							{
+								name: "Cut Stock",
+								to: "/stock-out/add",
+								icon: "mdi-plus-circle",
+								permission: "view users"
+							}
+						]
 					},
 					{
 						name: "Location",
@@ -201,7 +233,7 @@
 					{
 						name: "System Settings",
 						icon: "mdi-cogs",
-						to: "/setting",
+						to: "/setting/system-settings",
 						permission: "view users"
 					},
 
