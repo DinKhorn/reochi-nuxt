@@ -9,7 +9,13 @@
 					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="name">Product Name*</label>
 						<validation-provider name="Name" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Product Name" v-model="form.name"></v-text-field>
+							<v-text-field 
+							outlined 
+							solo 
+							dense 
+							label="Product Name" 
+							v-model="form.name">
+							</v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -17,13 +23,19 @@
 						<label class="font-weight-bold" for>Product Code*</label>
 						<validation-provider name="Product Code" rules="required" v-slot="{ errors }">
 							<div class="d-flex">
-								<v-text-field outlined solo dense label="Product Code" v-model="form.code"></v-text-field>
+								<v-text-field 
+								outlined 
+								solo 
+								dense 
+								label="Product Code" 
+								v-model="form.code">
+								</v-text-field>
 								<v-btn class="mx-1 mt-1" color="primary" dark @click="randomNumber">Generate</v-btn>
 							</div>
 							<span class="red--text">{{errors[0]}}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="6" cols="12">
+					<!-- <v-col sm="6" cols="12">
 						<label class="font-weight-bold" for>Brand*</label>
 						<v-autocomplete
 							outlined
@@ -43,20 +55,34 @@
 							<v-select outlined solo dense :items="barcodes" label="Please Select" v-model="form.barcode"></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
-					</v-col>
+					</v-col> -->
 				</v-row>
 				<v-row class="px-5">
 					<v-col sm="6" cols="12">
 						<label class="font-weight-bold">Product Unit*</label>
 						<validation-provider rules="required" name="Product Unit" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Product Unit" v-model="form.unit" type="number"></v-text-field>
+							<v-text-field 
+							outlined 
+							solo 
+							dense 
+							label="Product Unit" 
+							v-model="form.unit" 
+							type="number">
+							</v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
 					<v-col sm="6" cols="12">
 						<label class="font-weight-bold">Product Price*</label>
 						<validation-provider rules="required" name="Product Price" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Purchase Price" v-model="form.price" type="number"></v-text-field>
+							<v-text-field 
+							outlined 
+							solo 
+							dense 
+							label="Purchase Price" 
+							v-model="form.price" 
+							type="number">
+							</v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -88,7 +114,7 @@
 		name: "EditProduct",
 		created() {
 			this.fetchData();
-			this.fetchBrand();
+			// this.fetchBrand();
 		},
 
 		data() {
@@ -100,14 +126,14 @@
 				brands: [],
 				url: null,
 				itemsPerPage: 5,
-				barcodes: [
-					"Code 128",
-					"Code 39",
-					"UPC-A",
-					"UPC-E",
-					"EAN-8",
-					"EAN-13"
-				]
+				// barcodes: [
+				// 	"Code 128",
+				// 	"Code 39",
+				// 	"UPC-A",
+				// 	"UPC-E",
+				// 	"EAN-8",
+				// 	"EAN-13"
+				// ]
 			};
 		},
 
@@ -118,17 +144,17 @@
 				));
 			},
 
-			fetchBrand() {
-				this.$axios
-					.$get(`api/brand`)
-					.then(res => {
-						this.$set(this.$data, "brands", res.brands.data);
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
+			// fetchBrand() {
+			// 	this.$axios
+			// 		.$get(`api/brand`)
+			// 		.then(res => {
+			// 			this.$set(this.$data, "brands", res.brands.data);
+			// 			console.log(res);
+			// 		})
+			// 		.catch(err => {
+			// 			console.log(err.response);
+			// 		});
+			// },
 
 			fetchData() {
 				this.$axios
@@ -148,11 +174,12 @@
 					.$patch(`api/product/` + this.form.id, {
 						name: this.form.name,
 						code: this.form.code,
-						barcode: this.form.barcode,
+						// barcode: this.form.barcode,
 						unit: this.form.unit,
 						price: this.form.price,
-						brand: this.form.brand,
-						image: this.form.image
+						// brand: this.form.brand,
+						image: this.form.image,
+						description: this.form.description
 					})
 					.then(res => {
 						this.items = res.data;

@@ -19,10 +19,10 @@
 					<label for="" class="productDetail--type">Name</label>
 					<span class="productDetail--item">{{ products.name }}</span>
 				</v-col>
-				<v-col md="4" cols="12" class="productDetail">
+				<!-- <v-col md="4" cols="12" class="productDetail">
 					<label for="" class="productDetail--type">Brand</label>
 					<span class="productDetail--item" v-if="products.brand">{{ products.brand.name }}</span>
-				</v-col>
+				</v-col> -->
 				<v-col md="4" cols="12" class="productDetail">
 					<label for="" class="productDetail--type">Quantity</label>
 					<span class="productDetail--item">{{ products.unit }}</span>
