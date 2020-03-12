@@ -8,7 +8,7 @@
 			</p>
 			<ValidationObserver ref="form">
 				<v-row class="px-5">
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="name">
 							Outlet Name
 							<span class="red--text">*</span>
@@ -18,7 +18,7 @@
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="8" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="location">
 							Location
 							<span class="red--text">*</span>

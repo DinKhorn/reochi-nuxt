@@ -95,8 +95,8 @@
 				this.$axios
 					.$get(`/api/roles`)
 					.then(res => {
-						this.items = res.role.data;
-						// console.log(res.role.data);
+						this.items = res.role;
+						console.log(res.role);
 					})
 					.catch(err => {
 						console.log(err.response);

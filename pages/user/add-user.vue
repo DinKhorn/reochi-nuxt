@@ -9,7 +9,7 @@
 			</p>
 			<ValidationObserver ref="form">
 				<v-row class="px-5">
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="name">
 							Name
 							<span class="red--text">*</span>
@@ -19,7 +19,7 @@
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<!-- <v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="address">
 							Address
 							<span class="red--text">*</span>
@@ -28,8 +28,8 @@
 							<v-text-field outlined solo dense label="Address" v-model="form.address"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
-					</v-col>-->
-					<!-- <v-col sm="4" cols="12">
+					</v-col>
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="phone">
 							Phone
 							<span class="red--text">*</span>
@@ -38,8 +38,8 @@
 							<v-text-field outlined solo dense label="Phone" v-model="form.phone"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
-					</v-col>-->
-					<v-col sm="4" cols="12">
+					</v-col>
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="email">
 							Email
 							<span class="red--text">*</span>
@@ -49,26 +49,34 @@
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="password">
 							Password
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Password" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Password" v-model="form.password"></v-text-field>
+							<v-text-field outlined solo dense label="Password" v-model="form.password" type="password"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<!-- <v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="Role">
 							Role
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Role" rules="required" v-slot="{ errors }">
-							<v-select :items="role" v-model="form.role" outlined solo dense label="Select Role"></v-select>
+							<v-select
+								:items="roles"
+								item-text="name"
+								v-model="form.role"
+								outlined
+								solo
+								dense
+								label="Select Role"
+							></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
-					</v-col>-->
+					</v-col>
 				</v-row>
 			</ValidationObserver>
 			<v-card-actions class="px-5">
@@ -87,12 +95,26 @@
 			return {
 				form: {},
 				items: [],
+				roles: [],
 				url: null,
 				itemsPerPage: 5
 			};
 		},
-
+		created() {
+			this.initialize();
+		},
 		methods: {
+			initialize() {
+				this.$axios
+					.$get(`/api/roles`)
+					.then(res => {
+						this.roles = res.role;
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
 			createItem() {
 				this.$axios
 					.$post(`/api/user`, this.form)
@@ -104,7 +126,7 @@
 					})
 					.catch(err => {
 						// this.$refs.nameOfObserver.validate(
-						err.response.data.errors;
+						// err.response.data.errors;
 						// );
 						console.log(err.response.data.errors);
 					});

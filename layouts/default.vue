@@ -11,13 +11,27 @@
 					</v-btn>
 				</nuxt-link>-->
 
-				<v-btn text dark>{{ user.user ? user.user.name : null }}</v-btn>
-				<v-btn text dark>
-					<v-icon>mdi-settings</v-icon>
-				</v-btn>
-				<v-btn text dark @click="logout()">
-					<v-icon>mdi-logout</v-icon>
-				</v-btn>
+				<!-- <v-btn text dark>{{ user.user ? user.user.name : null }}</v-btn> -->
+
+				<v-list-group>
+					<template v-slot:activator>
+						<v-list-item-content>
+							<v-list-item-title>{{ user.user ? user.user.name : null }}</v-list-item-title>
+						</v-list-item-content>
+					</template>
+					<v-list-item style="background-color:white;">
+						<v-list-item-content>
+							<v-list-item-title class="red--text">Profile</v-list-item-title>
+						</v-list-item-content>
+						<v-list-item-content>
+							<v-list-item-title>
+								<v-btn text dark @click="logout()">
+									<v-icon class="red--text">mdi-logout</v-icon>
+								</v-btn>
+							</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+				</v-list-group>
 			</v-toolbar-items>
 		</v-app-bar>
 
@@ -92,30 +106,36 @@
 						permission: "view users"
 					},
 					{
-						name: "User",
-						icon: "mdi-account",
-						to: "/user/user-list",
-						permission: "view users"
+						name: "User Management",
+						icon: "mdi-account-group",
+						permission: "view product",
+						children: [
+							{
+								name: "User",
+								to: "/user/user-list",
+								icon: "mdi-account",
+								permission: "view product"
+							},
+							{
+								name: "Salesman",
+								to: "/salesman/list",
+								icon: "mdi-account-tie",
+								permission: "view product"
+							},
+							{
+								name: "Supplier",
+								to: "/supplier/list",
+								icon: "mdi-account-multiple",
+								permission: "view product"
+							},
+							{
+								name: "Role",
+								icon: "mdi-account-cog",
+								to: "/role/role-list",
+								permission: "view users"
+							}
+						]
 					},
-					// {
-					// 	name: "User",
-					// 	icon: "mdi-account",
-					// 	permission: "view product",
-					// 	children: [
-					// 		{
-					// 			name: "User List",
-					// 			to: "/user/user-list",
-					// 			icon: "mdi-view-list",
-					// 			permission: "view product"
-					// 		}
-					// {
-					// 	name: "Add User",
-					// 	to: "/user/add-user",
-					// 	icon: "mdi-plus-circle",
-					// 	permission: "view product"
-					// }
-					// 	]
-					// },
 					{
 						name: "Outlet",
 						icon: "mdi-storefront",
@@ -234,13 +254,6 @@
 						name: "System Settings",
 						icon: "mdi-cogs",
 						to: "/setting/system-settings",
-						permission: "view users"
-					},
-
-					{
-						name: "Role",
-						icon: "mdi-account-cog",
-						to: "/role/role-list",
 						permission: "view users"
 					}
 				]

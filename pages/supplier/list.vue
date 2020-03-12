@@ -5,55 +5,11 @@
 				Supplier
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/people/add_supplier">
+				<v-btn class="primary white--text" to="/supplier/add">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
 			<div class="pa-4">
-				<!-- <div class="d-flex">
-					<div class="py-5 pr-5">
-						<nuxt-link to="/people/add_supplier" class="nuxt--link grey--text text--lighten-4">
-							<v-btn class="teal darken-1" dark v-permission="'add users'">
-								<v-icon left>mdi-plus-circle</v-icon>Add Supplier
-							</v-btn>
-						</nuxt-link>
-					</div>
-					<div class="py-5">
-						<v-dialog v-model="dialog" max-width="700px" v-permission="'add users'">
-							<template v-slot:activator="{ on }">
-								<v-btn class="purple darken-1" dark v-on="on">
-									<v-icon left>mdi-file</v-icon>Import Supplier
-								</v-btn>
-							</template>
-							<v-card>
-								<v-card-title class="headline font-weight-light">IMPORT SUPPLIER</v-card-title>
-								<v-divider></v-divider>
-								<v-col cols="12">
-									<p
-										class="mt-5"
-									>The correct column order is (name*, parent_category) and you must follow this.</p>
-								</v-col>
-								<v-row class="px-4">
-									<v-col cols="12" sm="6">
-										<label class="font-weight-bold">Upload CSV File</label>
-										<input type="file" class="supplier-csv" @change="uploadCsv($event)" />
-									</v-col>
-									<v-col cols="12" sm="6" class="d-flex flex-column">
-										<label class="font-weight-bold">Sample File</label>
-										<v-btn class="teal darken-2 grey--text text--lighten-2">
-											<v-icon left>mdi-download</v-icon>Download
-										</v-btn>
-									</v-col>
-								</v-row>
-								<v-card-actions>
-									<v-spacer></v-spacer>
-									<v-btn color="blue darken-1" text>Close</v-btn>
-									<v-btn color="primary">Save</v-btn>
-								</v-card-actions>
-							</v-card>
-						</v-dialog>
-					</div> 
-				</div>-->
 				<div class="d-flex justify-space-between">
 					<div>
 						<v-text-field label="Search" solo outlined dense></v-text-field>

@@ -5,9 +5,6 @@
 				User
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<!-- <v-btn class="primary white--text" to="/user/add-user">
-					<v-icon left>mdi-plus-circle</v-icon>Add
-				</v-btn>-->
 				<v-dialog v-model="dialog" max-width="600px">
 					<template v-slot:activator="{ on }">
 						<v-btn v-permission="'add users'" v-on="on" class="primary white--text">
@@ -30,6 +27,21 @@
 									<validation-provider name="Email" rules="required|email" v-slot="{ errors }">
 										<label class="font-weight-bold" for="email">Email</label>
 										<input type="email" class="AddUserForm--input" v-model="form.email" />
+										<span class="red--text">{{ errors[0] }}</span>
+									</validation-provider>
+								</div>
+								<div class="AddUserForm">
+									<validation-provider name="Role" rules="required" v-slot="{ errors }">
+										<label class="font-weight-bold" for="role">Role</label>
+										<v-autocomplete
+											:items="roles"
+											item-text="name"
+											outlined
+											solo
+											dense
+											label="Role"
+											v-model="form.role"
+										></v-autocomplete>
 										<span class="red--text">{{ errors[0] }}</span>
 									</validation-provider>
 								</div>
@@ -59,9 +71,9 @@
 			</v-card-title>
 			<div class="pa-4">
 				<div class="d-flex justify-space-between">
-					<v-col md="3" cols="12" class="pa-0">
-						<v-text-field outlined dense solo v-model="term" label="Search By Username"></v-text-field>
-					</v-col>
+					<div>
+						<v-text-field outlined dense solo v-model="term" label="Search"></v-text-field>
+					</div>
 					<div>
 						<v-btn class="red darken-1">PDF</v-btn>
 						<v-btn class="lime lighten-1">CSV</v-btn>
@@ -142,7 +154,7 @@
 						sortable: false
 					},
 					{
-						text: "Phone",
+						text: "Role",
 						sortable: false,
 						value: "phone"
 					},
@@ -158,6 +170,15 @@
 
 		methods: {
 			getItems() {
+				this.$axios
+					.$get(`/api/roles`)
+					.then(res => {
+						this.roles = res.role;
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+
 				this.$axios
 					.$get(`/api/user?name=${this.name}&email=${this.email}`)
 					.then(res => {
@@ -186,45 +207,6 @@
 				this.form = Object.assign({}, item);
 				this.dialog = true;
 			},
-
-			// addUser() {
-			// 	if (this.editedIndex > -1) {
-			// 		this.$axios
-			// 			.$patch(`/api/user/` + this.form.id, {
-			// 				name: this.form.name,
-			// 				email: this.form.email,
-			// 				phone: this.form.phone,
-			// 				address: this.form.address,
-			// 				role: this.form.role,
-			// 				password: this.form.password
-			// 			})
-			// 			.then(res => {
-			// 				this.getItems();
-			// 				this.closeDialog();
-			// 				this.$toast.info("Succeessfully Updated");
-			// 			})
-			// 			.catch(err => {
-			// 				this.$refs.nameOfObserver.validate(
-			// 					err.response.data.errors
-			// 				);
-			// 			});
-			// 	} else {
-			// 		this.$axios
-			// 			.$post(`/api/user`, this.form)
-			// 			.then(res => {
-			// 				this.form = res;
-			// 				this.getItems();
-			// 				this.$toast.info("Succeessfully Created");
-			// 				this.closeDialog();
-			// 			})
-			// 			.catch(err => {
-			// 				this.$refs.nameOfObserver.validate(
-			// 					err.response.data.errors
-			// 				);
-			// 				console.log(err.response.data.errors);
-			// 			});
-			// 	}
-			// },
 
 			addUser() {
 				if (this.editedIndex > -1) {
@@ -292,7 +274,7 @@
 	.AddUserForm {
 		padding-top: 10px;
 		&--input {
-			border: 1px solid #1232dd;
+			border: 1px solid #bdbdbd;
 			padding: 5px 10px 5px 10px;
 			width: 100%;
 			outline: none;

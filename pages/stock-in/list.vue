@@ -10,6 +10,16 @@
 				</v-btn>
 			</v-card-title>
 			<div class="pa-4">
+				<div class="d-flex justify-space-between">
+					<div>
+						<v-text-field label="Search" solo outlined dense></v-text-field>
+					</div>
+					<div>
+						<v-btn class="red darken-1">PDF</v-btn>
+						<v-btn class="lime lighten-1">CSV</v-btn>
+						<v-btn class="blue lighten-1">Print</v-btn>
+					</div>
+				</div>
 				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
 					<template v-slot:item.action="{item}">
 						<v-tooltip top v-permission="'edit users'">
