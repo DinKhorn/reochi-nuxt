@@ -5,7 +5,7 @@
 				Order
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/stock-in/add">
+				<v-btn class="primary white--text" to="/order/add-order">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -76,36 +76,39 @@
 				form: {},
 				headers: [
 					{
-						text: "ID",
-						value: "id"
+						text: "Date",
+						value: "date"
 					},
 					{
-						text: "Name",
-						value: "name"
+						text: "Reference No.",
+						value: "reference_no"
 					},
 					{
-						text: "Code",
-						value: "code"
+						text: "Outlet Name",
+						value: "outlet_name"
 					},
 					{
-						text: "Qty",
-						value: "qty",
+						text: "Location",
+						value: "location"
+					},
+					{
+						text: "Purchase Status",
+						value: "purchase_status",
 						sortable: false
 					},
 					{
-						text: "Supplier",
-						sortable: false,
-						value: "supplier"
+						text: "Payment Status",
+						value: "payment_status",
+						sortable: false
 					},
 					{
-						text: "Date From",
-						sortable: false,
-						value: "date_from"
+						text: "Payment Due",
+						value: "payment_due"
 					},
 					{
-						text: "Date To",
-						sortable: false,
-						value: "date_to"
+						text: "Order By",
+						value: "order_by",
+						sortable: false
 					},
 					{
 						text: "Action",

@@ -65,15 +65,7 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Role" rules="required" v-slot="{ errors }">
-							<v-select
-								:items="roles"
-								item-text="name"
-								v-model="form.role"
-								outlined
-								solo
-								dense
-								label="Select Role"
-							></v-select>
+							<v-select :items="roles" v-model="form.role" outlined solo dense label="Select Role"></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -90,7 +82,7 @@
 
 <script>
 	export default {
-		name: "AddOutlet",
+		name: "AddUser",
 		data() {
 			return {
 				form: {},
@@ -119,6 +111,7 @@
 				this.$axios
 					.$post(`/api/user`, this.form)
 					.then(res => {
+						alert("hi");
 						this.form = res;
 						this.getItems();
 						this.$toast.info("Succeessfully Created");

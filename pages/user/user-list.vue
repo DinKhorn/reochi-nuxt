@@ -35,6 +35,7 @@
 										<label class="font-weight-bold" for="role">Role</label>
 										<v-autocomplete
 											:items="roles"
+											item-value="id"
 											item-text="name"
 											outlined
 											solo
@@ -75,12 +76,16 @@
 						<v-text-field outlined dense solo v-model="term" label="Search"></v-text-field>
 					</div>
 					<div>
-						<v-btn class="red darken-1">PDF</v-btn>
-						<v-btn class="lime lighten-1">CSV</v-btn>
-						<v-btn class="blue lighten-1">Print</v-btn>
+						<v-btn class="red darken-1">
+							<a :href="baseURL + '/api/user/export-pdf'" class="btn-link">PDF</a>
+						</v-btn>
+						<v-btn class="lime lighten-1">
+							<a :href="baseURL + '/api/user/export-csv'" class="btn-link">CSV</a>
+						</v-btn>
+						<v-btn class="blue lighten-1" @click.native="print">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
+				<v-data-table :headers="headers" :items="items" v-permission="'view users'" id="print">
 					<template v-slot:item.action="{item}">
 						<v-tooltip top v-permission="'edit users'">
 							<template v-slot:activator="{ on }">
@@ -131,32 +136,26 @@
 
 		data() {
 			return {
+				baseURL: process.env.APP_URL,
 				dialog: false,
 				items: [],
+				roles: [],
 				form: {},
 				name: "",
 				email: "",
 				term: "",
 				headers: [
 					{
-						text: "ID",
-						value: "id",
-						sortable: false
-					},
-					{
 						text: "Name",
-						value: "name",
-						sortable: false
+						value: "name"
 					},
 					{
 						text: "Email",
-						value: "email",
-						sortable: false
+						value: "email"
 					},
 					{
 						text: "Role",
-						sortable: false,
-						value: "phone"
+						value: "role.name"
 					},
 					{
 						text: "Action",
@@ -174,6 +173,7 @@
 					.$get(`/api/roles`)
 					.then(res => {
 						this.roles = res.role;
+						// console.log(res.role.data);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -183,7 +183,7 @@
 					.$get(`/api/user?name=${this.name}&email=${this.email}`)
 					.then(res => {
 						this.items = res.users.data;
-						console.log(res);
+						console.log(res.users.data);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -244,6 +244,28 @@
 				}
 			},
 
+			print() {
+				var prtContent = document.getElementById("print");
+				var tr = document.getElementsByTagName("tr");
+				var th = document.getElementsByTagName("th");
+
+				if (th.length > 0) {
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "hidden";
+					}
+					var newWin = window.open();
+					newWin.document.write(prtContent.children[0].outerHTML);
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "visible";
+					}
+				} else {
+					var newWin = window.open();
+					newWin.document.write("No Data aviable");
+				}
+				newWin.print();
+				newWin.close();
+			},
+
 			closeDialog() {
 				this.dialog = false;
 				this.editedIndex = -1;
@@ -280,5 +302,8 @@
 			outline: none;
 			border-radius: 3px;
 		}
+	}
+	.btn-link {
+		text-decoration: none;
 	}
 </style>
