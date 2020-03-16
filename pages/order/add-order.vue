@@ -14,7 +14,7 @@
 							Location
 							<span class="red--text">*</span>
 						</label>
-						<v-autocomplete
+						<!-- <v-autocomplete
 							item-value="name"
 							item-text="name"
 							solo
@@ -24,7 +24,8 @@
 							return-object
 							v-model="form.location"
 							:items="locations"
-						></v-autocomplete>
+						></v-autocomplete>-->
+						<v-text-field outlined solo dense label="Location" v-model="form.location"></v-text-field>
 					</v-col>
 					<v-col md="6" cols="12">
 						<label class="font-weight-bold">Outlet Name</label>

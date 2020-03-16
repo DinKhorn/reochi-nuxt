@@ -15,12 +15,16 @@
 						<v-text-field label="Search" solo outlined dense></v-text-field>
 					</div>
 					<div>
-						<v-btn class="red darken-1">PDF</v-btn>
-						<v-btn class="lime lighten-1">CSV</v-btn>
-						<v-btn class="blue lighten-1">Print</v-btn>
+						<v-btn class="red darken-1">
+							<a :href="baseURL + '/api/outlet/export-pdf'" class="nuxt--link">PDF</a>
+						</v-btn>
+						<v-btn class="lime lighten-1">
+							<a :href="baseURL + '/api/outlet/export-csv'" class="nuxt--link">CSV</a>
+						</v-btn>
+						<v-btn class="blue lighten-1" @click.native="print">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage">
+				<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage" id="print">
 					<template v-slot:item="{ item }">
 						<tr>
 							<td>{{ item.id }}</td>
@@ -28,7 +32,9 @@
 							<td>{{ item.location }}</td>
 							<td>{{ item.phone }}</td>
 							<td>{{ item.create_by }}</td>
-							<td>{{ item.status }}</td>
+							<td>
+								<span :class="item.status === 'Enable' ? 'enable' : 'disable'">{{ item.status }}</span>
+							</td>
 							<td>
 								<v-tooltip top v-permission="'edit sales'">
 									<template v-slot:activator="{ on }">
@@ -66,11 +72,6 @@
 
 <script>
 	import Vue from "vue";
-	var numeral = require("numeral");
-
-	Vue.filter("formatNumber", function(value) {
-		return numeral(value).format("0,0.00");
-	});
 
 	export default {
 		name: "Outlet",
@@ -89,6 +90,7 @@
 
 		data() {
 			return {
+				baseURL: process.env.APP_URL,
 				items: [],
 				search: "",
 				form: {},
@@ -166,6 +168,28 @@
 					.catch(err => {
 						// console.log(err.response);
 					});
+			},
+
+			print() {
+				var prtContent = document.getElementById("print");
+				var tr = document.getElementsByTagName("tr");
+				var th = document.getElementsByTagName("th");
+
+				if (th.length > 0) {
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "hidden";
+					}
+					var newWin = window.open();
+					newWin.document.write(prtContent.children[0].outerHTML);
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "visible";
+					}
+				} else {
+					var newWin = window.open();
+					newWin.document.write("No Data aviable");
+				}
+				newWin.print();
+				newWin.close();
 			}
 		}
 	};
@@ -190,5 +214,18 @@
 		outline: none;
 		border-radius: 5px;
 		border: 1px solid #616161;
+	}
+
+	.enable {
+		background-color: #36d160;
+		padding: 5px 7px 5px 7px;
+		border-radius: 5px;
+	}
+
+	.disable {
+		background-color: #e0355a;
+		padding: 5px 7px 5px 7px;
+		border-radius: 5px;
+		color: #fff;
 	}
 </style>

@@ -11,9 +11,14 @@
 					</v-btn>
 				</nuxt-link>-->
 
-				<!-- <v-btn text dark>{{ user.user ? user.user.name : null }}</v-btn> -->
+				<v-btn text dark>
+					<a href="/user/profile" class="nuxt--link">{{ user.user ? user.user.name : null }}</a>
+				</v-btn>
+				<v-btn text dark @click="logout()">
+					<v-icon>mdi-logout</v-icon>
+				</v-btn>
 
-				<v-list-group>
+				<!-- <v-list-group>
 					<template v-slot:activator>
 						<v-list-item-content>
 							<v-list-item-title>{{ user.user ? user.user.name : null }}</v-list-item-title>
@@ -31,7 +36,7 @@
 							</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-				</v-list-group>
+				</v-list-group>-->
 			</v-toolbar-items>
 		</v-app-bar>
 
@@ -463,5 +468,10 @@
 		display: block;
 		text-decoration: none;
 		padding-top: 7px;
+	}
+	.nuxt--link {
+		display: block;
+		text-decoration: none;
+		color: #fff !important;
 	}
 </style>
