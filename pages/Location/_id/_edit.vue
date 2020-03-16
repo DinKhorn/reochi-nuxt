@@ -6,32 +6,64 @@
 			<v-row class="pt-5 mx-5">
 				<v-col md="6" cols="12">
 					<label for="">Name</label>
-					<validation-provider rules="required|min:3" v-slot="{errors}">
-						<input type="text" class="form--location" v-model="form.name">
+					<validation-provider rules="required" v-slot="{errors}">
+						<v-text-field 
+							outlined 
+							solo 
+							type="text"
+							dense 
+							label="Reference no..." 
+							v-model="form.name"
+						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
 					<label for="">Address</label>
-					<validation-provider rules="required|min:3" v-slot="{errors}">
-						<input type="text" class="form--location" v-model="form.address">
+					<validation-provider rules="required" v-slot="{errors}">
+						<v-text-field 
+							outlined 
+							solo 
+							type="text"
+							dense 
+							label="Reference no..." 
+							v-model="form.address"
+						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
 					<label for="">City</label>
-					<validation-provider rules="required|min:3" v-slot="{errors}">
-						<input type="text" class="form--location" v-model="form.city">
+					<validation-provider rules="required" v-slot="{errors}">
+						<v-text-field 
+							outlined 
+							solo 
+							
+							type="text"
+							dense 
+							label="Reference no..." 
+							v-model="form.city"
+						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
 					<label for="">Country</label>
-					<input type="text" class="form--location" v-model="form.country">
+					<v-autocomplete
+						outlined
+						solo
+						dense
+						:items="province"
+						item-text="country"
+						item-value="country"
+						label="Select Provine"
+						v-model="form.country"
+						return-object
+					></v-autocomplete>
 				</v-col>
 				<v-col cols="12">
 					<label for="">Note</label>
-					<textarea cols="30" rows="7" v-model="form.description" class="form--location"></textarea>
+					<textarea cols="30" rows="5" v-model="form.description" class="form--location"></textarea>
 				</v-col>
 			</v-row>
 			<v-btn color="primary" class="mx-7 mb-5" @click="createItem">
@@ -57,14 +89,25 @@
 		data() {
 			return {
 				form: {},
+				province: [
+					"Takeo",
+					"Phnom Penh",
+					"Kompong Thom",
+				]
 			}
 		},
 
 		methods: {
 			createItem() {
-				this.$axios.$post(`api/location`, this.form)
+				this.$axios
+				.$patch(`api/location/` + this.form.id, {
+					name: this.form.name,
+					city: this.form.city,
+					address: this.form.address,
+					country: this.form.country,
+				})
 				.then(res => {
-					this.items = res.data;
+					this.location = res.data;
 					this.$router.push(`/location/`);
 				})
 				.catch(err => {
@@ -78,7 +121,7 @@
 
 <style lang="scss">
 	.form--location {
-		border: 1px solid #59bf19;
+		border: 1px solid #000000;
 		padding: 5px 10px 5px 10px;
 		width: 100%;
 		outline: none;
