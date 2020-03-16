@@ -23,7 +23,7 @@
 							<span class="red--text">{{errors[0]}}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="6" cols="12">
+					<!-- <v-col sm="6" cols="12">
 						<label class="font-weight-bold" for>Brand*</label>
 						<v-autocomplete
 							outlined
@@ -43,7 +43,7 @@
 							<v-select outlined solo dense :items="barcodes" label="Please Select" v-model="form.barcode"></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
-					</v-col>
+					</v-col> -->
 				</v-row>
 				<v-row class="px-5">
 					<v-col sm="6" cols="12">
@@ -88,7 +88,7 @@
 		name: "EditProduct",
 		created() {
 			this.fetchData();
-			this.fetchBrand();
+			// this.fetchBrand();
 		},
 
 		data() {
@@ -100,14 +100,14 @@
 				brands: [],
 				url: null,
 				itemsPerPage: 5,
-				barcodes: [
-					"Code 128",
-					"Code 39",
-					"UPC-A",
-					"UPC-E",
-					"EAN-8",
-					"EAN-13"
-				]
+				// barcodes: [
+				// 	"Code 128",
+				// 	"Code 39",
+				// 	"UPC-A",
+				// 	"UPC-E",
+				// 	"EAN-8",
+				// 	"EAN-13"
+				// ]
 			};
 		},
 
@@ -118,17 +118,17 @@
 				));
 			},
 
-			fetchBrand() {
-				this.$axios
-					.$get(`api/brand`)
-					.then(res => {
-						this.$set(this.$data, "brands", res.brands.data);
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
+			// fetchBrand() {
+			// 	this.$axios
+			// 		.$get(`api/brand`)
+			// 		.then(res => {
+			// 			this.$set(this.$data, "brands", res.brands.data);
+			// 			console.log(res);
+			// 		})
+			// 		.catch(err => {
+			// 			console.log(err.response);
+			// 		});
+			// },
 
 			fetchData() {
 				this.$axios

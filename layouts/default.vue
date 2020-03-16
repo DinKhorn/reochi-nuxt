@@ -244,7 +244,7 @@
 						children: [
 							{
 								name: "Location List",
-								to: "/location/index",
+								to: "/location/",
 								icon: "mdi-view-list",
 								permission: "view purchase"
 							},
