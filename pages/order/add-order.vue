@@ -27,28 +27,28 @@
 						></v-autocomplete>
 					</v-col>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">Supplier</label>
+						<label class="font-weight-bold">Outlet Name</label>
 						<v-autocomplete
-							:items="suppliers"
+							:items="outlets"
 							item-text="name"
-							item-value="name"
+							item-value="id"
 							solo
 							outlined
 							dense
 							return-object
-							v-model="form.supplier"
-							label="Please select Supplier"
+							v-model="form.outlets"
+							label="Please select Outlet"
 						></v-autocomplete>
 					</v-col>
-					<v-col md="4" cols="12">
-						<label class="font-weight-bold">Purchase Status</label>
+					<v-col md="6" cols="12">
+						<label class="font-weight-bold">Order Status</label>
 						<v-select
 							solo
 							outlined
 							dense
-							label="Received"
-							:items="purchase_status"
-							v-model="form.purchase_status"
+							label="Order Status"
+							:items="order_status"
+							v-model="form.order_status"
 						></v-select>
 					</v-col>
 					<!-- <v-col md="4" cols="12">
@@ -62,9 +62,17 @@
 							placeholder="0.00"
 						></v-text-field>
 					</v-col>-->
-					<v-col md="4" cols="12">
+					<v-col md="6" cols="12">
 						<label for class="font-weight-bold">Payment Status</label>
-						<v-select solo outlined dense v-model="form.payment_status" :items="payment_status" required></v-select>
+						<v-select
+							solo
+							outlined
+							dense
+							v-model="form.payment_status"
+							:items="payment_status"
+							label="Payment Status"
+							required
+						></v-select>
 					</v-col>
 					<v-col cols="12">
 						<label class="font-weight-bold">
@@ -88,9 +96,9 @@
 				</v-row>
 				<div>
 					<label class="font-weight-bold mb-3">Order Table</label>
-					<table class="tablePurchase">
+					<table class="tableOrder">
 						<thead>
-							<tr class="tablePurchase--header">
+							<tr class="tableOrder--header">
 								<td>Name</td>
 								<td>Code</td>
 								<td>Quantity</td>
@@ -101,7 +109,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="tablePurchase--td" v-for="(item, index) in form.items" :key="index">
+							<tr class="tableOrder--td" v-for="(item, index) in form.items" :key="index">
 								<td>{{item.name}}</td>
 								<td>{{item.code}}</td>
 								<td>
@@ -153,10 +161,7 @@
 					<textarea cols="30" rows="7" class="textarea" v-model="form.description"></textarea>
 				</div>
 			</div>
-			<v-btn
-				@click.prevent="createPurchase"
-				class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4"
-			>
+			<v-btn @click.prevent="createOrder" class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4">
 				<v-icon>mdi-check</v-icon>Submit
 			</v-btn>
 		</v-card>
@@ -173,11 +178,10 @@
 	});
 
 	export default {
-		name: "AddPurchase",
+		name: "AddOrder",
 		created() {
 			this.fetchData();
-			// this.fetchPurchase();
-			this.fetchSupplier();
+			this.fetchOutlet();
 			this.fetchLocation();
 		},
 
@@ -186,11 +190,11 @@
 				form: {
 					items: []
 				},
+				outlets: [],
 				products: [],
-				purchases: [],
-				purchase_status: ["Received", "Pending", "Ordered"],
+				orders: [],
+				order_status: ["Received", "Pending", "Ordered"],
 				payment_status: ["Paid", "Due"],
-				suppliers: [],
 				locations: []
 			};
 		},
@@ -234,15 +238,15 @@
 					});
 			},
 
-			fetchSupplier() {
+			fetchOutlet() {
 				this.$axios
-					.$get(`api/supplier`)
+					.$get(`/api/outlets`)
 					.then(res => {
-						console.log(res);
-						this.suppliers = res.suppliers.data;
+						this.outlets = res.outlets.data;
+						console.log(res.data);
 					})
 					.catch(err => {
-						console.log(err.response);
+						console.log(err);
 					});
 			},
 
@@ -296,7 +300,7 @@
 		outline: 1px solid #461577;
 	}
 
-	.tablePurchase {
+	.tableOrder {
 		width: 100%;
 		margin-top: 10px;
 		border-collapse: collapse;

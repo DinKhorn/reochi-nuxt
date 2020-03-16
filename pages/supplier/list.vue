@@ -80,11 +80,11 @@
 						sortable: false,
 						value: "company_name"
 					},
-					{
-						text: "VAT Number",
-						sortable: false,
-						value: "vat_number"
-					},
+					// {
+					// 	text: "VAT Number",
+					// 	sortable: false,
+					// 	value: "vat_number"
+					// },
 					{
 						text: "Email",
 						sortable: false,

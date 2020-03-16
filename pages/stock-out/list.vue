@@ -2,10 +2,10 @@
 	<v-app class="pa-5">
 		<v-card class="card">
 			<v-card-title class="blue-grey lighten-4">
-				Stock Out
+				Stock In
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/stock-out/add">
+				<v-btn class="primary white--text" to="/stock-in/add">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -47,7 +47,7 @@
 
 <script>
 	export default {
-		name: "UserField",
+		name: "StockIn",
 		watch: {
 			name: {
 				handler() {
@@ -74,16 +74,17 @@
 				dialog: false,
 				items: [],
 				form: {},
-				name: "",
-				email: "",
-				term: "",
 				headers: [
 					{
-						text: "ID",
-						value: "id"
+						text: "Date",
+						value: "date"
 					},
 					{
-						text: "Name",
+						text: "Reference No.",
+						value: "reference_no"
+					},
+					{
+						text: "Product Name",
 						value: "name"
 					},
 					{
@@ -91,24 +92,13 @@
 						value: "code"
 					},
 					{
-						text: "Qty",
-						value: "qty",
-						sortable: false
+						text: "Deliver Name",
+						sortable: false,
+						value: "deliver"
 					},
 					{
-						text: "Deliver",
-						sortable: false,
-						value: "Deliver"
-					},
-					{
-						text: "Date From",
-						sortable: false,
-						value: "date_from"
-					},
-					{
-						text: "Date To",
-						sortable: false,
-						value: "date_to"
+						text: "Total",
+						value: "total"
 					},
 					{
 						text: "Action",

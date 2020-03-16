@@ -174,18 +174,7 @@
 							}
 						]
 					},
-					// {
-					// 	name: "purchase list",
-					// 	icon: "mdi-view-dashboard",
-					// 	to: "/purchase/purchase-list",
-					// 	permission: "view users"
-					// },
-					// {
-					// 	name: "Add purchase",
-					// 	icon: "mdi-view-dashboard",
-					// 	to: "/purchase/add-purchase",
-					// 	permission: "view users"
-					// },
+
 					{
 						name: "Order",
 						icon: "mdi-cart-arrow-down",

@@ -76,11 +76,15 @@
 				form: {},
 				headers: [
 					{
-						text: "ID",
-						value: "id"
+						text: "Date",
+						value: "date"
 					},
 					{
-						text: "Name",
+						text: "Reference No.",
+						value: "reference_no"
+					},
+					{
+						text: "Product Name",
 						value: "name"
 					},
 					{
@@ -88,24 +92,13 @@
 						value: "code"
 					},
 					{
-						text: "Qty",
-						value: "qty",
-						sortable: false
-					},
-					{
 						text: "Supplier",
 						sortable: false,
 						value: "supplier"
 					},
 					{
-						text: "Date From",
-						sortable: false,
-						value: "date_from"
-					},
-					{
-						text: "Date To",
-						sortable: false,
-						value: "date_to"
+						text: "Total",
+						value: "total"
 					},
 					{
 						text: "Action",

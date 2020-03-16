@@ -125,13 +125,13 @@
 						amount: 678
 					},
 					{
-						text: "Total Purchase",
+						text: "Total Order",
 						icon: "mdi-account-group",
 						color: "orange darken-1",
 						amount: 678
 					},
 					{
-						text: "Total Purchase",
+						text: "Total Income",
 						icon: "mdi-account-group",
 						color: "purple darken-1",
 						amount: 678

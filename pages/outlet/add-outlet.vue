@@ -54,7 +54,7 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Status" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Status" v-model="form.status"></v-text-field>
+							<v-select outlined solo dense label="Status" v-model="form.status" :items="status"></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -77,7 +77,8 @@
 				form: {},
 				items: [],
 				url: null,
-				itemsPerPage: 5
+				itemsPerPage: 5,
+				status: ["Enable", "Disable"]
 			};
 		},
 
