@@ -12,7 +12,7 @@
 			<div class="pa-4">
 				<div class="d-flex justify-space-between">
 					<div>
-						<v-text-field label="Search" solo outlined dense></v-text-field>
+						<v-text-field label="Search" solo outlined dense v-model="search"></v-text-field>
 					</div>
 					<div>
 						<v-btn class="red darken-1">
@@ -85,6 +85,12 @@
 				handler() {
 					this.fetchData();
 				}
+			},
+
+			search: {
+				handler() {
+					this.searchItems();
+				}
 			}
 		},
 
@@ -93,6 +99,11 @@
 				baseURL: process.env.APP_URL,
 				items: [],
 				search: "",
+				name: "",
+				location: "",
+				phone: "",
+				create_by: "",
+				status: "",
 				form: {},
 				page: 1,
 				options: {},
@@ -115,7 +126,7 @@
 						value: "location"
 					},
 					{
-						text: "phone",
+						text: "Contact",
 						value: "phone"
 					},
 					{
@@ -137,17 +148,28 @@
 
 		methods: {
 			fetchData() {
-				let vm = this;
 				this.$axios
 					.$get(
-						`/api/outlets?temsPerPage=${this.options.itemsPerPage}&page=${this.options.page}`
+						`/api/outlets?name=${this.name}&location=${this.location}&phone=${this.phone}&create_by=${this.create_by}&status=${this.status}`
 					)
 					.then(res => {
-						vm.items = res.outlets.data;
-						console.log(res.data);
+						this.items = res.outlets.data;
+						console.log(res.outlets);
 					})
 					.catch(err => {
-						console.log(err);
+						console.log(err.response);
+					});
+			},
+
+			searchItems() {
+				this.$axios
+					.$get(`/api/outlets?search=${this.search}`)
+					.then(res => {
+						this.items = res.outlets.data;
+						// console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
 					});
 			},
 
@@ -166,7 +188,7 @@
 						this.fetchData();
 					})
 					.catch(err => {
-						// console.log(err.response);
+						console.log(err.response);
 					});
 			},
 
