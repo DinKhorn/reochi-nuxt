@@ -57,7 +57,7 @@
 			return {
 				items: [],
 				headers: [
-					{ text: 'Date', },
+					{ text: 'Name' },
 					{ text: 'Address' },
 					{ text: 'City' },
 					{ text: 'Country' },
