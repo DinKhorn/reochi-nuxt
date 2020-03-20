@@ -12,7 +12,7 @@
 							solo 
 							type="text"
 							dense 
-							label="Reference no..." 
+							label="Name..." 
 							v-model="form.name"
 						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
@@ -26,7 +26,7 @@
 							solo 
 							type="text"
 							dense 
-							label="Reference no..." 
+							label="Addres..." 
 							v-model="form.address"
 						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
@@ -41,7 +41,7 @@
 							
 							type="text"
 							dense 
-							label="Reference no..." 
+							label="City..." 
 							v-model="form.city"
 						></v-text-field>
 						<span class="location--validate">{{errors[0]}}</span>
