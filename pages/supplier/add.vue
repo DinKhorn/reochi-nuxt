@@ -23,11 +23,18 @@
 						<span class="red--text">*</span>
 					</label>
 					<validation-provider name="Company Name" rules="required" v-slot="{ errors }">
-						<v-text-field outlined solo dense label="Company Name" v-model="form.company_name" required></v-text-field>
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Company Name" 
+						v-model="form.company_name" 
+						required>
+						</v-text-field>
 						<span class="red--text">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
-				<v-col sm="6" cols="12">
+				<!-- <v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="vat_number">
 						VAT Number
 						<span class="caption">(Optional)</span>
@@ -44,7 +51,7 @@
 						></v-text-field>
 						<span class="red--text">{{ errors[0] }}</span>
 					</validation-provider>
-				</v-col>
+				</v-col> -->
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="email">
 						Email
@@ -65,8 +72,24 @@
 						<span class="red--text">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
+				<v-col sm="12" cols="12">
+					<label class="font-weight-bold" >
+						Address
+					</label>
+					<validation-provider rules="required" v-slot="{ errors }">
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Please type..." 
+						v-model="form.address" 
+						required
+						></v-text-field>
+						<span class="red--text">{{ errors[0] }}</span>
+					</validation-provider>
+				</v-col>
 
-				<v-col sm="6" cols="12">
+				<!-- <v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="past_code">
 						Post Code
 						<span class="caption">(Optional)</span>
@@ -82,7 +105,7 @@
 						<img :src="form.image" class="img-responsive" height="300" />
 					</div>
 					<input type="file" @change="uploadImage($event)" class="product--image" />
-				</v-col>
+				</v-col> -->
 			</v-row>
 			<v-btn class="mx-5 mb-5 mt-2" @click="createSupplier" color="primary" v-permission="'add users'">
 				<v-icon left>mdi-check</v-icon>Submit
@@ -119,7 +142,7 @@
 				this.$axios
 					.$post(`api/supplier`, this.form)
 					.then(res => {
-						this.$router.push(`/people/supplier`);
+						this.$router.push(`/supplier/`);
 						console.log(res);
 					})
 					.catch(err => {
