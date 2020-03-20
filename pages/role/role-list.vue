@@ -39,7 +39,7 @@
 					<template v-slot:item.action="{item}">
 						<v-tooltip top v-permission="'edit users'">
 							<template v-slot:activator="{ on }">
-								<v-btn icon @click="editItem(item)" color="primary" outlined v-on="on">
+								<v-btn small icon @click="editItem(item)" color="primary" outlined v-on="on">
 									<v-icon small>mdi-pencil</v-icon>
 								</v-btn>
 							</template>
@@ -47,7 +47,7 @@
 						</v-tooltip>
 						<v-tooltip top v-permission="'delete users'">
 							<template v-slot:activator="{ on }">
-								<v-btn icon @click="deleteItem(item)" color="red" outlined v-on="on">
+								<v-btn small icon @click="deleteItem(item)" color="red" outlined v-on="on">
 									<v-icon small>mdi-delete</v-icon>
 								</v-btn>
 							</template>

@@ -4,11 +4,14 @@
 			<v-card-title class="blue-grey lighten-4">Dashboard</v-card-title>
 			<div class="pa-4">
 				<v-row>
-					<template v-for="(card, key) in users">
+					<template v-for="(card, key) in cards">
 						<v-col md="3" sm="6" cols="12">
 							<v-card :color="card.color">
 								<v-card-text class="d-flex align-start justify-space-between">
-									<v-icon class="card--icon" style="font-size: 40px; color: #ffffff">{{ card.icon }}</v-icon>
+									<v-icon
+										class="card--icon"
+										style="padding-top:7px; font-size: 40px; color: #ffffff"
+									>{{ card.icon }}</v-icon>
 									<div class="d-flex flex-column align-end mt-7">
 										<div class="card--amount">{{ card.amount }}</div>
 										<div class="card--text">{{ card.text }}</div>
@@ -111,7 +114,7 @@
 	export default {
 		data() {
 			return {
-				users: [
+				cards: [
 					{
 						text: "Total Users",
 						icon: "mdi-account-group",
@@ -120,64 +123,27 @@
 					},
 					{
 						text: "Total Outlet",
-						icon: "mdi-account-group",
+						icon: "mdi-storefront",
 						color: "red darken-1",
 						amount: 678
 					},
 					{
 						text: "Total Order",
-						icon: "mdi-account-group",
+						icon: "mdi-cart-arrow-down",
 						color: "orange darken-1",
 						amount: 678
 					},
 					{
 						text: "Total Income",
-						icon: "mdi-account-group",
+						icon: "mdi-cash-multiple",
 						color: "purple darken-1",
 						amount: 678
-					},
-					{
-						text: "Total Purchase",
-						icon: "mdi-account-group",
-						color: "blue-grey darken-1",
-						amount: 678
-					},
-					{
-						text: "Total Purchase",
-						icon: "mdi-account-group",
-						color: "blue-grey darken-1",
-						amount: 678
-					},
-					{
-						text: "Total Purchase",
-						icon: "mdi-account-group",
-						color: "blue-grey darken-1",
-						amount: 678
-					},
-					{
-						text: "Total Purchase",
-						icon: "mdi-account-group",
-						color: "blue-grey darken-1",
-						amount: 678
 					}
-
 					// {
-					// 	text: 'Deactive Users',
-					// 	color: 'red lighten-1',
-					// 	icon: 'mdi-account-remove',
-					// 	amount: 0,
-					// },
-					// {
-					// 	text: 'Total Paid Users',
-					// 	icon: 'mdi-account-plus',
-					// 	amount: 8,
-					// 	color: 'teal darken-1',
-					// },
-					// {
-					// 	text: 'Total Free Users',
-					// 	icon: 'mdi-account-circle',
-					// 	amount: 671,
-					// 	color: 'lime darken-3',
+					// 	text: "Total Purchase",
+					// 	icon: "mdi-account-group",
+					// 	color: "blue-grey darken-1",
+					// 	amount: 678
 					// },
 				]
 
