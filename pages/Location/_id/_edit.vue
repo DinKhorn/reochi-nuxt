@@ -38,7 +38,6 @@
 						<v-text-field 
 							outlined 
 							solo 
-							
 							type="text"
 							dense 
 							label="City..." 

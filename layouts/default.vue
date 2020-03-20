@@ -131,7 +131,7 @@
 								name: "Supplier",
 								to: "/supplier/",
 								icon: "mdi-account-multiple",
-								permission: "view product"
+								permission: "view supplier"
 							},
 							{
 								name: "Role",
@@ -371,16 +371,16 @@
 					"customer report",
 					"supplier report",
 					"due report",
-					"support",
-					"payment log",
-					"add withdraw method",
-					"view withdraw method",
-					"edit withdraw method",
-					"delete withdraw method",
-					"charge commission",
-					"pos",
-					"return sales",
-					"return purchases"
+					// "support",
+					// "payment log",
+					// "add withdraw method",
+					// "view withdraw method",
+					// "edit withdraw method",
+					// "delete withdraw method",
+					// "charge commission",
+					// "pos",
+					// "return sales",
+					// "return purchases"
 				]);
 			}
 
