@@ -162,9 +162,10 @@
 		methods: {
 			fetchData() {
 				this.$axios
-					.$get(`/api/outlets`)
+					.$get(`api/stock-in`)
 					.then(res => {
-						this.items = res.outlets.data;
+						console.log(res);
+						// this.items = res.stockin.data;
 					})
 					.catch(err => {
 						console.log(err.response);

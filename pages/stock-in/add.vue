@@ -15,7 +15,7 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Reference No." rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Reference No." v-model="form.qty"></v-text-field>
+							<v-text-field outlined solo dense label="Reference No." v-model="form.reference_no"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -28,11 +28,12 @@
 							<v-autocomplete
 								:items="suppliers"
 								item-text="name"
+								item-value="id"
 								outlined
 								solo
 								dense
 								label="Supplier Name"
-								v-model="form.supplier"
+								v-model="form.supplier_id"
 							></v-autocomplete>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
@@ -49,7 +50,7 @@
 								outlined
 								dense
 								item-text="name"
-								item-value="name"
+								item-value="id"
 								return-object
 								@input="addTocart"
 								label="Select Product"
