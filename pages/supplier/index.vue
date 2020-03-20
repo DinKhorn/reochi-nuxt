@@ -25,7 +25,7 @@
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">
 								<!-- Edit Item -->
-								<v-btn @click="edit(item)" left small outlined icon color="primary" v-on="on">
+								<v-btn @click="editItem(item.id)" left small outlined icon color="primary" v-on="on">
 									<v-icon small>mdi-pencil</v-icon>
 								</v-btn>
 							</template>
@@ -34,7 +34,7 @@
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">
 								<!-- Delete Item -->
-								<v-btn @click="deleteItem(item)" left small outlined icon color="red" v-on="on">
+								<v-btn @click="deleteItem(item.id)" left small outlined icon color="red" v-on="on">
 									<v-icon small>mdi-delete</v-icon>
 								</v-btn>
 							</template>
@@ -123,14 +123,14 @@
 					});
 			},
 
-			edit(item) {
-				this.$router.push(`/supplier/${item.id}/edit`);
+			editItem(id) {
+				this.$router.push(`/supplier/${id}/edit`);
 			},
 
-			deleteItem(item) {
+			deleteItem(id) {
 				if (confirm("Are u sure to delete it?")) {
 					this.$axios
-						.$delete(`/api/supplier/` + item.id)
+						.$delete(`/api/supplier/` + id)
 						.then(res => {
 							this.fetchData();
 							this.$toast.info("Succeessfully Delete");
