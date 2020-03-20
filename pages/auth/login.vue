@@ -84,7 +84,7 @@
 							this.$laravel.setPermissions(permissions);
 							this.$laravel.setRoles(roles);
 							this.loading = false;
-							
+
 							// console.log(roles)
 						});
 				} catch (e) {
@@ -92,7 +92,6 @@
 					this.$toast.error(e.message);
 				}
 			}
-		},
-
+		}
 	};
 </script>

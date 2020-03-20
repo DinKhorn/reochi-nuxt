@@ -14,7 +14,7 @@
 							Location
 							<span class="red--text">*</span>
 						</label>
-						<!-- <v-autocomplete
+						<v-autocomplete
 							item-value="name"
 							item-text="name"
 							solo
@@ -24,11 +24,13 @@
 							return-object
 							v-model="form.location"
 							:items="locations"
-						></v-autocomplete>-->
-						<v-text-field outlined solo dense label="Location" v-model="form.location"></v-text-field>
+						></v-autocomplete>
 					</v-col>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">Outlet Name</label>
+						<label class="font-weight-bold">
+							Outlet Name
+							<span class="red--text">*</span>
+						</label>
 						<v-autocomplete
 							:items="outlets"
 							item-text="name"
@@ -37,7 +39,7 @@
 							outlined
 							dense
 							return-object
-							v-model="form.outlets"
+							v-model="form.outlet_name"
 							label="Please select Outlet"
 						></v-autocomplete>
 					</v-col>
@@ -52,17 +54,6 @@
 							v-model="form.order_status"
 						></v-select>
 					</v-col>
-					<!-- <v-col md="4" cols="12">
-						<label for class="font-weight-bold">Shipping Cost</label>
-						<v-text-field
-							solo
-							outlined
-							dense
-							type="number"
-							v-model="form.shipping_cost"
-							placeholder="0.00"
-						></v-text-field>
-					</v-col>-->
 					<v-col md="6" cols="12">
 						<label for class="font-weight-bold">Payment Status</label>
 						<v-select
@@ -100,8 +91,8 @@
 					<table class="tableOrder">
 						<thead>
 							<tr class="tableOrder--header">
-								<td>Name</td>
 								<td>Code</td>
+								<td>Name</td>
 								<td>Quantity</td>
 								<td>Unit Price</td>
 								<td>Discount</td>
@@ -111,8 +102,9 @@
 						</thead>
 						<tbody>
 							<tr class="tableOrder--td" v-for="(item, index) in form.items" :key="index">
-								<td>{{item.name}}</td>
 								<td>{{item.code}}</td>
+								<td>{{item.name}}</td>
+
 								<td>
 									<validation-provider rules="required" v-slot="{ errors }">
 										<input
@@ -181,7 +173,7 @@
 	export default {
 		name: "AddOrder",
 		created() {
-			this.fetchData();
+			this.fetchProduct();
 			this.fetchOutlet();
 			this.fetchLocation();
 		},
@@ -194,7 +186,7 @@
 				outlets: [],
 				products: [],
 				orders: [],
-				order_status: ["Received", "Pending", "Ordered"],
+				order_status: ["New", "Accepted", "Pending", "Received", "Cancel"],
 				payment_status: ["Paid", "Due"],
 				locations: []
 			};
@@ -227,7 +219,7 @@
 				);
 			},
 
-			fetchData() {
+			fetchProduct() {
 				this.$axios
 					.$get(`/api/product`)
 					.then(res => {
@@ -241,10 +233,9 @@
 
 			fetchOutlet() {
 				this.$axios
-					.$get(`/api/outlets`)
+					.$get(`/api/stock-in`)
 					.then(res => {
-						this.outlets = res.outlets.data;
-						console.log(res.data);
+						this.stockin = res.stockin.data;
 					})
 					.catch(err => {
 						console.log(err);
@@ -256,21 +247,18 @@
 					.$get(`api/location`)
 					.then(res => {
 						this.locations = res.locations.data;
-						console.log(res);
+						// console.log(res);
 					})
 					.catch(err => {
 						console.log(err.response);
 					});
 			},
 
-			createPurchase() {
+			createOrder() {
 				this.$axios
-					.$post(`api/purchase`, this.form)
+					.$post(`api/order`, this.form)
 					.then(res => {
-						// this.purchases = res.data;
-						this.$set(this.$data, "purchases", res.data);
-						this.$router.push(`/purchase/purchase-list`);
-						console.log(res);
+						this.$router.push(`/order/order-list`);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -282,7 +270,7 @@
 					alert("already there");
 				} else {
 					this.form.items.push(item);
-					console.log(item);
+					// console.log(this.form);
 				}
 				Vue.set(item, "quantity", 1);
 				Vue.set(item, "discount", 0);
@@ -291,6 +279,20 @@
 			removeItem(index) {
 				this.form.items.splice(index, 1);
 			}
+			// createOrder() {
+			// 	this.$axios
+			// 		.$post(`api/order`, this.form)
+			// 		.then(res => {
+			// 			alert("hi");
+			// 			// this.purchases = res.data;
+			// 			this.$set(this.$data, "purchases", res.data);
+			// 			this.$router.push(`/purchase/purchase-list`);
+			// 			// console.log(res);
+			// 		})
+			// 		.catch(err => {
+			// 			console.log(err.response);
+			// 		});
+			// },
 		}
 	};
 </script>

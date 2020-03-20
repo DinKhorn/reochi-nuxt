@@ -196,6 +196,12 @@
 								to: "/order/add-order",
 								icon: "mdi-plus-circle",
 								permission: "view purchase"
+							},
+							{
+								name: "Add Purchase",
+								to: "/purchase/add-purchase",
+								icon: "mdi-plus-circle",
+								permission: "view purchase"
 							}
 						]
 					},
