@@ -10,19 +10,37 @@
 			<v-row class="px-5">
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="name">Name*</label>
-					<validation-provider rules="required|min:3" v-slot="{ errors }">
-						<input type="text" v-model="form.name" required class="supplier--form">
+					<validation-provider rules="required" v-slot="{ errors }">
+                        <v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Name..." 
+						type="text" 
+                        v-model="form.name"
+						required>
+						</v-text-field>
+						<input type="text" v-model="form.name" required >
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="">Company Name*</label>
 					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.company_name" required class="supplier--form">
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Company Name..." 
+						type="text" 
+                        v-model="form.company_name"
+						required>
+						</v-text-field>
+						<!-- <input type="text" v-model="form.company_name" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
-				<v-col sm="6" cols="12">
+				<!-- <v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="">
 						Image <span class="font-weight-light">(Optional)</span>
 					</label>
@@ -33,52 +51,52 @@
 						VAT Number <span class="font-weight-light">(Optional)</span>
 					</label>
 					<input type="text" v-model="form.vat_number" required class="supplier--form">
-				</v-col>
+				</v-col> -->
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="">Email</label>
 					<validation-provider rules="required|email" v-slot="{ errors }">
-						<input type="text" v-model="form.email" required class="supplier--form">
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Email..." 
+						type="text" 
+                        v-model="form.email"
+						required>
+						</v-text-field>
+						<!-- <input type="text" v-model="form.email" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold">Phone Number</label>
 					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.phone" required class="supplier--form">
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Phone..." 
+						type="text" 
+                        v-model="form.phone"
+						required>
+						</v-text-field>
+						<!-- <input type="text" v-model="form.phone" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="">Address</label>
 					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.address" required class="supplier--form">
-						<span class="text--error">{{ errors[0] }}</span>
-					</validation-provider>
-				</v-col>
-				<v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">
-						City <span class="font-weight-light">(Optional)</span>
-					</label>
-					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.city" required class="supplier--form">
-						<span class="text--error">{{ errors[0] }}</span>
-					</validation-provider>
-				</v-col>
-				<v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">
-						Post Code <span class="font-weight-light">(Optional)</span>
-					</label>
-					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.post_code" required class="supplier--form">
-						<span class="text--error">{{ errors[0] }}</span>
-					</validation-provider>
-				</v-col>
-				<v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">
-						Country <span class="font-weight-light">(Optional)</span>
-					</label>
-					<validation-provider rules="required" v-slot="{ errors }">
-						<input type="text" v-model="form.country" required class="supplier--form">
+						<v-text-field 
+						outlined 
+						solo 
+						dense 
+						label="Email..." 
+						type="text" 
+                        v-model="form.address"
+						required>
+						</v-text-field>
+						<!-- <input type="text" v-model="form.address" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
@@ -93,7 +111,7 @@
 
 <script>
 	export default {
-		name: "editSupplier",
+		name: "eSupplier",
 		data() {
 			return {
 				form: {}
@@ -119,14 +137,14 @@
 					'email': this.form.email,
 					'phone': this.form.phone,
 					'address': this.form.address,
-					'city': this.form.city,
-					'country': this.form.country,
-					'vat_number': this.form.vat_number,
-					'post_code': this.form.post_code,
+					// 'city': this.form.city,
+					// 'country': this.form.country,
+					// 'vat_number': this.form.vat_number,
+					// 'post_code': this.form.post_code,
 					_method: 'patch',
 				})
 				.then(res => {
-					this.$router.push(`/people/supplier`)
+					this.$router.push(`/supplier/`)
 					console.log(res);
 				})
 				.catch(err => {

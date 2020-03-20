@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-card class="mx-5 my-5">
-			<v-card-title class="blue lighten-1 white--text">Add Location(Branch)</v-card-title>
+			<v-card-title class="green darken-3 white--text">Add Location(Branch)</v-card-title>
 			<v-divider></v-divider>
 			<v-row class="pt-5 mx-5">
 				<v-col md="6" cols="12">
@@ -19,7 +19,7 @@
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
-					<label for="">Address</label>
+					<label for="">Commune</label>
 					<validation-provider rules="required|min:3" v-slot="{errors}">
 						<v-text-field 
 							outlined 
@@ -33,7 +33,7 @@
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
-					<label for="">City</label>
+					<label for="">District</label>
 					<validation-provider rules="required|min:3" v-slot="{errors}">
 						<v-text-field 
 							outlined 
@@ -47,7 +47,7 @@
 					</validation-provider>
 				</v-col>
 				<v-col md="6" cols="12">
-					<label for="">Country</label>
+					<label for="">Province</label>
 					<v-autocomplete
 						outlined
 						solo

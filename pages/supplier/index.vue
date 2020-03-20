@@ -50,6 +50,7 @@
 
 <script>
 	export default {
+		name: "viewSupplier",
 		created() {
 			this.fetchData();
 		},
@@ -66,17 +67,17 @@
 				created: true,
 				dialog: false,
 				headers: [
-					{
-						text: "Image",
-						sortable: false
-					},
+					// {
+					// 	text: "Image",
+					// 	sortable: false
+					// },
 					{
 						text: "Name",
 						sortable: false,
 						value: "name"
 					},
 					{
-						text: "Company Name",
+						text: "Company",
 						sortable: false,
 						value: "company_name"
 					},
@@ -91,7 +92,7 @@
 						value: "email"
 					},
 					{
-						text: "Phone Number",
+						text: "Phone",
 						sortable: false,
 						value: "phone"
 					},
@@ -123,7 +124,7 @@
 			},
 
 			edit(item) {
-				this.$router.push(`/people/supplier/${item.id}/`);
+				this.$router.push(`/supplier/${item.id}/edit`);
 			},
 
 			deleteItem(item) {

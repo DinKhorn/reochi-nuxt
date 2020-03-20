@@ -129,7 +129,7 @@
 							},
 							{
 								name: "Supplier",
-								to: "/supplier/list",
+								to: "/supplier/",
 								icon: "mdi-account-multiple",
 								permission: "view product"
 							},
