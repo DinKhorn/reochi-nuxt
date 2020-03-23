@@ -226,7 +226,7 @@
 					alert("already there");
 				} else {
 					this.form.items.push(item);
-					console.log(item);
+					// console.log(item);
 				}
 				Vue.set(item, "quantity", 1);
 				Vue.set(item, "discount", 0);

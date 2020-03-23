@@ -1,7 +1,7 @@
 <template>
 	<v-app class="pa-5">
 		<v-card class="card">
-			<v-card-title class="blue-grey lighten-4">Create Stock Out</v-card-title>
+			<v-card-title class="blue-grey lighten-4">Edit Order</v-card-title>
 			<v-divider></v-divider>
 			<p class="px-5 pt-3 font-italic grey--text">
 				The field labels marked with
@@ -27,7 +27,10 @@
 						></v-autocomplete>
 					</v-col>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">Outlet Name</label>
+						<label class="font-weight-bold">
+							Outlet Name
+							<span class="red--text">*</span>
+						</label>
 						<v-autocomplete
 							:items="outlets"
 							item-text="name"
@@ -36,37 +39,32 @@
 							outlined
 							dense
 							return-object
-							v-model="form.outlets"
+							v-model="form.outlet_name"
 							label="Please select Outlet"
 						></v-autocomplete>
 					</v-col>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">Deliery Name</label>
-						<v-autocomplete
-							:items="suppliers"
-							item-text="name"
-							item-value="id"
+						<label class="font-weight-bold">Order Status</label>
+						<v-select
 							solo
 							outlined
 							dense
-							return-object
-							v-model="form.supplier_id"
-							label="Please select Salesman"
-						></v-autocomplete>
+							label="Order Status"
+							:items="order_status"
+							v-model="form.order_status"
+						></v-select>
 					</v-col>
 					<v-col md="6" cols="12">
-						<label class="font-weight-bold">Salesman</label>
-						<v-autocomplete
-							:items="suppliers"
-							item-text="name"
-							item-value="id"
+						<label for class="font-weight-bold">Payment Status</label>
+						<v-select
 							solo
 							outlined
 							dense
-							return-object
-							v-model="form.supplier_id"
-							label="Please select Salesman"
-						></v-autocomplete>
+							v-model="form.payment_status"
+							:items="payment_status"
+							label="Payment Status"
+							required
+						></v-select>
 					</v-col>
 					<v-col cols="12">
 						<label class="font-weight-bold">
@@ -88,7 +86,6 @@
 						</div>
 					</v-col>
 				</v-row>
-
 				<div>
 					<label class="font-weight-bold mb-3">Order Table</label>
 					<table class="tableOrder">
@@ -98,6 +95,7 @@
 								<td>Name</td>
 								<td>Quantity</td>
 								<td>Unit Price</td>
+								<td>Discount</td>
 								<td>Total</td>
 								<td>Actions</td>
 							</tr>
@@ -106,6 +104,7 @@
 							<tr class="tableOrder--td" v-for="(item, index) in form.items" :key="index">
 								<td>{{item.code}}</td>
 								<td>{{item.name}}</td>
+
 								<td>
 									<validation-provider rules="required" v-slot="{ errors }">
 										<input
@@ -126,7 +125,16 @@
 										placeholder="0.00"
 									/>
 								</td>
-								<td>USD {{ discountedPrice(item) | formatMoney }}</td>
+								<td>
+									<input
+										type="number"
+										class="table-quantity"
+										name="form.items[index].discount"
+										v-model.number="form.items[index].discount"
+										placeholder="0.00"
+									/>
+								</td>
+								<td>USD {{ discountedPrice(item)}}</td>
 								<td>
 									<v-btn small color="red" outlined @click="removeItem(index)">
 										<v-icon>mdi-delete</v-icon>
@@ -135,8 +143,8 @@
 							</tr>
 							<tr>
 								<td class="py-3" colspan="2">Total</td>
-								<td colspan="2">{{ calculateQty }}</td>
-								<td>USD {{ calculateTotal | formatMoney }}</td>
+								<td colspan="3">{{ calculateQty }}</td>
+								<td>USD {{ calculateTotal}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -146,10 +154,7 @@
 					<textarea cols="30" rows="7" class="textarea" v-model="form.description"></textarea>
 				</div>
 			</div>
-			<v-btn
-				@click.prevent="createStockOut"
-				class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4"
-			>
+			<v-btn @click.prevent="createOrder" class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4">
 				<v-icon>mdi-check</v-icon>Submit
 			</v-btn>
 		</v-card>
@@ -157,22 +162,13 @@
 </template>
 
 <script>
-	import Vue from "vue";
-
-	var numeral = require("numeral");
-
-	Vue.filter("formatMoney", function(value) {
-		return numeral(value).format("0,0.00");
-	});
-
 	export default {
 		name: "AddOrder",
 		created() {
 			this.fetchData();
 			this.fetchOutlet();
 			this.fetchLocation();
-			this.fetchSupplier();
-			this.fetchSalesman();
+			this.setData();
 		},
 
 		data() {
@@ -183,8 +179,7 @@
 				outlets: [],
 				products: [],
 				orders: [],
-				suppliers: [],
-				order_status: ["Received", "Pending", "Ordered"],
+				order_status: ["New", "Accepted", "Pending", "Received", "Cancel"],
 				payment_status: ["Paid", "Due"],
 				locations: []
 			};
@@ -192,18 +187,18 @@
 
 		computed: {
 			calculateQty() {
-				return this.form.items.reduce((total, item) => {
-					return total + item.quantity;
+				return this.form.products.reduce((total, item) => {
+					return total + Number(item.quantity);
 				}, 0);
 			},
-
-			calculateTotal() {
-				return this.form.items.reduce((total, item) => {
+			GrandTotal() {
+				return this.form.products.reduce((total, item) => {
 					let s =
 						(item.unit_price -
 							(item.unit_price * item.discount) / 100) *
 						item.quantity;
 					return total + s;
+					// console.log(total + s);
 				}, 0);
 			}
 		},
@@ -221,20 +216,32 @@
 				this.$axios
 					.$get(`/api/product`)
 					.then(res => {
-						Vue.set(this.$data, "products", res.products.data);
-						console.log(res);
+						// this.products = res.products.data;
+						this.$set(this.$data, "products", res.products.data);
 					})
 					.catch(err => {
 						console.log(err);
 					});
+
+				// this.$axios
+				// 	.$get(`api/location`)
+				// 	.then(res => {
+				// 		// this.locations = res.locations.data;
+				// 		this.$set(this.$data, "locations", res.locations.data);
+				// 		console.log(res);
+				// 	})
+				// 	.catch(err => {
+				// 		console.log(err.response);
+				// 	});
 			},
 
 			fetchOutlet() {
 				this.$axios
 					.$get(`/api/outlets`)
 					.then(res => {
-						this.outlets = res.outlets.data;
-						console.log(res.data);
+						// this.outlets = res.outlets.data;
+						this.$set(this.$data, "outlets", res.outlets.data);
+						console.log(res.outlets.data);
 					})
 					.catch(err => {
 						console.log(err);
@@ -246,44 +253,7 @@
 					.$get(`api/location`)
 					.then(res => {
 						this.locations = res.locations.data;
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			fetchSupplier() {
-				this.$axios
-					.$get(`api/supplier`)
-					.then(res => {
-						this.suppliers = res.suppliers.data;
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			fetchSalesman() {
-				this.$axios
-					.$get(`api/sale`)
-					.then(res => {
-						this.$set(this.$data, "items", res.sales.data);
-						this.salesman = res.sales.total;
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			createStockOut() {
-				this.$axios
-					.$post(`api/stock-out`, this.form)
-					.then(res => {
-						this.$set(this.$data, "stock_out", res.data);
-						this.$router.push(`/stock-out/list`);
-						console.log(res);
+						// console.log(res);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -295,7 +265,7 @@
 					alert("already there");
 				} else {
 					this.form.items.push(item);
-					console.log(item);
+					// console.log(this.form);
 				}
 				Vue.set(item, "quantity", 1);
 				Vue.set(item, "discount", 0);
@@ -303,6 +273,44 @@
 
 			removeItem(index) {
 				this.form.items.splice(index, 1);
+			},
+
+			setData() {
+				this.$axios
+					.$get(`api/order/` + this.$route.params.id)
+					.then(res => {
+						this.form = res[1];
+						this.$set(this.$data, "form", res[1]);
+						console.log(res[1]);
+						// Initial value = pivot
+						// for (let i in this.form.products) {
+						// 	Vue.set(this.form.products[i], 'quantity', this.form.products[i].pivot.quantity);
+						// 	Vue.set(this.form.products[i], 'unit_price', this.form.products[i].pivot.unit_price);
+						// 	Vue.set(this.form.products[i], 'discount', this.form.products[i].pivot.discount);
+						// }
+					})
+					.catch(err => {
+						console.log(res.response);
+					});
+			},
+
+			updateItem() {
+				this.$axios
+					.$patch(`api/order/` + this.form.id, {
+						name: this.form.name,
+						location: this.form.location,
+						phone: this.form.phone,
+						create_by: this.form.create_by,
+						status: this.form.status
+					})
+					.then(res => {
+						this.items = res.data;
+						this.$toast.info("Succeessfully updated");
+						this.$router.push("/order/order-list");
+					})
+					.catch(err => {
+						this.$refs.form.validate(err.response.data.errors);
+					});
 			}
 		}
 	};
