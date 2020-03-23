@@ -18,9 +18,8 @@
 						label="Name..." 
 						type="text" 
                         v-model="form.name"
-						required>
+                        >
 						</v-text-field>
-						<input type="text" v-model="form.name" required >
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
@@ -34,24 +33,11 @@
 						label="Company Name..." 
 						type="text" 
                         v-model="form.company_name"
-						required>
+						>
 						</v-text-field>
-						<!-- <input type="text" v-model="form.company_name" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
-				<!-- <v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">
-						Image <span class="font-weight-light">(Optional)</span>
-					</label>
-					<input type="file" accept="image/*" required class="supplier--form">
-				</v-col>
-				<v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">
-						VAT Number <span class="font-weight-light">(Optional)</span>
-					</label>
-					<input type="text" v-model="form.vat_number" required class="supplier--form">
-				</v-col> -->
 				<v-col sm="6" cols="12">
 					<label class="font-weight-bold" for="">Email</label>
 					<validation-provider rules="required|email" v-slot="{ errors }">
@@ -62,9 +48,8 @@
 						label="Email..." 
 						type="text" 
                         v-model="form.email"
-						required>
+						>
 						</v-text-field>
-						<!-- <input type="text" v-model="form.email" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
@@ -78,25 +63,22 @@
 						label="Phone..." 
 						type="text" 
                         v-model="form.phone"
-						required>
+						>
 						</v-text-field>
-						<!-- <input type="text" v-model="form.phone" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
-				<v-col sm="6" cols="12">
+				<v-col sm="12" cols="12">
 					<label class="font-weight-bold" for="">Address</label>
 					<validation-provider rules="required" v-slot="{ errors }">
 						<v-text-field 
 						outlined 
 						solo 
 						dense 
-						label="Email..." 
+						label="Address..." 
 						type="text" 
-                        v-model="form.address"
-						required>
+                        v-model="form.address">
 						</v-text-field>
-						<!-- <input type="text" v-model="form.address" required class="supplier--form"> -->
 						<span class="text--error">{{ errors[0] }}</span>
 					</validation-provider>
 				</v-col>
@@ -131,7 +113,8 @@
 
 		methods: {
 			editSupplier() {
-				this.$axios.$post(`api/supplier/` + this.form.id, {
+				this.$axios
+				.$patch(`api/supplier/` + this.form.id, {
 					'name': this.form.name,
 					'company_name': this.form.company_name,
 					'email': this.form.email,
@@ -140,8 +123,6 @@
 					// 'city': this.form.city,
 					// 'country': this.form.country,
 					// 'vat_number': this.form.vat_number,
-					// 'post_code': this.form.post_code,
-					_method: 'patch',
 				})
 				.then(res => {
 					this.$router.push(`/supplier/`)

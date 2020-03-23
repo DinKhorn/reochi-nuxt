@@ -1,7 +1,7 @@
 <template>
 	<v-app class="pa-5">
 		<v-card class="card">
-			<v-card-title class="blue-grey lighten-4">Create User</v-card-title>
+			<v-card-title class="blue-grey lighten-4">Create Product</v-card-title>
 			<v-divider></v-divider>
 			<p class="px-5 pt-3 font-italic grey--text">
 				The field labels marked with
@@ -21,44 +21,21 @@
 					</v-col>
 					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for>
-							Product Code
-							<span class="red--text">*</span>
-						</label>
-						<validation-provider name="Product Code" rules="required" v-slot="{ errors }">
-							<div class="d-flex">
-								<v-text-field outlined solo dense label="Product Code" v-model="form.code"></v-text-field>
-								<v-btn class="mx-1 mt-1" color="primary" dark @click="randomNumber">Generate</v-btn>
-							</div>
-							<span class="red--text">{{errors[0]}}</span>
-						</validation-provider>
-					</v-col>
-					<!-- <v-col sm="6" cols="12">
-						<label class="font-weight-bold" for>
-							Brand
+							Category
 							<span class="red--text">*</span>
 						</label>
 						<v-autocomplete
 							outlined
 							solo
 							dense
-							:items="brands"
-							item-text="name"
-							item-value="name"
-							label="Select Brand"
-							v-model="form.brand"
+							:items="categories"
+							item-text="category"
+							item-value="category"
+							label="Select Category"
+							v-model="form.category"
 							return-object
 						></v-autocomplete>
 					</v-col>
-					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for>
-							Barcode Type
-							<span class="red--text">*</span>*
-						</label>
-						<validation-provider rules="required" name="Barcode Type" v-slot="{ errors }">
-							<v-select outlined solo dense :items="barcodes" label="Please Select" v-model="form.barcode"></v-select>
-							<span class="red--text">{{ errors[0] }}</span>
-						</validation-provider>
-					</v-col> -->
 				</v-row>
 				<v-row class="px-5">
 					<v-col sm="6" cols="12">
@@ -79,6 +56,19 @@
 						<validation-provider rules="required" name="Product Price" v-slot="{ errors }">
 							<v-text-field outlined solo dense label="Purchase Price" v-model="form.price" type="number"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
+						</validation-provider>
+					</v-col>
+					<v-col sm="12" cols="12">
+						<label class="font-weight-bold" for>
+							Product Code
+							<span class="red--text">*</span>
+						</label>
+						<validation-provider name="Product Code" rules="required" v-slot="{ errors }">
+							<div class="d-flex">
+								<v-text-field outlined solo dense label="Product Code" v-model="form.code"></v-text-field>
+								<v-btn class="mx-1 mt-1" color="primary" dark @click="randomNumber">Generate</v-btn>
+							</div>
+							<span class="red--text">{{errors[0]}}</span>
 						</validation-provider>
 					</v-col>
 					<v-col sm="12" cols="12">

@@ -131,7 +131,7 @@
 								name: "Supplier",
 								to: "/supplier/",
 								icon: "mdi-account-multiple",
-								permission: "view product"
+								permission: "view supplier"
 							},
 							{
 								name: "Role",
@@ -174,6 +174,18 @@
 							{
 								name: "Add Product",
 								to: "/product/add-product",
+								icon: "mdi-plus-circle",
+								permission: "view product"
+							},
+							{
+								name: "Product Category",
+								to: "/product/category/",
+								icon: "mdi-apps",
+								permission: "view product"
+							},
+							{
+								name: "Add Category",
+								to: "/product/category/add_category",
 								icon: "mdi-plus-circle",
 								permission: "view product"
 							}
@@ -371,16 +383,16 @@
 					"customer report",
 					"supplier report",
 					"due report",
-					"support",
-					"payment log",
-					"add withdraw method",
-					"view withdraw method",
-					"edit withdraw method",
-					"delete withdraw method",
-					"charge commission",
-					"pos",
-					"return sales",
-					"return purchases"
+					// "support",
+					// "payment log",
+					// "add withdraw method",
+					// "view withdraw method",
+					// "edit withdraw method",
+					// "delete withdraw method",
+					// "charge commission",
+					// "pos",
+					// "return sales",
+					// "return purchases"
 				]);
 			}
 
