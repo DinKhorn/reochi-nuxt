@@ -176,6 +176,18 @@
 								to: "/product/add-product",
 								icon: "mdi-plus-circle",
 								permission: "view product"
+							},
+							{
+								name: "Product Category",
+								to: "/product/category/",
+								icon: "mdi-apps",
+								permission: "view product"
+							},
+							{
+								name: "Add Category",
+								to: "/product/category/add_category",
+								icon: "mdi-plus-circle",
+								permission: "view product"
 							}
 						]
 					},

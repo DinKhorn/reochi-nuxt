@@ -81,6 +81,7 @@
 							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.code }}</td>
+							<td>{{ item.category}}</td>
 							<td>{{ item.unit }}</td>
 							<td>USD {{ item.price |formatNumber }}</td>
 							<td>
@@ -143,14 +144,7 @@
 
 		data() {
 			return {
-				barcode: [
-					"Code 128",
-					"Code 39",
-					"UPC-A",
-					"UPC-E",
-					"EAN-8",
-					"EAN-13"
-				],
+				
 				items: [],
 				search: "",
 				form: {},
@@ -160,8 +154,8 @@
 				itemsPerPage: 5,
 				editedIndex: -1,
 				created: true,
-				dialog: false,
-				dialog2: false,
+				// dialog: false,
+				// dialog2: false,
 				headers: [
 					{
 						text: "Image",
@@ -175,6 +169,11 @@
 						text: "Code",
 						sortable: false,
 						value: "code"
+					},
+					{
+						text: "Category",
+						sortable: false,
+						value: "category"
 					},
 					{
 						text: "Unit",
@@ -216,19 +215,19 @@
 				this.$router.push(`/product/product-list/${id}/edit`);
 			},
 
-			viewItem(id) {
-				this.$router.push(`/product/product-list/${id}`);
-			},
+			// viewItem(id) {
+			// 	this.$router.push(`/product/product-list/${id}`);
+			// },
 
 			deleteItem(item) {
 				this.$axios
-					.$delete(`api/product/` + item.id)
-					.then(res => {
-						this.fetchData();
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
+				.$delete(`api/product/` + item.id)
+				.then(res => {
+					this.fetchData();
+				})
+				.catch(err => {
+					console.log(err.response);
+				});
 			}
 		}
 	};
