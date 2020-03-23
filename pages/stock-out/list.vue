@@ -5,7 +5,7 @@
 				Stock In
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/stock-in/add">
+				<v-btn class="primary white--text" to="/stock-out/add">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -177,27 +177,15 @@
 			};
 		},
 		created() {
-			this.fetchLocation();
 			this.fetchData();
 		},
 		methods: {
 			fetchData() {
 				this.$axios
-					.$get(`/api/outlets`)
+					.$get(`api/stock-out`)
 					.then(res => {
-						this.items = res.outlets.data;
-						console.log(res.outlets);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-			fetchLocation() {
-				this.$axios
-					.$get(`api/location`)
-					.then(res => {
-						this.filter_by_location = res.locations.data;
-						// console.log(this.filter_by_location);
+						console.log(res);
+						// this.items = res.stock_out.data;
 					})
 					.catch(err => {
 						console.log(err.response);

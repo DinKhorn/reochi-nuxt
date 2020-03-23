@@ -28,7 +28,9 @@
 						</div>
 					</div>
 					<div class="col-6 pb-0">
-						<label class="font-weight-bold" for="image">Product Image</label>
+						<div>
+							<label class="font-weight-bold" for="image">Product Image</label>
+						</div>
 						<div v-if="url" class="preview--image">
 							<img :src="form.image" class="img-responsive" height="150" />
 						</div>
@@ -83,6 +85,7 @@
 		data() {
 			return {
 				dialog: false,
+				url: "",
 				items: [],
 				form: {},
 				name: "",
@@ -140,7 +143,7 @@
 	.product--image {
 		border: 1px solid rgba(0, 0, 0, 0.125);
 		padding: 5px 5px 5px 5px;
-		width: 100%;
+		width: 45%;
 	}
 
 	.preview--image {

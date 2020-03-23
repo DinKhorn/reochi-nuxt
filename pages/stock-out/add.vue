@@ -46,21 +46,21 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Reference No." rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Outlet Contact" v-model="form.qty"></v-text-field>
+							<v-text-field outlined solo dense label="Outlet Contact" v-model="form.contact"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
 					<v-col md="6" cols="12">
 						<label class="font-weight-bold">Deliery Name</label>
 						<v-autocomplete
-							:items="outlets"
+							:items="suppliers"
 							item-text="name"
 							item-value="id"
 							solo
 							outlined
 							dense
 							return-object
-							v-model="form.outlets"
+							v-model="form.supplier_id"
 							label="Please select Delier"
 						></v-autocomplete>
 					</v-col>
@@ -152,7 +152,10 @@
 					<textarea cols="30" rows="7" class="textarea" v-model="form.description"></textarea>
 				</div>
 			</div>
-			<v-btn @click.prevent="createOrder" class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4">
+			<v-btn
+				@click.prevent="createStockOut"
+				class="blue mx-5 darken-2 mb-5 grey--text text--lighten-4"
+			>
 				<v-icon>mdi-check</v-icon>Submit
 			</v-btn>
 		</v-card>
@@ -174,6 +177,7 @@
 			this.fetchData();
 			this.fetchOutlet();
 			this.fetchLocation();
+			this.fetchSupplier();
 		},
 
 		data() {
@@ -228,15 +232,6 @@
 					.catch(err => {
 						console.log(err);
 					});
-
-				this.$axios
-					.$get(`api/supplier`)
-					.then(res => {
-						this.suppliers = res.suppliers.data;
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
 			},
 
 			fetchOutlet() {
@@ -263,13 +258,23 @@
 					});
 			},
 
-			createPurchase() {
+			fetchSupplier() {
 				this.$axios
-					.$post(`api/purchase`, this.form)
+					.$get(`api/supplier`)
 					.then(res => {
-						// this.purchases = res.data;
-						this.$set(this.$data, "purchases", res.data);
-						this.$router.push(`/purchase/purchase-list`);
+						this.suppliers = res.suppliers.data;
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
+			createStockOut() {
+				this.$axios
+					.$post(`api/stock-out`, this.form)
+					.then(res => {
+						this.$set(this.$data, "stock_out", res.data);
+						this.$router.push(`/stock-out/list`);
 						console.log(res);
 					})
 					.catch(err => {

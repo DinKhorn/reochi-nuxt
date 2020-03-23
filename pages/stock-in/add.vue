@@ -213,7 +213,7 @@
 				this.$axios
 					.$post(`api/stock-in`, this.form)
 					.then(res => {
-						this.$set(this.$data, "stockin", res.data);
+						this.$set(this.$data, "stock_in", res.data);
 						this.$router.push(`/stock-in/list`);
 					})
 					.catch(err => {

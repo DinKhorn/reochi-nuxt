@@ -165,7 +165,7 @@
 					.$get(`api/stock-in`)
 					.then(res => {
 						console.log(res);
-						// this.items = res.stockin.data;
+						// this.items = res.stock_in.data;
 					})
 					.catch(err => {
 						console.log(err.response);
