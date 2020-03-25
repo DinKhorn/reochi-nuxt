@@ -20,17 +20,17 @@
 						</validation-provider>
 					</v-col>
 					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for="">Category*</label>
+						<label class="font-weight-bold" for="cat_name">Category*</label>
 						<v-autocomplete
-							outlined
-							solo
-							dense
-							:items="categories"
-							item-text="cat_name"
-							item-value="cat_name"
-							label="Select Category"
-							v-model="form.cat_name"
+							item-value="cat_name" 
+							item-text="cat_name"  
+							dense 
+							solo 
+							outlined 
 							return-object
+							v-model="form.category"
+							:items="categories"
+							label="Please type, select..."
 						></v-autocomplete>
 					</v-col>
 				</v-row>
@@ -113,12 +113,16 @@
 		data() {
 			return {
 				form: {
-					// code: '',
+					code: "",
+					name: "",
+					unit:"",
+					price:"",
+					category:""
 				},
 				items: [],
-				brands: [],
 				url: null,
 				itemsPerPage: 5,
+				categories:[],
 			};
 		},
 
@@ -130,9 +134,8 @@
 			},
 
 			fetchCategory() {
-				this.$axios
-				.$get(`api/category`)
-				.then(res => {
+				this.$axios.$get(`api/category`).then(res => {
+					// this.categories = res.categories.data;
 					this.$set(this.$data, "categories", res.categories.data);
 					console.log(res);
 				})

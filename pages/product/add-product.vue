@@ -15,25 +15,30 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Name" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Product Name" v-model="form.name"></v-text-field>
+							<v-text-field 
+							outlined 
+							solo 
+							dense 
+							label="Product Name" 
+							v-model="form.name"
+							></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
 					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for>
+						<label class="font-weight-bold" for="cat_name">
 							Category
 							<span class="red--text">*</span>
 						</label>
 						<v-autocomplete
+							item-value="cat_name" 
+							item-text="cat_name"  
+							dense 
+							solo 
 							outlined
-							solo
-							dense
-							:items="categories"
-							item-text="category"
-							item-value="category"
-							label="Select Category"
 							v-model="form.category"
-							return-object
+							:items="categories"
+							label="Please type, select..."
 						></v-autocomplete>
 					</v-col>
 				</v-row>
@@ -99,26 +104,22 @@
 		name: "AddProduct",
 		created() {
 			this.fetchData();
-			// this.fetchBrand();
+			this.fetchCategory();
 		},
 
 		data() {
 			return {
 				form: {
-					code: ""
+					code: "",
+					name: "",
+					unit:"",
+					price:"",
+					category:""
 				},
 				items: [],
-				brands: [],
 				url: null,
 				itemsPerPage: 5,
-				// barcodes: [
-				// 	"Code 128",
-				// 	"Code 39",
-				// 	"UPC-A",
-				// 	"UPC-E",
-				// 	"EAN-8",
-				// 	"EAN-13"
-				// ]
+				categories:[],
 			};
 		},
 
@@ -129,17 +130,16 @@
 				));
 			},
 
-			// fetchBrand() {
-			// 	this.$axios
-			// 		.$get(`api/brand`)
-			// 		.then(res => {
-			// 			this.$set(this.$data, "brands", res.brands.data);
-			// 			console.log(res);
-			// 		})
-			// 		.catch(err => {
-			// 			console.log(err.response);
-			// 		});
-			// },
+			fetchCategory() {
+				this.$axios.$get(`api/category`).then(res => {
+					// this.categories = res.categories.data;
+					this.$set(this.$data, "categories", res.categories.data);
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err.response);
+				});
+			},
 
 			fetchData() {
 				this.$axios.$get(`api/product`).then(res => {

@@ -253,6 +253,31 @@
 						]
 					},
 					{
+						name: "Transfer",
+						icon: "mdi-transfer-right",
+						permission: "view transfer",
+						children: [
+							{
+								name: "Transfer List",
+								icon: "mdi-view-list",
+								to: "/transfer/transfers",
+								permission: "view transfer"
+							},
+							{
+								name: "Add Transfer",
+								icon: "mdi-plus-circle",
+								to: "/transfer/add_transfer",
+								permission: "view transfer"
+							},
+							{
+								name: "Import Transfer By CSV",
+								icon: "mdi-file-import",
+								to: "/transfer/import_transfer",
+								permission: "view transfer"
+							}
+						]
+					},
+					{
 						name: "Location",
 						icon: "mdi-google-maps",
 						permission: "view purchase",
