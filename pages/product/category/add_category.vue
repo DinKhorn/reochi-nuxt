@@ -18,7 +18,7 @@
                         solo 
                         dense 
                         label="Category..." 
-                        v-model="form.category" 
+                        v-model="form.cat_name" 
                         required></v-text-field>
 						<span class="red--text">{{ errors[0] }}</span>
 					</validation-provider>

@@ -81,7 +81,7 @@
 							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.code }}</td>
-							<td>{{ item.category}}</td>
+							<td>{{ item.cat_name}}</td>
 							<td>{{ item.unit }}</td>
 							<td>USD {{ item.price |formatNumber }}</td>
 							<td>
@@ -173,7 +173,7 @@
 					{
 						text: "Category",
 						sortable: false,
-						value: "category"
+						value: "cat_name"
 					},
 					{
 						text: "Unit",
@@ -224,9 +224,11 @@
 				.$delete(`api/product/` + item.id)
 				.then(res => {
 					this.fetchData();
+					this.$toast.info("Succeessfully Delete");
 				})
 				.catch(err => {
 					console.log(err.response);
+					this.$toast.error("Error!! Unable to Delete");
 				});
 			}
 		}

@@ -26,10 +26,10 @@
 							solo
 							dense
 							:items="categories"
-							item-text="category"
-							item-value="category"
+							item-text="cat_name"
+							item-value="cat_name"
 							label="Select Category"
-							v-model="form.category"
+							v-model="form.cat_name"
 							return-object
 						></v-autocomplete>
 					</v-col>
@@ -161,7 +161,7 @@
 						code: this.form.code,
 						unit: this.form.unit,
 						price: this.form.price,
-						category: this.form.category,
+						cat_name: this.form.cat_name,
 						image: this.form.image
 					})
 					.then(res => {

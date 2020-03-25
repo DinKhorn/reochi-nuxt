@@ -9,7 +9,7 @@
 			<v-divider></v-divider> 
 			<v-row class="px-5">
 				<v-col sm="6" cols="12">
-					<label class="font-weight-bold" for="">Category*</label>
+					<label class="font-weight-bold" for="cat_name">Category*</label>
 					<validation-provider rules="required" v-slot="{ errors }">
                         <v-text-field 
 							outlined 
@@ -17,7 +17,7 @@
 							type="text"
 							dense 
 							label="Category..." 
-							v-model="form.category"
+							v-model="form.cat_name"
                         >
 						</v-text-field>
 						<span class="text--error">{{ errors[0] }}</span>
@@ -73,7 +73,7 @@
 			editCategory() {
 				this.$axios
 				.$patch(`api/category/` + this.form.id, {
-					'category': this.form.category,
+					'cat_name': this.form.cat_name,
 					'description': this.form.description,
 				})
 				.then(res => {
