@@ -57,27 +57,7 @@
 
 <script>
 	export default {
-		name: "UserField",
-		watch: {
-			name: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			email: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			term: {
-				handler() {
-					this.searchItems();
-				}
-			},
-			immediate: true
-		},
+		name: "System Setting",
 
 		data() {
 			return {

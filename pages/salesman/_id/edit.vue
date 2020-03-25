@@ -1,188 +1,67 @@
 <template>
-	<v-container>
+	<v-app class="pa-5">
 		<v-card>
-			<div class="indigo lighten-1 white--text">
-				<v-card-title>Edit Sale</v-card-title>
-			</div>
+			<v-card-title class="blue-grey lighten-4">Edit Outlet</v-card-title>
 			<v-divider></v-divider>
+			<p class="px-5 pt-3 font-italic grey--text">
+				The field labels marked with
+				<span class="red--text">*</span> are required input fields.
+			</p>
 			<div class="px-5">
-				<p class="caption font-italic pt-5">The field labels marked with * are required input fields.</p>
-				<v-row>
-					<v-col md="4" cols="12">
-						<label class="font-weight-bold">Customer*</label>
-						<v-autocomplete
-							solo
-							outlined
-							dense
-							label="Select Customer"
-							:items="members"
-							item-value="name"
-							item-text="name"
-							return-object
-							v-model="form.member"
-						></v-autocomplete>
+				<v-row class="px-5">
+					<v-col sm="6" cols="12">
+						<label class="font-weight-bold" for="name">
+							Salesman Name
+							<span class="red--text">*</span>
+						</label>
+						<validation-provider rules="required" v-slot="{ errors }">
+							<v-text-field outlined solo dense label="Salesman Name" type="text" v-model="form.name"></v-text-field>
+							<span class="text--error">{{ errors[0] }}</span>
+						</validation-provider>
 					</v-col>
-					<v-col md="4" cols="12">
-						<label class="font-weight-bold">Warehouse*</label>
-						<v-autocomplete
-							solo
-							outlined
-							dense
-							label="Select Warehouse"
-							:items="locations"
-							item-value="name"
-							item-text="name"
-							return-object
-							v-model="form.branch"
-						></v-autocomplete>
+					<v-col sm="6" cols="12">
+						<label class="font-weight-bold" for="email">
+							Email
+							<span class="red--text">*</span>
+						</label>
+						<validation-provider name="Email" rules="required|email" v-slot="{ errors }">
+							<v-text-field outlined solo dense label="Email" v-model="form.email" required></v-text-field>
+							<span class="red--text">{{ errors[0] }}</span>
+						</validation-provider>
 					</v-col>
-					<v-col md="4" cols="12">
-						<label class="font-weight-bold">Payment Method*</label>
-						<v-select
-							solo
-							outlined
-							dense
-							:items="payment_method"
-							label="Please Select"
-							v-model="form.payment_method"
-						></v-select>
+					<v-col sm="6" cols="12">
+						<label class="font-weight-bold" for="phone">
+							Phone Number
+							<span class="red--text">*</span>
+						</label>
+						<validation-provider name="Phone Number" rules="required" v-slot="{ errors }">
+							<v-text-field outlined solo dense label="Phone Number" v-model="form.phone" required></v-text-field>
+							<span class="red--text">{{ errors[0] }}</span>
+						</validation-provider>
 					</v-col>
-					<v-col md="12" cols="12">
-						<label class="font-weight-bold">Select Product</label>
-						<v-autocomplete
-							solo
-							outlined
-							dense
-							append-icon="mdi-barcode"
-							:items="products"
-							item-value="name"
-							item-text="name"
-							return-object
-							@input="addTocart"
-						></v-autocomplete>
+					<v-col sm="6" cols="12">
+						<label class="font-weight-bold" for="address">Address</label>
+						<v-text-field outlined solo dense label="Address" v-model="form.address"></v-text-field>
 					</v-col>
 				</v-row>
-				<div>
-					<table class="saleTable">
-						<thead>
-							<tr>
-								<th class="saleTable--th">Name</th>
-								<th class="saleTable--th">Code</th>
-								<th class="saleTable--th">Quantity</th>
-								<th class="saleTable--th">Product Price</th>
-								<!-- <th class="saleTable--th">Discount</th> -->
-								<th class="saleTable--th">Total</th>
-								<th class="saleTable--th">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="saleTable--td" v-for="(item, index) in form.products" :key="index">
-								<td>{{item.name}}</td>
-								<td>{{item.code}}</td>
-								<td>
-									<input
-										type="number"
-										class="saleTable--input"
-										v-model.number="form.products[index].quantity"
-									/>
-								</td>
-								<td>
-									<input
-										type="number"
-										class="saleTable--input"
-										v-model.number="form.products[index].unit_price"
-										placeholder="0.00"
-									/>
-								</td>
-								<!-- <td>
-									<input
-										type="number"
-										class="saleTable--input"
-										v-model.number="form.products[index].discount"
-										placeholder="0.00"
-									/>
-								</td>-->
-								<td>USD {{ discountedPrice(item) | formatMoney }}</td>
-								<td>
-									<v-btn small color="red" outlined @click="removeItem(index)">
-										<v-icon>mdi-delete</v-icon>
-									</v-btn>
-								</td>
-							</tr>
-							<tr class="saleTable--total">
-								<th colspan="2">Total</th>
-								<td colspan="2">{{ calculateQty }}</td>
-								<td>USD {{ Total | formatMoney }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<v-row>
-					<v-col md="4" cols="12">
-						<label for class="font-weight-bold">Shipping Cost</label>
-						<v-text-field
-							solo
-							outlined
-							dense
-							type="number"
-							placeholder="0.0"
-							v-model="form.shipping_cost"
-						></v-text-field>
-					</v-col>
-					<v-col md="4" cols="12">
-						<label for class="font-weight-bold">Paid</label>
-						<v-text-field solo outlined dense type="number" placeholder="0.0" v-model="form.paid"></v-text-field>
-					</v-col>
-					<v-col md="4" cols="12">
-						<label for="discount" class="font-weight-bold">Discount Percent</label>
-						<v-text-field solo outlined dense v-model="form.discount"></v-text-field>
-					</v-col>
-				</v-row>
-
-				<!-- Table Show Grand Total Price -->
-				<div class="d-flex justify-space-between grandTotal px-5 py-2">
-					<div class="granTotal--border">
-						<span class="font-weight-medium">Item:</span>
-						<span>{{ calculateQty }}</span>
-					</div>
-					<div>
-						<span class="font-weight-medium">Total:</span>
-						<span>USD {{ Total }}</span>
-					</div>
-					<div>
-						<span class="font-weight-medium">Grand Total:</span>
-						<span>USD {{ grandTotal }}</span>
-					</div>
-				</div>
-
-				<div class="d-flex flex-column pt-5">
-					<label for="note">Note</label>
-					<textarea cols="30" rows="5" class="sale--textarea" v-model="form.description"></textarea>
-				</div>
+				<v-btn
+					class="mx-5 mb-5 mt-2"
+					@click="updateSalesman"
+					color="primary"
+					v-permission="'add users'"
+				>
+					<v-icon left>mdi-check</v-icon>Update
+				</v-btn>
 			</div>
-			<v-btn class="blue mx-5 lighten-2 my-5" v-permission="'add sales'" @click="updateSale">
-				<v-icon>mdi-check</v-icon>Submit
-			</v-btn>
 		</v-card>
-	</v-container>
+	</v-app>
 </template>
 
 <script>
-	import Vue from "vue";
-
-	var numeral = require("numeral");
-
-	Vue.filter("formatMoney", function(value) {
-		return numeral(value).format("0,0.00");
-	});
-
 	export default {
 		name: "EditSale",
 		created() {
-			this.fetchProduct();
-			this.fetchSale();
-			this.fetchMember();
-			this.fetchLocation();
+			this.fetchSalesman();
 		},
 
 		data() {
@@ -193,68 +72,15 @@
 					paid: 0,
 					shipping_cost: 0
 				},
-				items: [],
-				payment_status: ["Paid", "Due"],
-				payment_method: ["Cash", "Cheque"],
-				sale_status: ["Completed", "Pending"],
-
-				members: [],
-				locations: [],
-				products: [],
-				sales: []
+				items: []
 			};
 		},
-
-		computed: {
-			calculateQty() {
-				return this.form.products.reduce((total, item) => {
-					return total + item.quantity;
-				}, 0);
-			},
-
-			Total() {
-				return this.form.products.reduce((total, item) => {
-					let s = Number(item.unit_price * item.quantity);
-					return total + s;
-				}, 0);
-			},
-
-			grandTotal() {
-				return this.form.products.reduce((total, item) => {
-					let s =
-						(item.unit_price -
-							(item.unit_price * this.form.discount) / 100) *
-						item.quantity;
-					return total + s + Number(this.form.shipping_cost);
-				}, 0);
-			}
-		},
-
 		methods: {
-			fetchSale() {
+			fetchSalesman() {
 				this.$axios
-					.$get(`api/sale/` + this.$route.params.id)
+					.$get(`api/salesman/` + this.$route.params.id)
 					.then(res => {
-						this.$set(this.$data, "form", res.sales);
-
-						for (let i in this.form.products) {
-							Vue.set(
-								this.form.products[i],
-								"quantity",
-								this.form.products[i].pivot.quantity
-							);
-							Vue.set(
-								this.form.products[i],
-								"unit_price",
-								this.form.products[i].pivot.unit_price
-							);
-							Vue.set(
-								this.form.products[i],
-								"discount",
-								this.form.products[i].pivot.discount
-							);
-						}
-
+						this.$set(this.$data, "form", res.salesman);
 						console.log(res);
 					})
 					.catch(err => {
@@ -262,57 +88,19 @@
 					});
 			},
 
-			fetchLocation() {
+			updateSalesman() {
 				this.$axios
-					.$get(`api/location`)
-					.then(res => {
-						this.locations = res.locations.data;
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			fetchMember() {
-				this.$axios
-					.$get(`api/member`)
-					.then(res => {
-						this.members = res.members.data;
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			fetchProduct() {
-				this.$axios
-					.$get(`api/product`)
-					.then(res => {
-						this.$set(this.$data, "products", res.products.data);
-						console.log(res);
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
-
-			updateSale() {
-				this.$axios
-					.$patch(`api/sale/` + this.form.id, {
-						paid: this.form.paid,
-						payment_status: this.form.payment_status,
-						payment_method: this.form.payment_method,
-						branch: this.form.branch,
-						member: this.form.member,
-						products: this.form.products,
-						discount: this.form.discount
+					.$patch(`api/salesman/` + this.form.id, {
+						name: this.form.name,
+						email: this.form.email,
+						phone: this.form.phone,
+						address: this.form.address
 					})
 					.then(res => {
 						// this.sales = res.data;
-						this.$set(this.$data, "sales", res.data);
+						// this.$set(this.$data, "salesman", res.data);
 						console.log(res);
-						this.$router.push(`/sale/sale-list`);
+						this.$router.push(`/salesman/list`);
 					})
 					.catch(err => {
 						console.log(err.response);

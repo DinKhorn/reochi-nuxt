@@ -13,7 +13,14 @@
 				<div class="d-flex justify-space-between">
 					<div class="col-7 py-0">
 						<div class="row">
-							<v-text-field label="Search" solo outlined dense style="width: 120px !important;"></v-text-field>
+							<v-text-field
+								label="Search"
+								v-model="search"
+								solo
+								outlined
+								dense
+								style="width: 120px !important;"
+							></v-text-field>
 							<v-menu
 								v-model="menu1"
 								:close-on-content-click="false"
@@ -61,12 +68,16 @@
 						</div>
 					</div>
 					<div>
-						<v-btn class="red darken-1">PDF</v-btn>
-						<v-btn class="lime lighten-1">CSV</v-btn>
-						<v-btn class="blue lighten-1">Print</v-btn>
+						<v-btn class="red darken-1">
+							<a :href="baseURL + '/api/salesman/export-pdf'" class="nuxt--link">PDF</a>
+						</v-btn>
+						<v-btn class="lime lighten-1">
+							<a :href="baseURL + '/api/salesman/export-csv'" class="nuxt--link">CSV</a>
+						</v-btn>
+						<v-btn class="blue lighten-1" @click.native="print">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
+				<v-data-table :headers="headers" :items="items" v-permission="'view users'" id="print">
 					<template v-slot:item="{item}">
 						<tr>
 							<td>{{ item.created_at }}</td>
@@ -103,19 +114,7 @@
 	export default {
 		name: "StockIn",
 		watch: {
-			name: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			email: {
-				handler() {
-					this.getItems();
-				}
-			},
-
-			term: {
+			search: {
 				handler() {
 					this.searchItems();
 				}
@@ -126,10 +125,12 @@
 		data() {
 			return {
 				date: new Date().toISOString().substr(0, 10),
+				baseURL: process.env.APP_URL,
 				menu1: false,
 				modal: false,
 				menu2: false,
 				dialog: false,
+				search: "",
 				items: [],
 				filter_by_location: [],
 				form: {},
@@ -162,13 +163,12 @@
 		created() {
 			this.fetchData();
 		},
-
 		methods: {
 			fetchData() {
 				this.$axios
 					.$get(`api/stock-in`)
 					.then(res => {
-						console.log(res.stock_in.data[0]);
+						// console.log(res.stock_in.data[0]);
 						this.items = res.stock_in.data;
 					})
 					.catch(err => {
@@ -176,17 +176,17 @@
 					});
 			},
 
-			// 	searchItems() {
-			// 		this.$axios
-			// 			.$get(`/api/outlets?search=${this.search}`)
-			// 			.then(res => {
-			// 				this.items = res.outlets.data;
-			// 				// console.log(res);
-			// 			})
-			// 			.catch(err => {
-			// 				console.log(err.response);
-			// 			});
-			// 	},
+			searchItems() {
+				this.$axios
+					.$get(`/api/stock-in?search=${this.search}`)
+					.then(res => {
+						this.items = res.stock_in.data;
+						console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
 
 			editItem(id) {
 				this.$router.push(`/stock-in/${id}/edit`);
@@ -194,7 +194,7 @@
 
 			viewItem(id) {
 				this.$router.push(`/stock-in/${id}/detail`);
-			}
+			},
 
 			// 	deleteItem(item) {
 			// 		this.$axios
@@ -207,27 +207,27 @@
 			// 			});
 			// 	},
 
-			// 	print() {
-			// 		var prtContent = document.getElementById("print");
-			// 		var tr = document.getElementsByTagName("tr");
-			// 		var th = document.getElementsByTagName("th");
+			print() {
+				var prtContent = document.getElementById("print");
+				var tr = document.getElementsByTagName("tr");
+				var th = document.getElementsByTagName("th");
 
-			// 		if (th.length > 0) {
-			// 			for (var i = 0; i < tr.length; i++) {
-			// 				tr[i].cells[th.length - 1].style.visibility = "hidden";
-			// 			}
-			// 			var newWin = window.open();
-			// 			newWin.document.write(prtContent.children[0].outerHTML);
-			// 			for (var i = 0; i < tr.length; i++) {
-			// 				tr[i].cells[th.length - 1].style.visibility = "visible";
-			// 			}
-			// 		} else {
-			// 			var newWin = window.open();
-			// 			newWin.document.write("No Data aviable");
-			// 		}
-			// 		newWin.print();
-			// 		newWin.close();
-			// 	}
+				if (th.length > 0) {
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "hidden";
+					}
+					var newWin = window.open();
+					newWin.document.write(prtContent.children[0].outerHTML);
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "visible";
+					}
+				} else {
+					var newWin = window.open();
+					newWin.document.write("No Data aviable");
+				}
+				newWin.print();
+				newWin.close();
+			}
 		}
 	};
 </script>

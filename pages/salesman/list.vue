@@ -2,7 +2,7 @@
 	<v-app class="pa-5">
 		<v-card class="card">
 			<v-card-title class="blue-grey lighten-4">
-				Supplier
+				Salesman
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
 				<v-btn class="primary white--text" to="/salesman/add">
@@ -15,38 +15,36 @@
 						<v-text-field label="Search" v-model="search" solo outlined dense></v-text-field>
 					</div>
 					<div>
-						<v-btn class="red darken-1">PDF</v-btn>
-						<v-btn class="lime lighten-1">CSV</v-btn>
-						<v-btn class="blue lighten-1">Print</v-btn>
+						<v-btn class="red darken-1">
+							<a :href="baseURL + '/api/salesman/export-pdf'" class="nuxt--link">PDF</a>
+						</v-btn>
+						<v-btn class="lime lighten-1">
+							<a :href="baseURL + '/api/salesman/export-csv'" class="nuxt--link">CSV</a>
+						</v-btn>
+						<v-btn class="blue lighten-1" @click.native="print">Print</v-btn>
 					</div>
 				</div>
 				<v-data-table
 					:headers="headers"
 					:items="items"
 					:items-per-page="itemsPerPage"
-					:server-items-length="total"
 					:options.sync="options"
+					id="print"
 				>
 					<template v-slot:item="{ item }">
 						<tr class="sale-tr">
-							<td>{{ item.created_at }}</td>
-							<td></td>
-							<td>{{ item.reference_no }}</td>
-							<td>{{ item.member.name }}</td>
+							<td>{{ item.name }}</td>
+							<td>{{ item.email }}</td>
+							<td>{{ item.phone }}</td>
+							<td>{{ item.address }}</td>
 							<td>
-								<span :class="item.payment_status === 'Paid' ? 'paid' : 'due'">{{ item.payment_status }}</span>
-							</td>
-							<td>USD {{ item.grand_total | formatNumber }}</td>
-							<td>USD {{ item.paid | formatNumber }}</td>
-							<td>USD {{ item.due_amount | formatNumber }}</td>
-							<td>
-								<v-btn @click="viewInfo(item.id)" small outlined icon color="teal">
+								<!-- <v-btn @click="viewItem(item.id)" small outlined icon color="teal">
 									<v-icon small text>mdi-eye</v-icon>
-								</v-btn>
-								<v-btn @click="editSale(item.id)" small outlined icon color="primary">
+								</v-btn>-->
+								<v-btn @click="editItem(item.id)" small outlined icon color="primary">
 									<v-icon small text>mdi-pencil</v-icon>
 								</v-btn>
-								<v-btn @click="removeSale(item.id)" small outlined icon color="red">
+								<v-btn @click="removeItem(item.id)" small outlined icon color="red">
 									<v-icon small>mdi-delete</v-icon>
 								</v-btn>
 							</td>
@@ -60,102 +58,67 @@
 
 
 <script>
-	import Vue from "vue";
-	var numeral = require("numeral");
-
-	Vue.filter("formatNumber", function(value) {
-		return numeral(value).format("0,0.00");
-	});
-
 	export default {
 		created() {
 			this.fetchData();
 		},
-
+		watch: {
+			search: {
+				handler() {
+					this.searchItems();
+				}
+			}
+		},
 		data() {
 			return {
-				completed: true,
+				baseURL: process.env.APP_URL,
 				items: [],
 				search: "",
 				form: {},
-				total: 0,
 				options: {},
 				itemsPerPage: 5,
 				editedIndex: -1,
 				headers: [
 					{
-						text: "Date",
-						sortable: false,
-						value: "date"
+						text: "Salesman Name"
 					},
 					{
-						text: "Seller",
+						text: "Email"
+					},
+					{
+						text: "Phone"
+					},
+					{
+						text: "address"
+					},
+					{
+						text: "Action",
 						sortable: false
-					},
-					{
-						text: "Invoice No",
-						sortable: false
-					},
-					,
-					{
-						text: "Customer",
-						sortable: false
-					},
-					{
-						text: "Payment Status",
-						sortable: false,
-						value: "payment_status"
-					},
-					{
-						text: "Grand Total",
-						sortable: false,
-						value: "total"
-					},
-					{
-						text: "Paid",
-						sortable: false,
-						value: "paid"
-					},
-					{
-						text: "Due",
-						sortable: false,
-						value: "due"
-					},
-					{
-						text: "Actions",
-						sortable: false,
-						value: "action"
 					}
-				],
-				total: 0
+				]
 			};
-		},
-
-		watch: {
-			search: {
-				handler() {
-					this.fetchData();
-				}
-			},
-			options: {
-				handler() {
-					this.fetchData();
-				}
-			},
-
-			immediate: true
 		},
 
 		methods: {
 			fetchData() {
 				this.$axios
-					.$get(
-						`api/sale?search=${this.search}&itemsPerPage=${this.options.itemsPerPage}&page=${this.options.page}`
-					)
+					.$get(`api/salesman`)
 					.then(res => {
-						this.$set(this.$data, "items", res.sales.data);
-						this.total = res.sales.total;
-						console.log(res);
+						// this.$set(this.$data, "items", res.sales.data);
+						// this.total = res.sales.total;
+						this.items = res.salesman.data;
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
+			searchItems() {
+				this.$axios
+					.$get(`/api/salesman?search=${this.search}`)
+					.then(res => {
+						this.items = res.salesman.data;
+						// console.log(res);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -168,23 +131,48 @@
 				this.form = {};
 			},
 
-			editSale(id) {
+			editItem(id) {
 				this.$router.push(`/salesman/${id}/edit`);
 			},
 
-			removeSale(id) {
-				this.$axios
-					.$delete(`api/sale/` + id)
-					.then(res => {
-						this.fetchData();
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
-			},
+			// viewInfo(id) {
+			// 	this.$router.push(`/salesman/${id}/show`);
+			// }
 
-			viewInfo(id) {
-				this.$router.push(`/salesman/${id}/show`);
+			removeItem(id) {
+				if (confirm("Are u sure to delete it?")) {
+					this.$axios
+						.$delete(`/api/salesman/` + id)
+						.then(res => {
+							this.fetchData();
+							this.$toast.info("Succeessfully Delete");
+						})
+						.catch(err => {
+							console.log(err.response);
+							this.$toast.error("Error!! Unable to Delete");
+						});
+				}
+			},
+			print() {
+				var prtContent = document.getElementById("print");
+				var tr = document.getElementsByTagName("tr");
+				var th = document.getElementsByTagName("th");
+
+				if (th.length > 0) {
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "hidden";
+					}
+					var newWin = window.open();
+					newWin.document.write(prtContent.children[0].outerHTML);
+					for (var i = 0; i < tr.length; i++) {
+						tr[i].cells[th.length - 1].style.visibility = "visible";
+					}
+				} else {
+					var newWin = window.open();
+					newWin.document.write("No Data aviable");
+				}
+				newWin.print();
+				newWin.close();
 			}
 		}
 	};
