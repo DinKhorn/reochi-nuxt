@@ -27,7 +27,6 @@
 				<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage" id="print">
 					<template v-slot:item="{ item }">
 						<tr>
-							<td>{{ item.id }}</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.location }}</td>
 							<td>{{ item.phone }}</td>
@@ -86,7 +85,6 @@
 					this.fetchData();
 				}
 			},
-
 			search: {
 				handler() {
 					this.searchItems();
@@ -113,10 +111,6 @@
 				dialog: false,
 				dialog2: false,
 				headers: [
-					{
-						text: "No.",
-						value: "id"
-					},
 					{
 						text: "Name",
 						value: "name"
