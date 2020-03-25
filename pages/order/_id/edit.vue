@@ -163,7 +163,7 @@
 
 <script>
 	export default {
-		name: "AddOrder",
+		name: "EditOrder",
 		created() {
 			this.fetchData();
 			this.fetchOutlet();
@@ -179,28 +179,27 @@
 				outlets: [],
 				products: [],
 				orders: [],
-				order_status: ["New", "Accepted", "Pending", "Received", "Cancel"],
+				order_status: ["New", "Accepted", "Received", "Cancel"],
 				payment_status: ["Paid", "Due"],
 				locations: []
 			};
 		},
 
 		computed: {
-			// calculateQty() {
-			// 	return this.form.products.reduce((total, item) => {
-			// 		return total + Number(item.quantity);
-			// 	}, 0);
-			// },
-			// GrandTotal() {
-			// 	return this.form.products.reduce((total, item) => {
-			// 		let s =
-			// 			(item.unit_price -
-			// 				(item.unit_price * item.discount) / 100) *
-			// 			item.quantity;
-			// 		return total + s;
-			// 		// console.log(total + s);
-			// 	}, 0);
-			// }
+			calculateQty() {
+				return this.form.items.reduce((total, item) => {
+					return total + Number(item.quantity);
+				}, 0);
+			},
+			calculateTotal() {
+				return this.form.items.reduce((total, item) => {
+					let s =
+						(item.unit_price -
+							(item.unit_price * item.discount) / 100) *
+						item.quantity;
+					return total + s;
+				}, 0);
+			}
 		},
 
 		methods: {
@@ -241,7 +240,7 @@
 					.then(res => {
 						// this.outlets = res.outlets.data;
 						this.$set(this.$data, "outlets", res.outlets.data);
-						console.log(res.outlets.data);
+						//console.log(res.outlets.data);
 					})
 					.catch(err => {
 						console.log(err);
@@ -280,14 +279,10 @@
 					.$get(`api/order/` + this.$route.params.id)
 					.then(res => {
 						this.form = res[1];
-						this.$set(this.$data, "form", res[1]);
-						console.log(res[1]);
-						// Initial value = pivot
-						// for (let i in this.form.products) {
-						// 	Vue.set(this.form.products[i], 'quantity', this.form.products[i].pivot.quantity);
-						// 	Vue.set(this.form.products[i], 'unit_price', this.form.products[i].pivot.unit_price);
-						// 	Vue.set(this.form.products[i], 'discount', this.form.products[i].pivot.discount);
-						// }
+
+						let test = this.form.items.reduce((total, item) => {
+							return total + Number(item.quantity);
+						}, 0);
 					})
 					.catch(err => {
 						console.log(res.response);

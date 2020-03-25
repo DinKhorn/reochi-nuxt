@@ -41,12 +41,9 @@
 		</v-app-bar>
 
 		<v-navigation-drawer app clipped-left class="color" dense v-model="toggle">
-			<v-list-item class="text-center font-weight-bold color--item">
-				<v-list-item-content>
-					<!-- <v-img 
-						:src="require('@/assets/img/final.png')" 
-						height="65"
-					/>-->
+			<v-list-item class="text-center font-weight-bold">
+				<v-list-item-content style="padding:0px;">
+					<v-img :src="require('@/assets/img/logo2.png')" height="48" />
 				</v-list-item-content>
 			</v-list-item>
 
@@ -382,7 +379,7 @@
 					"user report",
 					"customer report",
 					"supplier report",
-					"due report",
+					"due report"
 					// "support",
 					// "payment log",
 					// "add withdraw method",

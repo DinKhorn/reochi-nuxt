@@ -8,21 +8,17 @@
 					<div class="col-6">
 						<div>
 							<label for class="font-weight-medium">Date:</label>
-							<span class="productDetail--item">{{ order.created_at }}</span>
+							<span class="productDetail--item">{{ stock_in.created_at }}</span>
 						</div>
 						<div>
 							<label for class="font-weight-medium">Reference No:</label>
-							<span class="productDetail--item">{{ order.reference_no}}</span>
+							<span class="productDetail--item">{{ stock_in.reference_no}}</span>
 						</div>
 					</div>
 					<div class="col-6">
 						<div>
-							<label for class="font-weight-medium">Outlet Name:</label>
-							<span class="productDetail--item" v-if="order.outlet">{{ order.outlet.name}}</span>
-						</div>
-						<div>
-							<label for class="font-weight-medium">Location:</label>
-							<span class="productDetail--item" v-if="order.location">{{ order.location.name }}</span>
+							<label for class="font-weight-medium">Supplier Name:</label>
+							<span class="productDetail--item" v-if="stock_in.supplier">{{ stock_in.supplier.name}}</span>
 						</div>
 					</div>
 				</v-row>
@@ -32,37 +28,27 @@
 							<th class="tablePurchase--tr">Code</th>
 							<th class="tablePurchase--tr">Product</th>
 							<th class="tablePurchase--tr">Qty</th>
-							<th class="tablePurchase--tr">Cost</th>
-							<th class="tablePurchase--tr">Discount (%)</th>
+							<th class="tablePurchase--tr">Unit Price</th>
 							<th class="tablePurchase--tr">Sub Total</th>
 						</tr>
-						<tr v-if="order.order_detail" v-for="order_detail in order.order_detail">
-							<td class="tablePurchase--td">{{ order_detail.product.code }}</td>
-							<td class="tablePurchase--td">{{ order_detail.product.name }}</td>
-							<td class="tablePurchase--td">{{ order_detail.quantity }}</td>
+						<tr v-if="stock_in.stock_in_detail" v-for="stock_in_detail in stock_in.stock_in_detail">
+							<td class="tablePurchase--td">{{ stock_in_detail.product.code }}</td>
+							<td class="tablePurchase--td">{{ stock_in_detail.product.name }}</td>
+							<td class="tablePurchase--td">{{ stock_in_detail.quantity }}</td>
 
-							<td class="tablePurchase--td">USD {{ order_detail.unit_price }}</td>
-							<td class="tablePurchase--td">{{ order_detail.discount }}%</td>
-							<td class="tablePurchase--td">USD {{ order_detail.amount }}</td>
+							<td class="tablePurchase--td">{{ stock_in_detail.unit_price }}</td>
+							<td class="tablePurchase--td">calculateTotal</td>
 						</tr>
 						<tr class="tablePurchase--td">
-							<th class="tablePurchase--td" colspan="5">Grand Total</th>
-							<td class="tablePurchase--td">USD {{ order.sub_total }}</td>
-						</tr>
-						<tr class="tablePurchase--td">
-							<th class="tablePurchase--td" colspan="5">Due Amount</th>
-							<td class="tablePurchase--td">USD {{ order.due_amount }}</td>
-						</tr>
-						<tr>
-							<th class="tablePurchase--td" colspan="5">Total</th>
-							<td class="tablePurchase--td">USD {{ order.total }}</td>
+							<th class="tablePurchase--td" colspan="4">Grand Total</th>
+							<td class="tablePurchase--td">USD total</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 			<div class="d-flex flex-column ma-5">
 				<label for>Note</label>
-				<textarea cols="30" rows="7" class="textarea" v-model="order.note"></textarea>
+				<textarea cols="30" rows="7" class="textarea" v-model="stock_in.note"></textarea>
 			</div>
 			<v-btn @click="printProduct" class="mx-5 my-5 blue accent-3 white--text">
 				<v-icon left>mdi-printer</v-icon>Print
@@ -80,17 +66,14 @@
 
 		data() {
 			return {
-				order: [],
-				order_detail: []
+				stock_in: [],
+				stock_in_detail: []
 			};
 		},
 		computed: {
 			calculateTotal() {
 				return this.reduce((total, item) => {
-					let s =
-						(item.unit_price -
-							(item.unit_price * item.discount) / 100) *
-						item.quantity;
+					let s = item.unit_price * item.quantity;
 					return total + s;
 				}, 0);
 			}
@@ -98,10 +81,10 @@
 		methods: {
 			fetchData() {
 				this.$axios
-					.$get(`api/order/` + this.$route.params.id)
+					.$get(`api/stock-in/` + this.$route.params.id)
 					.then(res => {
-						this.order = res[1];
-						// console.log(res[1].order_detail[0]);
+						this.stock_in = res[1];
+						console.log(res);
 					})
 					.catch(err => {
 						console.log(err.response);

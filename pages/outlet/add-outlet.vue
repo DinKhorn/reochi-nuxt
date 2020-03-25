@@ -23,10 +23,17 @@
 							Location
 							<span class="red--text">*</span>
 						</label>
-						<validation-provider name="Location" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Location" v-model="form.location"></v-text-field>
-							<span class="red--text">{{ errors[0] }}</span>
-						</validation-provider>
+						<v-autocomplete
+							item-value="name"
+							item-text="name"
+							solo
+							outlined
+							dense
+							label="Business Location"
+							return-object
+							v-model="form.location"
+							:items="locations"
+						></v-autocomplete>
 					</v-col>
 					<v-col sm="4" cols="12">
 						<label class="font-weight-bold" for="phone">
@@ -76,13 +83,28 @@
 			return {
 				form: {},
 				items: [],
+				locations: [],
 				url: null,
 				itemsPerPage: 5,
 				status: ["Enable", "Disable"]
 			};
 		},
-
+		created() {
+			this.fetchLocation();
+		},
 		methods: {
+			fetchLocation() {
+				this.$axios
+					.$get(`api/location`)
+					.then(res => {
+						this.locations = res.locations.data;
+						// console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
 			createItem() {
 				this.$axios
 					.$post(`api/outlets`, this.form)

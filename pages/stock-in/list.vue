@@ -67,23 +67,31 @@
 					</div>
 				</div>
 				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
-					<template v-slot:item.action="{item}">
-						<v-tooltip top v-permission="'edit users'">
-							<template v-slot:activator="{ on }">
-								<v-btn icon @click="editItem(item)" color="primary" outlined v-on="on">
-									<v-icon small>mdi-pencil</v-icon>
-								</v-btn>
-							</template>
-							<span>Edit</span>
-						</v-tooltip>
-						<v-tooltip top v-permission="'delete users'">
-							<template v-slot:activator="{ on }">
-								<v-btn icon @click="deleteItem(item)" color="red" outlined v-on="on">
-									<v-icon small>mdi-delete</v-icon>
-								</v-btn>
-							</template>
-							<span>Delete</span>
-						</v-tooltip>
+					<template v-slot:item="{item}">
+						<tr>
+							<td>{{ item.created_at }}</td>
+							<td>{{ item.reference_no }}</td>
+							<td>{{ item.supplier.name }}</td>
+							<td>{{ item.created_by.name }}</td>
+							<td>
+								<v-tooltip top v-permission="'view users'">
+									<template v-slot:activator="{ on }">
+										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
+											<v-icon small>mdi-eye</v-icon>
+										</v-btn>
+									</template>
+									<span>View</span>
+								</v-tooltip>
+								<v-tooltip top v-permission="'edit users'">
+									<template v-slot:activator="{ on }">
+										<v-btn small icon @click="editItem(item.id)" color="primary" outlined v-on="on">
+											<v-icon small>mdi-pencil</v-icon>
+										</v-btn>
+									</template>
+									<span>Edit</span>
+								</v-tooltip>
+							</td>
+						</tr>
 					</template>
 				</v-data-table>
 			</div>
@@ -128,7 +136,7 @@
 				headers: [
 					{
 						text: "Date",
-						value: "date"
+						value: "created_at"
 					},
 					{
 						text: "Reference No.",
@@ -136,15 +144,11 @@
 					},
 					{
 						text: "Supplier",
-						value: "supplier"
-					},
-					{
-						text: "Total",
-						value: "total"
+						value: "supplier_id"
 					},
 					{
 						text: "Create By",
-						value: "create_by"
+						value: "created_by"
 					},
 					{
 						text: "Action",
@@ -164,13 +168,13 @@
 				this.$axios
 					.$get(`api/stock-in`)
 					.then(res => {
-						console.log(res);
-						// this.items = res.stockin.data;
+						console.log(res.stock_in.data[0]);
+						this.items = res.stock_in.data;
 					})
 					.catch(err => {
 						console.log(err.response);
 					});
-			}
+			},
 
 			// 	searchItems() {
 			// 		this.$axios
@@ -184,13 +188,13 @@
 			// 			});
 			// 	},
 
-			// 	editItem(id) {
-			// 		this.$router.push(`/outlet/${id}/edit`);
-			// 	},
+			editItem(id) {
+				this.$router.push(`/stock-in/${id}/edit`);
+			},
 
-			// 	viewItem(id) {
-			// 		this.$router.push(`/outlet/${id}/detail`);
-			// 	},
+			viewItem(id) {
+				this.$router.push(`/stock-in/${id}/detail`);
+			}
 
 			// 	deleteItem(item) {
 			// 		this.$axios

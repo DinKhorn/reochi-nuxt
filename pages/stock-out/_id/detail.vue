@@ -101,7 +101,17 @@
 					.$get(`api/order/` + this.$route.params.id)
 					.then(res => {
 						this.order = res[1];
-						// console.log(res[1].order_detail[0]);
+						console.log(res[1].order_detail[0]);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+
+				this.$axios
+					.$get(`api/order/` + this.$route.params.id)
+					.then(res => {
+						this.order = res[1];
+						// console.log(res);
 					})
 					.catch(err => {
 						console.log(err.response);
