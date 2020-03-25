@@ -28,13 +28,10 @@
 						</div>
 					</div>
 					<div class="col-6 pb-0">
-						<div>
-							<label class="font-weight-bold" for="image">Product Image</label>
+						<div class="preview--image">
+							<img src="@/assets/img/logo.jpg" height="230" />
+							<!-- <img src class="img-responsive" height="180" /> -->
 						</div>
-						<div v-if="url" class="preview--image">
-							<img :src="form.image" class="img-responsive" height="150" />
-						</div>
-						<input type="file" @change="uploadImage($event)" class="product--image" />
 					</div>
 				</div>
 				<div class="row">

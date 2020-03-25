@@ -43,7 +43,7 @@
 							label="Please select Outlet"
 						></v-autocomplete>
 					</v-col>
-					<v-col md="6" cols="12">
+					<!-- <v-col md="6" cols="12">
 						<label class="font-weight-bold">Order Status</label>
 						<v-select
 							solo
@@ -65,7 +65,7 @@
 							label="Payment Status"
 							required
 						></v-select>
-					</v-col>
+					</v-col>-->
 					<v-col cols="12">
 						<label class="font-weight-bold">
 							Select Product
@@ -186,7 +186,7 @@
 				outlets: [],
 				products: [],
 				orders: [],
-				order_status: ["New", "Accepted", "Pending", "Received", "Cancel"],
+				order_status: ["New", "Accepted", "Received", "Cancel"],
 				payment_status: ["Paid", "Due"],
 				locations: []
 			};

@@ -144,7 +144,7 @@
 							<tr>
 								<td class="py-3" colspan="2">Total</td>
 								<td colspan="3">{{ calculateQty }}</td>
-								<td>USD {{ calculateTotal}}</td>
+								<td>USD {{ calculateTotal }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -163,7 +163,7 @@
 
 <script>
 	export default {
-		name: "AddOrder",
+		name: "EditOrder",
 		created() {
 			this.fetchData();
 			this.fetchOutlet();
@@ -191,7 +191,7 @@
 					return total + Number(item.quantity);
 				}, 0);
 			},
-			GrandTotal() {
+			calculateTotal() {
 				return this.form.products.reduce((total, item) => {
 					let s =
 						(item.unit_price -
