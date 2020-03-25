@@ -72,7 +72,7 @@
 					{
 						text: "Category",
 						sortable: false,
-						value: "category"
+						value: "cat_name"
 					},
 					{
 						text: "Description",
