@@ -81,7 +81,7 @@
 							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.code }}</td>
-							<td>{{ item.cat_name}}</td>
+							<td>{{ item.categories.cat_name}}</td>
 							<td>{{ item.unit }}</td>
 							<td>USD {{ item.price |formatNumber }}</td>
 							<td>
