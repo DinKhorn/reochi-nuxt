@@ -62,8 +62,8 @@
 					</div>
 					<div class="col-4 pb-0">
 						<div class="preview--image">
-							<!-- <img src="@/assets/img/profile.jpg" height="230" /> -->
-							<img src="/assets/img/profile.jpg" alt="Example" height="230" />
+							<img src="@/assets/img/profile.jpg" height="230" />
+							<!-- <img src="@/assets/img/profile.jpg" alt="Example" height="230" /> -->
 						</div>
 					</div>
 				</div>
