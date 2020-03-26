@@ -78,7 +78,7 @@
 
 <script>
 	export default {
-		name: "System Setting",
+		name: "SystemSetting",
 
 		data() {
 			return {
