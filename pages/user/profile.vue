@@ -26,7 +26,7 @@
 						</div>
 						<div class="row">
 							<div class="col-4 font-weight-bold">E-mail:</div>
-							<div class="col-8">reo-chi@mail.com</div>
+							<div class="col-8">administator@mail.com</div>
 						</div>
 						<div class="row pt-0">
 							<div class="col-4 font-weight-bold">Address:</div>
@@ -62,8 +62,8 @@
 					</div>
 					<div class="col-4 pb-0">
 						<div class="preview--image">
-							<img src="@/assets/img/logo.jpg" height="230" />
-							<!-- <img src class="img-responsive" height="180" /> -->
+							<!-- <img src="@/assets/img/profile.jpg" height="230" /> -->
+							<img src="/assets/img/profile.jpg" alt="Example" height="230" />
 						</div>
 					</div>
 				</div>

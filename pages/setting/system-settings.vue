@@ -20,6 +20,10 @@
 							<div class="col-6 font-weight-bold">E-mail:</div>
 							<div class="col-6">reo-chi@mail.com</div>
 						</div>
+						<div class="row">
+							<div class="col-6 font-weight-bold">Website:</div>
+							<div class="col-6">https://www.reochi.com/</div>
+						</div>
 						<div class="row pt-0">
 							<div class="col-6 font-weight-bold">Address:</div>
 							<div
@@ -48,6 +52,23 @@
 						3- Honey is the king of over 1,000 medicinal herbs.
 						4- Date Palm fruits are good for health.
 						Thanks and don't forget to support this product.
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 font-weight-bold">Social:</div>
+					<div class="col-8 pt-0">
+						<v-btn icon color="primary">
+							<v-icon large>mdi-facebook</v-icon>
+						</v-btn>
+						<v-btn icon color="blue lighten-2">
+							<v-icon large>mdi-twitter</v-icon>
+						</v-btn>
+						<v-btn icon color="red">
+							<v-icon large>mdi-pinterest</v-icon>
+						</v-btn>
+						<v-btn icon color="blue darken-1">
+							<v-icon large>mdi-linkedin</v-icon>
+						</v-btn>
 					</div>
 				</div>
 			</div>
