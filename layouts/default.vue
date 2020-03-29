@@ -105,24 +105,24 @@
 						name: "Dashboard",
 						icon: "mdi-view-dashboard",
 						to: "/",
-						permission: "view users"
+						permission: "view dashboard"
 					},
 					{
 						name: "User Management",
 						icon: "mdi-account-group",
-						permission: "view product",
+						permission: "view users",
 						children: [
 							{
 								name: "User",
 								to: "/user/user-list",
 								icon: "mdi-account",
-								permission: "view product"
+								permission: "view users"
 							},
 							{
 								name: "Salesman",
 								to: "/salesman/list",
 								icon: "mdi-account-tie",
-								permission: "view product"
+								permission: "view saleman"
 							},
 							{
 								name: "Supplier",
@@ -134,26 +134,26 @@
 								name: "Role",
 								icon: "mdi-account-cog",
 								to: "/role/role-list",
-								permission: "view users"
+								permission: "view role"
 							}
 						]
 					},
 					{
 						name: "Outlet",
 						icon: "mdi-storefront",
-						permission: "view product",
+						permission: "view outlet",
 						children: [
 							{
 								name: "Outlet List",
 								to: "/outlet/outlet-list",
 								icon: "mdi-view-list",
-								permission: "view product"
+								permission: "view outlet"
 							},
 							{
 								name: "Add Outlet",
 								to: "/outlet/add-outlet",
 								icon: "mdi-plus-circle",
-								permission: "view product"
+								permission: "view outlet"
 							}
 						]
 					},
@@ -192,57 +192,57 @@
 					{
 						name: "Order",
 						icon: "mdi-cart-arrow-down",
-						permission: "view purchase",
+						permission: "view order",
 						children: [
 							{
 								name: "Order List",
 								to: "/order/order-list",
 								icon: "mdi-view-list",
-								permission: "view purchase"
+								permission: "view order"
 							},
 							{
 								name: "Add Order",
 								to: "/order/add-order",
 								icon: "mdi-plus-circle",
-								permission: "view purchase"
+								permission: "view order"
 							}
 						]
 					},
 					{
 						name: "Stock In",
 						icon: "mdi-clipboard-arrow-down-outline",
-						permission: "view users",
+						permission: "view stock",
 						children: [
 							{
 								name: "Stockin List",
 								to: "/stock-in/list",
 								icon: "mdi-view-list",
-								permission: "view users"
+								permission: "view stock"
 							},
 							{
 								name: "Add Stock",
 								to: "/stock-in/add",
 								icon: "mdi-plus-circle",
-								permission: "view users"
+								permission: "view stock"
 							}
 						]
 					},
 					{
 						name: "Stock Out",
 						icon: "mdi-clipboard-arrow-up-outline",
-						permission: "view users",
+						permission: "view stock",
 						children: [
 							{
 								name: "Stock-out List",
 								to: "/stock-out/list",
 								icon: "mdi-view-list",
-								permission: "view users"
+								permission: "view stock"
 							},
 							{
 								name: "Cut Stock",
 								to: "/stock-out/add",
 								icon: "mdi-plus-circle",
-								permission: "view users"
+								permission: "view stock"
 							}
 						]
 					},
@@ -272,21 +272,21 @@
 						]
 					},
 					{
-						name: "Location",
+						name: " Seller Location",
 						icon: "mdi-google-maps",
-						permission: "view purchase",
+						permission: "view location",
 						children: [
 							{
 								name: "Location List",
 								to: "/location/",
 								icon: "mdi-view-list",
-								permission: "view purchase"
+								permission: "view location"
 							},
 							{
 								name: "Add Location",
 								to: "/location/create",
 								icon: "mdi-plus-circle",
-								permission: "view purchase"
+								permission: "view location"
 							}
 						]
 					},
@@ -294,7 +294,7 @@
 						name: "System Settings",
 						icon: "mdi-cogs",
 						to: "/setting/system-settings",
-						permission: "view users"
+						permission: "view setting"
 					}
 				]
 			};
@@ -326,79 +326,85 @@
 		created() {
 			if (this.user.role[0] === "administrator") {
 				this.$laravel.setPermissions([
+					"view dashboard",
 					"view users",
 					"add users",
 					"edit users",
 					"delete users",
-					"view sales",
-					"add sales",
-					"import sales",
-					"edit sales",
-					"delete sales",
-					"view website",
-					"add website",
-					"edit website",
-					"delete website",
+					"view saleman",
+					"add saleman",
+					"import saleman",
+					"edit saleman",
+					"delete saleman",
+					"view stock",
+					"add stock",
+					"edit stock",
+					"delete stock",
 					"view product",
 					"add product",
 					"edit product",
 					"delete product",
 					"import product",
-					"view purchase",
-					"add purchase",
-					"edit purchase",
-					"delete purchase",
-					"import purchase",
-					"view expense",
-					"add expense",
-					"edit expense",
-					"delete expense",
-					"import expense",
-					"view quotation",
-					"add quotation",
-					"edit quotation",
+					"view order",
+					"add order",
+					"edit order",
+					"delete order",
+					"view location",
+					"add location",
+					"edit location",
+					"delete location",
+					"import location",
+					"view role",
+					"add role",
+					"edit role",
+					"delete role",
+					"import role",
+					// "view quotation",
+					// "add quotation",
+					// "edit quotation",
 					"view transfer",
 					"add transfer",
 					"edit transfer",
-					"view employee",
-					"add employee",
-					"edit employee",
-					"delete employee",
-					"view account",
-					"add account",
-					"edit account",
-					"delete account",
-					"import account",
-					"view customer",
-					"add customer",
-					"edit customer",
-					"delete customer",
-					"import customer",
-					"view biller",
-					"add biller",
-					"edit biller",
-					"delete biller",
-					"import biller",
+					"view setting",
+					"add setting",
+					"edit setting",
+					"delete setting",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
+					"import outlet",
 					"view supplier",
 					"add supplier",
 					"edit supplier",
 					"delete supplier",
 					"import supplier",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"monthly purchase report",
-					"sale report",
-					"payment report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"user report",
-					"customer report",
-					"supplier report",
-					"due report"
+					// "view account",
+					// "add account",
+					// "edit account",
+					// "delete account",
+					// "import account",
+					// "view customer",
+					// "add customer",
+					// "edit customer",
+					// "delete customer",
+					// "import customer",
+					
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "monthly purchase report",
+					// "sale report",
+					// "payment report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "user report",
+					// "customer report",
+					// "supplier report",
+					// "due report",
 					// "support",
 					// "payment log",
 					// "add withdraw method",
@@ -413,72 +419,96 @@
 			}
 
 			if (
-				this.user.role[0] === "saleman" ||
-				this.user.role[0] === "Supervisor"
+				this.user.role[0] === "saleman"
 			) {
 				this.$laravel.setPermissions([
-					"view sales",
-					"add sales",
-					"edit sales",
-					"delete sales",
-					"import sales",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"sale report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"customer report",
-					"supplier report",
-					"due report",
-					"pos",
-					"return sales"
-				]);
-			}
-
-			if (this.user.role[0] === "accountant") {
-				this.$laravel.setPermissions([
-					"view account",
-					"add account",
-					"edit account",
-					"delete account",
-					"import account",
-					"view expense",
-					"add expense",
-					"edit expense",
-					"delete expense",
-					"import expense"
-				]);
-			}
-
-			if (this.user.role[0] === "saleManager") {
-				this.$laravel.setPermissions([
-					"view sales",
-					"import sales",
+					"view dashboard",
+					"view saleman",
+					"add saleman",
+					"edit saleman",
+					"delete saleman",
+					"import saleman",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
+					"import outlet",
+					"view order",
+					"add order",
+					"edit order",
+					"delete order",
 					"view product",
-					"payment log",
-					"add withdraw method",
-					"view expense",
-					"return sales",
-					"return purchases",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"monthly purchase report",
-					"sale report",
-					"payment report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"user report",
-					"customer report",
-					"supplier report",
-					"due report"
+					"add product",
+					"edit product",
+					"delete product",
+					"import product",
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "sale report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "customer report",
+					// "supplier report",
+					// "due report",
+					// "pos",
+					// "return sales"
+				]);
+			}
+
+			// if (this.user.role[0] === "accountant") {
+			// 	this.$laravel.setPermissions([
+			// 		"view account",
+			// 		"add account",
+			// 		"edit account",
+			// 		"delete account",
+			// 		"import account",
+			// 		"view expense",
+			// 		"add expense",
+			// 		"edit expense",
+			// 		"delete expense",
+			// 		"import expense"
+			// 	]);
+			// }
+
+			if (this.user.role[0] === "stockmanager") {
+				this.$laravel.setPermissions([
+					"view dashboard",
+					"view stock",
+					"add stock",
+					"edit stock",
+					"delete stock",
+					"view product",
+					"add product",
+					"edit product",
+					"delete product",
+					"import product",
+					// "view sales",
+					// "import sales",
+					// "view product",
+					// "payment log",
+					// "add withdraw method",
+					// "view expense",
+					// "return sales",
+					// "return purchases",
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "monthly purchase report",
+					// "sale report",
+					// "payment report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "user report",
+					// "customer report",
+					// "supplier report",
+					// "due report"
 				]);
 			}
 		}
