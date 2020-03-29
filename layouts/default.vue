@@ -131,6 +131,12 @@
 								permission: "view supplier"
 							},
 							{
+								name: "Delivery Man",
+								to: "/delivery-man/list",
+								icon: "mdi-account-multiple",
+								permission: "view supplier"
+							},
+							{
 								name: "Role",
 								icon: "mdi-account-cog",
 								to: "/role/role-list",
