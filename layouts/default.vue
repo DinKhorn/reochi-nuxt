@@ -381,7 +381,7 @@
 					"add location",
 					"edit location",
 					"delete location",
-					"view setting",
+					// "view setting",
 					"view sales",
 					"add sales",
 					"import sales",

@@ -25,7 +25,7 @@
 								</template>
 								<span>Edit Location</span>
 							</v-tooltip>
-							<v-tooltip bottom v-permission="'add location'">
+							<v-tooltip bottom v-permission="'delete location'">
 								<template v-slot:activator="{ on }">
 									<v-btn @click="deleteItem(item.id)" small outlined color="red" icon v-on="on">
 										<v-icon small>mdi-delete</v-icon>
