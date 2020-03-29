@@ -5,7 +5,7 @@
 				Role
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-dialog v-model="dialog" max-width="700px" v-permission="'add expense'" persistent>
+				<v-dialog v-model="dialog" max-width="700px" v-permission="'add role'" persistent>
 					<template v-slot:activator="{ on }">
 						<v-btn class="primary white--text" dark v-on="on">
 							<v-icon left>mdi-plus-circle</v-icon>Add

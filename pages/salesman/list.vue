@@ -5,7 +5,7 @@
 				Salesman
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/salesman/add">
+				<v-btn v-permission="'add salesman'" class="primary white--text" to="/salesman/add">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -41,10 +41,24 @@
 								<!-- <v-btn @click="viewItem(item.id)" small outlined icon color="teal">
 									<v-icon small text>mdi-eye</v-icon>
 								</v-btn>-->
-								<v-btn @click="editItem(item.id)" small outlined icon color="primary">
+								<v-btn
+									v-permission="'edit salesman'"
+									@click="editItem(item.id)"
+									small
+									outlined
+									icon
+									color="primary"
+								>
 									<v-icon small text>mdi-pencil</v-icon>
 								</v-btn>
-								<v-btn @click="removeItem(item.id)" small outlined icon color="red">
+								<v-btn
+									v-permission="'delete salesman'"
+									@click="removeItem(item.id)"
+									small
+									outlined
+									icon
+									color="red"
+								>
 									<v-icon small>mdi-delete</v-icon>
 								</v-btn>
 							</td>

@@ -110,19 +110,19 @@
 					{
 						name: "User Management",
 						icon: "mdi-account-group",
-						permission: "view product",
+						permission: "view users",
 						children: [
 							{
 								name: "User",
 								to: "/user/user-list",
 								icon: "mdi-account",
-								permission: "view product"
+								permission: "view users"
 							},
 							{
 								name: "Salesman",
 								to: "/salesman/list",
 								icon: "mdi-account-tie",
-								permission: "view product"
+								permission: "view salesman"
 							},
 							{
 								name: "Supplier",
@@ -134,32 +134,32 @@
 								name: "Delivery Man",
 								to: "/delivery-man/list",
 								icon: "mdi-account-multiple",
-								permission: "view supplier"
+								permission: "view deliveryman"
 							},
 							{
 								name: "Role",
 								icon: "mdi-account-cog",
 								to: "/role/role-list",
-								permission: "view users"
+								permission: "view role"
 							}
 						]
 					},
 					{
 						name: "Outlet",
 						icon: "mdi-storefront",
-						permission: "view product",
+						permission: "view outlet",
 						children: [
 							{
 								name: "Outlet List",
 								to: "/outlet/outlet-list",
 								icon: "mdi-view-list",
-								permission: "view product"
+								permission: "view outlet"
 							},
 							{
 								name: "Add Outlet",
 								to: "/outlet/add-outlet",
 								icon: "mdi-plus-circle",
-								permission: "view product"
+								permission: "add outlet"
 							}
 						]
 					},
@@ -178,13 +178,13 @@
 								name: "Add Product",
 								to: "/product/add-product",
 								icon: "mdi-plus-circle",
-								permission: "view product"
+								permission: "add product"
 							},
 							{
 								name: "Product Category",
 								to: "/product/category/",
 								icon: "mdi-apps",
-								permission: "view product"
+								permission: "view category"
 							},
 							{
 								name: "Add Category",
@@ -198,57 +198,57 @@
 					{
 						name: "Order",
 						icon: "mdi-cart-arrow-down",
-						permission: "view purchase",
+						permission: "view order",
 						children: [
 							{
 								name: "Order List",
 								to: "/order/order-list",
 								icon: "mdi-view-list",
-								permission: "view purchase"
+								permission: "view order"
 							},
 							{
 								name: "Add Order",
 								to: "/order/add-order",
 								icon: "mdi-plus-circle",
-								permission: "view purchase"
+								permission: "add order"
 							}
 						]
 					},
 					{
 						name: "Stock In",
 						icon: "mdi-clipboard-arrow-down-outline",
-						permission: "view users",
+						permission: "view stock-in",
 						children: [
 							{
 								name: "Stockin List",
 								to: "/stock-in/list",
 								icon: "mdi-view-list",
-								permission: "view users"
+								permission: "view stock-in"
 							},
 							{
 								name: "Add Stock",
 								to: "/stock-in/add",
 								icon: "mdi-plus-circle",
-								permission: "view users"
+								permission: "view stock-in"
 							}
 						]
 					},
 					{
 						name: "Stock Out",
 						icon: "mdi-clipboard-arrow-up-outline",
-						permission: "view users",
+						permission: "view stock-out",
 						children: [
 							{
 								name: "Stock-out List",
 								to: "/stock-out/list",
 								icon: "mdi-view-list",
-								permission: "view users"
+								permission: "view stock-out"
 							},
 							{
 								name: "Cut Stock",
 								to: "/stock-out/add",
 								icon: "mdi-plus-circle",
-								permission: "view users"
+								permission: "view stock-out"
 							}
 						]
 					},
@@ -267,32 +267,32 @@
 								name: "Add Transfer",
 								icon: "mdi-plus-circle",
 								to: "/transfer/add_transfer",
-								permission: "view transfer"
+								permission: "add transfer"
 							},
 							{
 								name: "Import Transfer By CSV",
 								icon: "mdi-file-import",
 								to: "/transfer/import_transfer",
-								permission: "view transfer"
+								permission: "import transfer"
 							}
 						]
 					},
 					{
 						name: "Location",
 						icon: "mdi-google-maps",
-						permission: "view purchase",
+						permission: "view location",
 						children: [
 							{
 								name: "Location List",
 								to: "/location/",
 								icon: "mdi-view-list",
-								permission: "view purchase"
+								permission: "view location"
 							},
 							{
 								name: "Add Location",
 								to: "/location/create",
 								icon: "mdi-plus-circle",
-								permission: "view purchase"
+								permission: "view location"
 							}
 						]
 					},
@@ -300,7 +300,7 @@
 						name: "System Settings",
 						icon: "mdi-cogs",
 						to: "/setting/system-settings",
-						permission: "view users"
+						permission: "view setting"
 					}
 				]
 			};
@@ -336,6 +336,52 @@
 					"add users",
 					"edit users",
 					"delete users",
+					"view salesman",
+					"add salesman",
+					"edit salesman",
+					"delete salesman",
+					"view deliveryman",
+					"add deliveryman",
+					"edit deliveryman",
+					"delete deliveryman",
+					"view role",
+					"add role",
+					"edit role",
+					"delete role",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
+					"view product",
+					"add product",
+					"edit product",
+					"delete product",
+					"view order",
+					"add order",
+					"edit order",
+					"delete order",
+					"view category",
+					"add category",
+					"edit category",
+					"delete category",
+					"view stock-in",
+					"add stock-in",
+					"edit stock-in",
+					"delete stock-in",
+					"view stock-out",
+					"add stock-out",
+					"edit stock-out",
+					"delete stock-out",
+					"view transfer",
+					"add transfer",
+					"edit transfer",
+					"delete transfer",
+					"import transfer",
+					"view location",
+					"add location",
+					"edit location",
+					"delete location",
+					"view setting",
 					"view sales",
 					"add sales",
 					"import sales",
@@ -345,16 +391,6 @@
 					"add website",
 					"edit website",
 					"delete website",
-					"view product",
-					"add product",
-					"edit product",
-					"delete product",
-					"import product",
-					"view purchase",
-					"add purchase",
-					"edit purchase",
-					"delete purchase",
-					"import purchase",
 					"view expense",
 					"add expense",
 					"edit expense",

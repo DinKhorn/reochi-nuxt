@@ -49,7 +49,7 @@
 				Product
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/product/add-product">
+				<v-btn v-permission="'add product'" class="primary white--text" to="/product/add-product">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -85,7 +85,7 @@
 							<td>{{ item.unit }}</td>
 							<td>USD {{ item.price |formatNumber }}</td>
 							<td>
-								<v-tooltip top v-permission="'edit sales'">
+								<v-tooltip top v-permission="'view product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
 											<v-icon small>mdi-eye</v-icon>
@@ -93,7 +93,7 @@
 									</template>
 									<span>View</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'edit sales'">
+								<v-tooltip top v-permission="'edit product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="editItem(item.id)" color="primary" outlined v-on="on">
 											<v-icon small>mdi-pencil</v-icon>
@@ -101,7 +101,7 @@
 									</template>
 									<span>Edit</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'delete sales'">
+								<v-tooltip top v-permission="'delete product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="deleteItem(item)" color="red" outlined v-on="on">
 											<v-icon small>mdi-delete</v-icon>
@@ -144,7 +144,6 @@
 
 		data() {
 			return {
-				
 				items: [],
 				search: "",
 				form: {},
@@ -221,15 +220,15 @@
 
 			deleteItem(item) {
 				this.$axios
-				.$delete(`api/product/` + item.id)
-				.then(res => {
-					this.fetchData();
-					this.$toast.info("Succeessfully Delete");
-				})
-				.catch(err => {
-					console.log(err.response);
-					this.$toast.error("Error!! Unable to Delete");
-				});
+					.$delete(`api/product/` + item.id)
+					.then(res => {
+						this.fetchData();
+						this.$toast.info("Succeessfully Delete");
+					})
+					.catch(err => {
+						console.log(err.response);
+						this.$toast.error("Error!! Unable to Delete");
+					});
 			}
 		}
 	};

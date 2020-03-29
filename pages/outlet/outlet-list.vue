@@ -5,7 +5,7 @@
 				Outlet
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/outlet/add-outlet">
+				<v-btn v-permission="'add outlet'" class="primary white--text" to="/outlet/add-outlet">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -35,7 +35,7 @@
 								<span :class="item.status === 'Enable' ? 'enable' : 'disable'">{{ item.status }}</span>
 							</td>
 							<td>
-								<v-tooltip top v-permission="'edit sales'">
+								<v-tooltip top v-permission="'edit outlet'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
 											<v-icon small>mdi-eye</v-icon>
@@ -43,7 +43,7 @@
 									</template>
 									<span>View</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'edit sales'">
+								<v-tooltip top v-permission="'edit outlet'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="editItem(item.id)" color="primary" outlined v-on="on">
 											<v-icon small>mdi-pencil</v-icon>
@@ -51,7 +51,7 @@
 									</template>
 									<span>Edit</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'delete sales'">
+								<v-tooltip top v-permission="'delete outlet'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="deleteItem(item)" color="red" outlined v-on="on">
 											<v-icon small>mdi-delete</v-icon>

@@ -75,7 +75,7 @@
 						<v-btn class="blue lighten-1">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
+				<v-data-table :headers="headers" :items="items" v-permission="'view order'">
 					<template v-slot:item="{item}">
 						<tr>
 							<td>{{ item.created_at }}</td>
@@ -105,7 +105,7 @@
 							<td>USD {{ item.due_amount }}</td>
 							<td>{{ item.order_by.name }}</td>
 							<td>
-								<v-tooltip top v-permission="'view users'">
+								<v-tooltip top v-permission="'view order'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
 											<v-icon small>mdi-eye</v-icon>
@@ -113,7 +113,7 @@
 									</template>
 									<span>View</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'edit users'">
+								<v-tooltip top v-permission="'edit order'">
 									<template v-slot:activator="{ on }">
 										<v-btn small icon @click="editItem(item.id)" color="primary" outlined v-on="on">
 											<v-icon small>mdi-pencil</v-icon>
@@ -121,7 +121,7 @@
 									</template>
 									<span>Edit</span>
 								</v-tooltip>
-								<!-- <v-tooltip top v-permission="'delete users'">
+								<!-- <v-tooltip top v-permission="'delete order'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon @click="deleteItem(item)" color="red" outlined v-on="on">
 											<v-icon small>mdi-delete</v-icon>

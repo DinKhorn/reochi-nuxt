@@ -5,7 +5,11 @@
 				Category
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/product/category/add_category">
+				<v-btn
+					v-permission="'add category'"
+					class="primary white--text"
+					to="/product/category/add_category"
+				>
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -22,7 +26,7 @@
 				</div>
 				<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage">
 					<template v-slot:item.action="{ item }">
-						<v-tooltip bottom>
+						<v-tooltip bottom v-permission="'edit category'">
 							<template v-slot:activator="{ on }">
 								<!-- Edit Item -->
 								<v-btn @click="editItem(item.id)" left small outlined icon color="primary" v-on="on">
@@ -31,7 +35,7 @@
 							</template>
 							<span>Edit Category</span>
 						</v-tooltip>
-						<v-tooltip bottom>
+						<v-tooltip bottom v-permission="'delete category'">
 							<template v-slot:activator="{ on }">
 								<!-- Delete Item -->
 								<v-btn @click="deleteItem(item.id)" left small outlined icon color="red" v-on="on">
