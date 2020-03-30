@@ -268,7 +268,7 @@
 								icon: "mdi-plus-circle",
 								to: "/transfer/add_transfer",
 								permission: "add transfer"
-							},
+							}
 							// {
 							// 	name: "Import Transfer By CSV",
 							// 	icon: "mdi-file-import",
