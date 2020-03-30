@@ -17,7 +17,7 @@
 					</v-btn>
 				</nuxt-link>
 			</div>
-			<div class="pb-5 pr-3">
+			<!-- <div class="pb-5 pr-3">
 				<nuxt-link
 					to="/transfer/import_transfer"
 					class="nuxt--link grey--text text--lighten-4"
@@ -29,7 +29,7 @@
 						<v-icon left>mdi-file</v-icon>Import Transfer
 					</v-btn>
 				</nuxt-link>
-			</div>
+			</div> -->
 		</div>
 		<div class="d-flex justify-space-between pb-5">
 			<div>

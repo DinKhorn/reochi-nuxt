@@ -85,15 +85,15 @@
 							<td>{{ item.unit }}</td>
 							<td>USD {{ item.price |formatNumber }}</td>
 							<td>
-								<v-tooltip top v-permission="'edit sales'">
+								<!-- <v-tooltip top v-permission="'edit product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
 											<v-icon small>mdi-eye</v-icon>
 										</v-btn>
 									</template>
 									<span>View</span>
-								</v-tooltip>
-								<v-tooltip top v-permission="'edit sales'">
+								</v-tooltip> -->
+								<v-tooltip top v-permission="'edit product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="editItem(item.id)" color="primary" outlined v-on="on">
 											<v-icon small>mdi-pencil</v-icon>
@@ -101,7 +101,7 @@
 									</template>
 									<span>Edit</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'delete sales'">
+								<v-tooltip top v-permission="'delete product'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="deleteItem(item)" color="red" outlined v-on="on">
 											<v-icon small>mdi-delete</v-icon>

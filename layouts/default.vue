@@ -130,12 +130,12 @@
 								icon: "mdi-account-multiple",
 								permission: "view supplier"
 							},
-							{
-								name: "Delivery Man",
-								to: "/delivery-man/list",
-								icon: "mdi-account-multiple",
-								permission: "view supplier"
-							},
+							// {
+							// 	name: "Delivery Man",
+							// 	to: "/delivery-man/list",
+							// 	icon: "mdi-account-multiple",
+							// 	permission: "view supplier"
+							// },
 							{
 								name: "Role",
 								icon: "mdi-account-cog",
@@ -269,12 +269,12 @@
 								to: "/transfer/add_transfer",
 								permission: "view transfer"
 							},
-							{
-								name: "Import Transfer By CSV",
-								icon: "mdi-file-import",
-								to: "/transfer/import_transfer",
-								permission: "view transfer"
-							}
+							// {
+							// 	name: "Import Transfer By CSV",
+							// 	icon: "mdi-file-import",
+							// 	to: "/transfer/import_transfer",
+							// 	permission: "view transfer"
+							// }
 						]
 					},
 					{
@@ -350,7 +350,6 @@
 					"add product",
 					"edit product",
 					"delete product",
-					"import product",
 					"view order",
 					"add order",
 					"edit order",
