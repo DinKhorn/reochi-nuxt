@@ -105,7 +105,7 @@
 						name: "Dashboard",
 						icon: "mdi-view-dashboard",
 						to: "/",
-						permission: "view users"
+						permission: "view dashboard"
 					},
 					{
 						name: "User Management",
@@ -278,7 +278,7 @@
 						]
 					},
 					{
-						name: "Location",
+						name: " Seller Location",
 						icon: "mdi-google-maps",
 						permission: "view location",
 						children: [
@@ -332,6 +332,7 @@
 		created() {
 			if (this.user.role[0] === "administrator") {
 				this.$laravel.setPermissions([
+					"view dashboard",
 					"view users",
 					"add users",
 					"edit users",
@@ -402,45 +403,46 @@
 					"view transfer",
 					"add transfer",
 					"edit transfer",
-					"view employee",
-					"add employee",
-					"edit employee",
-					"delete employee",
-					"view account",
-					"add account",
-					"edit account",
-					"delete account",
-					"import account",
-					"view customer",
-					"add customer",
-					"edit customer",
-					"delete customer",
-					"import customer",
-					"view biller",
-					"add biller",
-					"edit biller",
-					"delete biller",
-					"import biller",
+					"view setting",
+					"add setting",
+					"edit setting",
+					"delete setting",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
+					"import outlet",
 					"view supplier",
 					"add supplier",
 					"edit supplier",
 					"delete supplier",
-					"import supplier",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"monthly purchase report",
-					"sale report",
-					"payment report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"user report",
-					"customer report",
-					"supplier report",
-					"due report"
+					"import supplier"
+					// "view account",
+					// "add account",
+					// "edit account",
+					// "delete account",
+					// "import account",
+					// "view customer",
+					// "add customer",
+					// "edit customer",
+					// "delete customer",
+					// "import customer",
+
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "monthly purchase report",
+					// "sale report",
+					// "payment report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "user report",
+					// "customer report",
+					// "supplier report",
+					// "due report",
 					// "support",
 					// "payment log",
 					// "add withdraw method",
@@ -454,73 +456,95 @@
 				]);
 			}
 
-			if (
-				this.user.role[0] === "saleman" ||
-				this.user.role[0] === "Supervisor"
-			) {
+			if (this.user.role[0] === "saleman") {
 				this.$laravel.setPermissions([
-					"view sales",
-					"add sales",
-					"edit sales",
-					"delete sales",
-					"import sales",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"sale report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"customer report",
-					"supplier report",
-					"due report",
-					"pos",
-					"return sales"
-				]);
-			}
-
-			if (this.user.role[0] === "accountant") {
-				this.$laravel.setPermissions([
-					"view account",
-					"add account",
-					"edit account",
-					"delete account",
-					"import account",
-					"view expense",
-					"add expense",
-					"edit expense",
-					"delete expense",
-					"import expense"
-				]);
-			}
-
-			if (this.user.role[0] === "saleManager") {
-				this.$laravel.setPermissions([
-					"view sales",
-					"import sales",
+					"view dashboard",
+					"view saleman",
+					"add saleman",
+					"edit saleman",
+					"delete saleman",
+					"import saleman",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
+					"import outlet",
+					"view order",
+					"add order",
+					"edit order",
+					"delete order",
 					"view product",
-					"payment log",
-					"add withdraw method",
-					"view expense",
-					"return sales",
-					"return purchases",
-					"summary report",
-					"product report",
-					"daily sale report",
-					"monthly sale report",
-					"daily purchase report",
-					"monthly purchase report",
-					"sale report",
-					"payment report",
-					"purchase report",
-					"warehouse report",
-					"product qty alert",
-					"user report",
-					"customer report",
-					"supplier report",
-					"due report"
+					"add product",
+					"edit product",
+					"delete product",
+					"import product"
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "sale report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "customer report",
+					// "supplier report",
+					// "due report",
+					// "pos",
+					// "return sales"
+				]);
+			}
+
+			// if (this.user.role[0] === "accountant") {
+			// 	this.$laravel.setPermissions([
+			// 		"view account",
+			// 		"add account",
+			// 		"edit account",
+			// 		"delete account",
+			// 		"import account",
+			// 		"view expense",
+			// 		"add expense",
+			// 		"edit expense",
+			// 		"delete expense",
+			// 		"import expense"
+			// 	]);
+			// }
+
+			if (this.user.role[0] === "stockmanager") {
+				this.$laravel.setPermissions([
+					"view dashboard",
+					"view stock",
+					"add stock",
+					"edit stock",
+					"delete stock",
+					"view product",
+					"add product",
+					"edit product",
+					"delete product",
+					"import product"
+					// "view sales",
+					// "import sales",
+					// "view product",
+					// "payment log",
+					// "add withdraw method",
+					// "view expense",
+					// "return sales",
+					// "return purchases",
+					// "summary report",
+					// "product report",
+					// "daily sale report",
+					// "monthly sale report",
+					// "daily purchase report",
+					// "monthly purchase report",
+					// "sale report",
+					// "payment report",
+					// "purchase report",
+					// "warehouse report",
+					// "product qty alert",
+					// "user report",
+					// "customer report",
+					// "supplier report",
+					// "due report"
 				]);
 			}
 		}

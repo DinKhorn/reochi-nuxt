@@ -11,6 +11,19 @@
 				<p class="caption font-italic pt-5">The field labels marked with * are required input fields.</p>
 				<v-row>
 					<v-col md="6" cols="12">
+						<label class="font-weight-bold">Reference No *</label>
+						<validation-provider name="Name" rules="required" v-slot="{ errors }">
+							<v-text-field 
+							outlined 
+							solo 
+							dense 
+							label="Reference no..." 
+							v-model="form.reference_no"
+							></v-text-field>
+							<span class="red--text">{{ errors[0] }}</span>
+						</validation-provider>
+					</v-col>
+					<v-col md="6" cols="12">
 						<label >Location(From)*</label>
 						<validation-provider rules="required" v-slot="{ errors }">
 							<v-autocomplete 
