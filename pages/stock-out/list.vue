@@ -2,7 +2,7 @@
 	<v-app class="pa-5">
 		<v-card class="card">
 			<v-card-title class="blue-grey lighten-4">
-				Stock In
+				Stock Out
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
 				<v-btn v-permission="'add stock-out'" class="primary white--text" to="/stock-out/add">
@@ -115,7 +115,7 @@
 
 <script>
 	export default {
-		name: "StockIn",
+		name: "StockOut",
 		watch: {
 			name: {
 				handler() {
@@ -150,7 +150,7 @@
 				headers: [
 					{
 						text: "Date",
-						value: "date"
+						value: "created_at"
 					},
 					{
 						text: "Reference No.",
@@ -158,8 +158,7 @@
 					},
 					{
 						text: "Deliver Name",
-						sortable: false,
-						value: "deliver"
+						value: "deliver_name"
 					},
 					{
 						text: "Total",
@@ -184,8 +183,8 @@
 				this.$axios
 					.$get(`api/stock-out`)
 					.then(res => {
-						console.log(res);
-						// this.items = res.stock_out.data;
+						// console.log(res.stock_out.data);
+						this.items = res.stock_out.data;
 					})
 					.catch(err => {
 						console.log(err.response);

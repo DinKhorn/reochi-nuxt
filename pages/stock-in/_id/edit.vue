@@ -187,12 +187,12 @@
 
 		computed: {
 			calculateQty() {
-				return this.form.products.reduce((total, item) => {
+				return this.form.items.reduce((total, item) => {
 					return total + Number(item.quantity);
 				}, 0);
 			},
 			calculateTotal() {
-				return this.form.products.reduce((total, item) => {
+				return this.form.items.reduce((total, item) => {
 					let s =
 						(item.unit_price -
 							(item.unit_price * item.discount) / 100) *
