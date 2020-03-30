@@ -9,7 +9,7 @@
 			</p>
 			<ValidationObserver ref="form">
 				<v-row class="px-5">
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="name">
 							Outlet Name
 							<span class="red--text">*</span>
@@ -19,17 +19,28 @@
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="8" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="location">
 							Location
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Location" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Location" v-model="form.location"></v-text-field>
+							<!-- <v-text-field outlined solo dense label="Location" v-model="form.location"></v-text-field> -->
+							<v-autocomplete
+								item-value="name"
+								item-text="name"
+								solo
+								outlined
+								dense
+								label="Business Location"
+								return-object
+								v-model="form.location"
+								:items="locations"
+							></v-autocomplete>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="phone">
 							Phone
 							<span class="red--text">*</span>
@@ -39,23 +50,13 @@
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
-					<v-col sm="4" cols="12">
-						<label class="font-weight-bold" for="create_by">
-							Create By
-							<span class="red--text">*</span>
-						</label>
-						<validation-provider name="Create By" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Create By" v-model="form.create_by"></v-text-field>
-							<span class="red--text">{{ errors[0] }}</span>
-						</validation-provider>
-					</v-col>
-					<v-col sm="4" cols="12">
+					<v-col sm="6" cols="12">
 						<label class="font-weight-bold" for="status">
 							Status
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Status" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Status" v-model="form.status"></v-text-field>
+							<v-select outlined solo dense label="Status" v-model="form.status" :items="status"></v-select>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -75,18 +76,33 @@
 	export default {
 		name: "EditOutlet",
 		created() {
+			this.fetchLocation();
 			this.setData();
 		},
 
 		data() {
 			return {
+				locations: [],
 				form: {},
 				items: [],
-				itemsPerPage: 5
+				itemsPerPage: 5,
+				status: ["Enable", "Disable"]
 			};
 		},
 
 		methods: {
+			fetchLocation() {
+				this.$axios
+					.$get(`api/location`)
+					.then(res => {
+						this.locations = res.locations.data;
+						// console.log(res);
+					})
+					.catch(err => {
+						console.log(err.response);
+					});
+			},
+
 			setData() {
 				this.$axios
 					.$get(`api/outlets/` + this.$route.params.id)

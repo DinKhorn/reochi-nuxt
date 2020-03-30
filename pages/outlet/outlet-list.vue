@@ -176,14 +176,16 @@
 			},
 
 			deleteItem(item) {
-				this.$axios
-					.$delete(`api/outlets/` + item.id)
-					.then(res => {
-						this.fetchData();
-					})
-					.catch(err => {
-						console.log(err.response);
-					});
+				if (confirm("Are u sure to delete it?")) {
+					this.$axios
+						.$delete(`api/outlets/` + item.id)
+						.then(res => {
+							this.fetchData();
+						})
+						.catch(err => {
+							console.log(err.response);
+						});
+				}
 			},
 
 			print() {
