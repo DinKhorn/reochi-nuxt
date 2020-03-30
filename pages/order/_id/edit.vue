@@ -221,29 +221,17 @@
 					.catch(err => {
 						console.log(err);
 					});
-
-				// this.$axios
-				// 	.$get(`api/location`)
-				// 	.then(res => {
-				// 		// this.locations = res.locations.data;
-				// 		this.$set(this.$data, "locations", res.locations.data);
-				// 		console.log(res);
-				// 	})
-				// 	.catch(err => {
-				// 		console.log(err.response);
-				// 	});
 			},
 
 			fetchOutlet() {
 				this.$axios
-					.$get(`/api/outlets`)
+					.$get(`api/outlets`)
 					.then(res => {
-						// this.outlets = res.outlets.data;
-						this.$set(this.$data, "outlets", res.outlets.data);
-						//console.log(res.outlets.data);
+						this.outlets = res.outlets.data;
+						// console.log(res);
 					})
 					.catch(err => {
-						console.log(err);
+						console.log(err.response);
 					});
 			},
 

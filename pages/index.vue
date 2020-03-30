@@ -116,14 +116,14 @@
 			return {
 				cards: [
 					{
-						text: "Total Users",
-						icon: "mdi-account-group",
+						text: "Today Sale (Pcs)",
+						icon: "mdi-cube",
 						color: "light-blue darken-1",
 						amount: 678
 					},
 					{
-						text: "Total Outlet",
-						icon: "mdi-storefront",
+						text: "Monthly Sale (Pcs)",
+						icon: "mdi-cube",
 						color: "red darken-1",
 						amount: 678
 					},
@@ -134,8 +134,8 @@
 						amount: 678
 					},
 					{
-						text: "Total Income",
-						icon: "mdi-cash-multiple",
+						text: "Total Outlet",
+						icon: "mdi-storefront",
 						color: "purple darken-1",
 						amount: 678
 					}

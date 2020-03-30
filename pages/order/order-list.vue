@@ -227,7 +227,7 @@
 					.$get(`/api/order`)
 					.then(res => {
 						this.items = res.orders.data;
-						// console.log(this.items);
+						console.log(this.items);
 					})
 					.catch(err => {
 						console.log(err.response);

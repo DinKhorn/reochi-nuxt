@@ -15,36 +15,13 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Name" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Name" v-model="form.name"></v-text-field>
+							<v-text-field outlined solo dense label="Name" v-model="form.name" required></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
 					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for="address">
-							Address
-							<span class="red--text">*</span>
-						</label>
-						<validation-provider name="Address" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Address" v-model="form.address"></v-text-field>
-							<span class="red--text">{{ errors[0] }}</span>
-						</validation-provider>
-					</v-col>
-					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for="phone">
-							Phone
-							<span class="red--text">*</span>
-						</label>
-						<validation-provider name="Phone" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Phone" v-model="form.phone"></v-text-field>
-							<span class="red--text">{{ errors[0] }}</span>
-						</validation-provider>
-					</v-col>
-					<v-col sm="6" cols="12">
-						<label class="font-weight-bold" for="email">
-							Email
-							<span class="red--text">*</span>
-						</label>
-						<validation-provider name="Email" rules="required" v-slot="{ errors }">
+						<label class="font-weight-bold" for="email">Email</label>
+						<validation-provider name="Email" v-slot="{ errors }">
 							<v-text-field outlined solo dense label="Email" v-model="form.email"></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
@@ -55,7 +32,15 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Password" rules="required" v-slot="{ errors }">
-							<v-text-field outlined solo dense label="Password" v-model="form.password" type="password"></v-text-field>
+							<v-text-field
+								outlined
+								solo
+								dense
+								label="Password"
+								v-model="form.password"
+								type="password"
+								required
+							></v-text-field>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -65,7 +50,19 @@
 							<span class="red--text">*</span>
 						</label>
 						<validation-provider name="Role" rules="required" v-slot="{ errors }">
-							<v-select :items="roles" v-model="form.role" outlined solo dense label="Select Role"></v-select>
+							<!-- <v-select :items="roles" v-model="form.role" outlined solo dense label="Select Role"></v-select> -->
+							<v-autocomplete
+								item-value="name"
+								item-text="name"
+								solo
+								outlined
+								dense
+								label="Select Role"
+								return-object
+								v-model="form.role"
+								:items="roles"
+								required
+							></v-autocomplete>
 							<span class="red--text">{{ errors[0] }}</span>
 						</validation-provider>
 					</v-col>
@@ -93,14 +90,15 @@
 			};
 		},
 		created() {
-			this.initialize();
+			this.fetchRole();
 		},
 		methods: {
-			initialize() {
+			fetchRole() {
 				this.$axios
 					.$get(`/api/roles`)
 					.then(res => {
 						this.roles = res.role;
+						console.log(res.role);
 					})
 					.catch(err => {
 						console.log(err.response);
@@ -118,9 +116,6 @@
 						this.closeDialog();
 					})
 					.catch(err => {
-						// this.$refs.nameOfObserver.validate(
-						// err.response.data.errors;
-						// );
 						console.log(err.response.data.errors);
 					});
 			}

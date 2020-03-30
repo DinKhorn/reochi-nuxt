@@ -233,12 +233,15 @@
 
 			fetchOutlet() {
 				this.$axios
-					.$get(`/api/stock-in`)
+					.$get(
+						`/api/outlets?name=${this.name}&location=${this.location}&phone=${this.phone}&create_by=${this.create_by}&status=${this.status}`
+					)
 					.then(res => {
-						this.stockin = res.stockin.data;
+						this.outlets = res.outlets.data;
+						console.log(res.outlets);
 					})
 					.catch(err => {
-						console.log(err);
+						console.log(err.response);
 					});
 			},
 
