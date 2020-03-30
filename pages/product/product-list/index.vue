@@ -49,7 +49,7 @@
 				Product
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/product/add-product">
+				<v-btn v-permission="'add product'" class="primary white--text" to="/product/add-product">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -144,7 +144,6 @@
 
 		data() {
 			return {
-				
 				items: [],
 				search: "",
 				form: {},
@@ -221,15 +220,15 @@
 
 			deleteItem(item) {
 				this.$axios
-				.$delete(`api/product/` + item.id)
-				.then(res => {
-					this.fetchData();
-					this.$toast.info("Succeessfully Delete");
-				})
-				.catch(err => {
-					console.log(err.response);
-					this.$toast.error("Error!! Unable to Delete");
-				});
+					.$delete(`api/product/` + item.id)
+					.then(res => {
+						this.fetchData();
+						this.$toast.info("Succeessfully Delete");
+					})
+					.catch(err => {
+						console.log(err.response);
+						this.$toast.error("Error!! Unable to Delete");
+					});
 			}
 		}
 	};

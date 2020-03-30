@@ -2,10 +2,10 @@
 	<v-app class="pa-5">
 		<v-card class="card">
 			<v-card-title class="blue-grey lighten-4">
-				Stock In
+				Stock Out
 				<span class="caption grey--text mt-2">&nbsp;List</span>
 				<v-spacer></v-spacer>
-				<v-btn class="primary white--text" to="/stock-out/add">
+				<v-btn v-permission="'add stock-out'" class="primary white--text" to="/stock-out/add">
 					<v-icon left>mdi-plus-circle</v-icon>Add
 				</v-btn>
 			</v-card-title>
@@ -88,9 +88,9 @@
 						<v-btn class="blue lighten-1">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" v-permission="'view users'">
+				<v-data-table :headers="headers" :items="items" v-permission="'view stock-out'">
 					<template v-slot:item.action="{item}">
-						<v-tooltip top v-permission="'edit users'">
+						<v-tooltip top v-permission="'edit stock-out'">
 							<template v-slot:activator="{ on }">
 								<v-btn icon @click="editItem(item)" color="primary" outlined v-on="on">
 									<v-icon small>mdi-pencil</v-icon>
@@ -98,7 +98,7 @@
 							</template>
 							<span>Edit</span>
 						</v-tooltip>
-						<v-tooltip top v-permission="'delete users'">
+						<v-tooltip top v-permission="'delete stock-out'">
 							<template v-slot:activator="{ on }">
 								<v-btn icon @click="deleteItem(item)" color="red" outlined v-on="on">
 									<v-icon small>mdi-delete</v-icon>
@@ -115,7 +115,7 @@
 
 <script>
 	export default {
-		name: "StockIn",
+		name: "StockOut",
 		watch: {
 			name: {
 				handler() {
@@ -150,7 +150,7 @@
 				headers: [
 					{
 						text: "Date",
-						value: "date"
+						value: "created_at"
 					},
 					{
 						text: "Reference No.",
@@ -158,8 +158,7 @@
 					},
 					{
 						text: "Deliver Name",
-						sortable: false,
-						value: "deliver"
+						value: "deliver_name"
 					},
 					{
 						text: "Total",
@@ -184,8 +183,8 @@
 				this.$axios
 					.$get(`api/stock-out`)
 					.then(res => {
-						console.log(res);
-						// this.items = res.stock_out.data;
+						// console.log(res.stock_out.data);
+						this.items = res.stock_out.data;
 					})
 					.catch(err => {
 						console.log(err.response);

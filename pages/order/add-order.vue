@@ -272,6 +272,7 @@
 					this.form.items.push(item);
 					// console.log(this.form);
 				}
+				console.log(this.form);
 				Vue.set(item, "quantity", 1);
 				Vue.set(item, "discount", 0);
 			},

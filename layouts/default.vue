@@ -122,7 +122,7 @@
 								name: "Salesman",
 								to: "/salesman/list",
 								icon: "mdi-account-tie",
-								permission: "view saleman"
+								permission: "view salesman"
 							},
 							{
 								name: "Supplier",
@@ -159,7 +159,7 @@
 								name: "Add Outlet",
 								to: "/outlet/add-outlet",
 								icon: "mdi-plus-circle",
-								permission: "view outlet"
+								permission: "add outlet"
 							}
 						]
 					},
@@ -178,13 +178,13 @@
 								name: "Add Product",
 								to: "/product/add-product",
 								icon: "mdi-plus-circle",
-								permission: "view product"
+								permission: "add product"
 							},
 							{
 								name: "Product Category",
 								to: "/product/category/",
 								icon: "mdi-apps",
-								permission: "view product"
+								permission: "view category"
 							},
 							{
 								name: "Add Category",
@@ -210,45 +210,45 @@
 								name: "Add Order",
 								to: "/order/add-order",
 								icon: "mdi-plus-circle",
-								permission: "view order"
+								permission: "add order"
 							}
 						]
 					},
 					{
 						name: "Stock In",
 						icon: "mdi-clipboard-arrow-down-outline",
-						permission: "view stock",
+						permission: "view stock-in",
 						children: [
 							{
 								name: "Stockin List",
 								to: "/stock-in/list",
 								icon: "mdi-view-list",
-								permission: "view stock"
+								permission: "view stock-in"
 							},
 							{
 								name: "Add Stock",
 								to: "/stock-in/add",
 								icon: "mdi-plus-circle",
-								permission: "view stock"
+								permission: "view stock-in"
 							}
 						]
 					},
 					{
 						name: "Stock Out",
 						icon: "mdi-clipboard-arrow-up-outline",
-						permission: "view stock",
+						permission: "view stock-out",
 						children: [
 							{
 								name: "Stock-out List",
 								to: "/stock-out/list",
 								icon: "mdi-view-list",
-								permission: "view stock"
+								permission: "view stock-out"
 							},
 							{
 								name: "Cut Stock",
 								to: "/stock-out/add",
 								icon: "mdi-plus-circle",
-								permission: "view stock"
+								permission: "view stock-out"
 							}
 						]
 					},
@@ -267,7 +267,7 @@
 								name: "Add Transfer",
 								icon: "mdi-plus-circle",
 								to: "/transfer/add_transfer",
-								permission: "view transfer"
+								permission: "add transfer"
 							},
 							// {
 							// 	name: "Import Transfer By CSV",
@@ -337,15 +337,22 @@
 					"add users",
 					"edit users",
 					"delete users",
-					"view saleman",
-					"add saleman",
-					"import saleman",
-					"edit saleman",
-					"delete saleman",
-					"view stock",
-					"add stock",
-					"edit stock",
-					"delete stock",
+					"view salesman",
+					"add salesman",
+					"edit salesman",
+					"delete salesman",
+					"view deliveryman",
+					"add deliveryman",
+					"edit deliveryman",
+					"delete deliveryman",
+					"view role",
+					"add role",
+					"edit role",
+					"delete role",
+					"view outlet",
+					"add outlet",
+					"edit outlet",
+					"delete outlet",
 					"view product",
 					"add product",
 					"edit product",
@@ -354,19 +361,45 @@
 					"add order",
 					"edit order",
 					"delete order",
+					"view category",
+					"add category",
+					"edit category",
+					"delete category",
+					"view stock-in",
+					"add stock-in",
+					"edit stock-in",
+					"delete stock-in",
+					"view stock-out",
+					"add stock-out",
+					"edit stock-out",
+					"delete stock-out",
+					"view transfer",
+					"add transfer",
+					"edit transfer",
+					"delete transfer",
+					"import transfer",
 					"view location",
 					"add location",
 					"edit location",
 					"delete location",
-					"import location",
-					"view role",
-					"add role",
-					"edit role",
-					"delete role",
-					"import role",
-					// "view quotation",
-					// "add quotation",
-					// "edit quotation",
+					// "view setting",
+					"view sales",
+					"add sales",
+					"import sales",
+					"edit sales",
+					"delete sales",
+					"view website",
+					"add website",
+					"edit website",
+					"delete website",
+					"view expense",
+					"add expense",
+					"edit expense",
+					"delete expense",
+					"import expense",
+					"view quotation",
+					"add quotation",
+					"edit quotation",
 					"view transfer",
 					"add transfer",
 					"edit transfer",
@@ -383,7 +416,7 @@
 					"add supplier",
 					"edit supplier",
 					"delete supplier",
-					"import supplier",
+					"import supplier"
 					// "view account",
 					// "add account",
 					// "edit account",
@@ -394,7 +427,7 @@
 					// "edit customer",
 					// "delete customer",
 					// "import customer",
-					
+
 					// "summary report",
 					// "product report",
 					// "daily sale report",
@@ -423,9 +456,7 @@
 				]);
 			}
 
-			if (
-				this.user.role[0] === "saleman"
-			) {
+			if (this.user.role[0] === "saleman") {
 				this.$laravel.setPermissions([
 					"view dashboard",
 					"view saleman",
@@ -446,7 +477,7 @@
 					"add product",
 					"edit product",
 					"delete product",
-					"import product",
+					"import product"
 					// "summary report",
 					// "product report",
 					// "daily sale report",
@@ -490,7 +521,7 @@
 					"add product",
 					"edit product",
 					"delete product",
-					"import product",
+					"import product"
 					// "view sales",
 					// "import sales",
 					// "view product",

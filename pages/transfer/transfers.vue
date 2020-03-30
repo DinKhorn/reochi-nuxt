@@ -1,18 +1,9 @@
 <template>
 	<v-app class="mx-5 my-5">
-		<div
-			class="d-flex"
-			v-permission="'add transfer'"
-		>
-			<div class="pb-5 pr-3">
-				<nuxt-link
-					to="/transfer/add_transfer"
-					class="nuxt--link grey--text text--lighten-4"
-				>
-					<v-btn
-						class="teal darken-1"
-						dark
-					>
+		<div class="d-flex">
+			<div class="pb-5 pr-3" v-permission="'add transfer'">
+				<nuxt-link to="/transfer/add_transfer" class="nuxt--link grey--text text--lighten-4">
+					<v-btn class="teal darken-1" dark>
 						<v-icon left>mdi-plus-circle</v-icon>Add Transfer
 					</v-btn>
 				</nuxt-link>
@@ -33,12 +24,7 @@
 		</div>
 		<div class="d-flex justify-space-between pb-5">
 			<div>
-				<input
-					type="text"
-					placeholder="Search..."
-					class="transfer--search"
-					v-model="search"
-				>
+				<input type="text" placeholder="Search..." class="transfer--search" v-model="search" />
 			</div>
 			<div>
 				<v-btn class="red darken-1">PDF</v-btn>
@@ -47,11 +33,7 @@
 			</div>
 		</div>
 		<v-card>
-			<v-data-table
-				:headers="headers"
-				:items="items"
-				:items-per-page="itemsPerPage"
-			>
+			<v-data-table :headers="headers" :items="items" :items-per-page="itemsPerPage">
 				<template v-slot:item="{ item }">
 					<tr>
 						<td>{{ item.created_at }}</td>
@@ -61,37 +43,24 @@
 						<td>USD {{ item.shipping_charge | formatNumber }}</td>
 						<td>{{ item | formatNumber }}</td>
 						<td>
-							<span :class="item.status === 'Completed' ? 'completed' : (item.status === 'Pending' ? 'pending' : 'sent')">{{ item.status }}</span>
+							<span
+								:class="item.status === 'Completed' ? 'completed' : (item.status === 'Pending' ? 'pending' : 'sent')"
+							>{{ item.status }}</span>
 						</td>
 						<td>
-							<v-tooltip bottom>
+							<v-tooltip bottom v-permission="'edit transfer'">
 								<template v-slot:activator="{ on }">
 									<!-- Edit Item -->
-									<v-btn
-										left
-										small
-										outlined
-										icon
-										color="primary"
-										v-on="on"
-									>
+									<v-btn left small outlined icon color="primary" v-on="on">
 										<v-icon small>mdi-pencil</v-icon>
 									</v-btn>
 								</template>
 								<span>Edit Transfer</span>
 							</v-tooltip>
-							<v-tooltip bottom>
+							<v-tooltip bottom v-permission="'delete transfer'">
 								<template v-slot:activator="{ on }">
 									<!-- Delete Item -->
-									<v-btn
-										@click="deleteTransfer(item.id)"
-										left
-										small
-										outlined
-										icon
-										color="red"
-										v-on="on"
-									>
+									<v-btn @click="deleteTransfer(item.id)" left small outlined icon color="red" v-on="on">
 										<v-icon small>mdi-delete</v-icon>
 									</v-btn>
 								</template>

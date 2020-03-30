@@ -102,8 +102,8 @@
 						</thead>
 						<tbody>
 							<tr class="tableOrder--td" v-for="(item, index) in form.items" :key="index">
-								<td>{{item.code}}</td>
-								<td>{{item.name}}</td>
+								<td>{{form.items[index].product.code}}</td>
+								<td>{{form.items[index].product.name}}</td>
 
 								<td>
 									<validation-provider rules="required" v-slot="{ errors }">
@@ -260,12 +260,23 @@
 			},
 
 			addTocart(item) {
-				if (this.form.items.includes(item)) {
+				let length = this.form.items.length;
+				let isHas = false;
+				for (var i = 0; i < length; i++) {
+					if (this.form.items[i].product_id === item.id) {
+						isHas = true;
+						break;
+					}
+				}
+
+				if (isHas) {
 					alert("already there");
 				} else {
+					// console.log(this.form);
 					this.form.items.push(item);
 					// console.log(this.form);
 				}
+				return false;
 				Vue.set(item, "quantity", 1);
 				Vue.set(item, "discount", 0);
 			},
@@ -279,10 +290,16 @@
 					.$get(`api/order/` + this.$route.params.id)
 					.then(res => {
 						this.form = res[1];
-
-						let test = this.form.items.reduce((total, item) => {
-							return total + Number(item.quantity);
-						}, 0);
+						// for (let i in this.form.items) {
+						// 	console.log(this.form.items[i].product.name);
+						// 	return false;
+						// 	// console.log(this.form.items[i].product_id);
+						// 	// Vue.set(
+						// 	// 	this.form.items[i],
+						// 	// 	"id",
+						// 	// 	this.form.items[i].product_id
+						// 	// );
+						// }
 					})
 					.catch(err => {
 						console.log(res.response);

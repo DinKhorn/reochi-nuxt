@@ -77,7 +77,7 @@
 						<v-btn class="blue lighten-1" @click.native="print">Print</v-btn>
 					</div>
 				</div>
-				<v-data-table :headers="headers" :items="items" v-permission="'view users'" id="print">
+				<v-data-table :headers="headers" :items="items" v-permission="'view stock-in'" id="print">
 					<template v-slot:item="{item}">
 						<tr>
 							<td>{{ item.created_at }}</td>
@@ -85,7 +85,7 @@
 							<td>{{ item.supplier.name }}</td>
 							<td>{{ item.created_by.name }}</td>
 							<td>
-								<v-tooltip top v-permission="'view users'">
+								<v-tooltip top v-permission="'view stock-in'">
 									<template v-slot:activator="{ on }">
 										<v-btn icon small @click="viewItem(item.id)" color="cyan" outlined v-on="on">
 											<v-icon small>mdi-eye</v-icon>
@@ -93,7 +93,7 @@
 									</template>
 									<span>View</span>
 								</v-tooltip>
-								<v-tooltip top v-permission="'edit users'">
+								<v-tooltip top v-permission="'edit stock-in'">
 									<template v-slot:activator="{ on }">
 										<v-btn small icon @click="editItem(item.id)" color="primary" outlined v-on="on">
 											<v-icon small>mdi-pencil</v-icon>
