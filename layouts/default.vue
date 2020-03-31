@@ -109,6 +109,7 @@
 					},
 					{
 						name: "User Management",
+						to: "/user/user-list",
 						icon: "mdi-account-group",
 						permission: "view users",
 						children: [
@@ -124,12 +125,7 @@
 								icon: "mdi-account-tie",
 								permission: "view salesman"
 							},
-							{
-								name: "Supplier",
-								to: "/supplier/",
-								icon: "mdi-account-multiple",
-								permission: "view supplier"
-							},
+
 							// {
 							// 	name: "Delivery Man",
 							// 	to: "/delivery-man/list",
@@ -146,25 +142,27 @@
 					},
 					{
 						name: "Outlet",
+						to: "/outlet/outlet-list",
 						icon: "mdi-storefront",
-						permission: "view outlet",
-						children: [
-							{
-								name: "Outlet List",
-								to: "/outlet/outlet-list",
-								icon: "mdi-view-list",
-								permission: "view outlet"
-							},
-							{
-								name: "Add Outlet",
-								to: "/outlet/add-outlet",
-								icon: "mdi-plus-circle",
-								permission: "add outlet"
-							}
-						]
+						permission: "view outlet"
+						// children: [
+						// 	{
+						// 		name: "Outlet List",
+						// 		to: "/outlet/outlet-list",
+						// 		icon: "mdi-view-list",
+						// 		permission: "view outlet"
+						// 	},
+						// 	{
+						// 		name: "Add Outlet",
+						// 		to: "/outlet/add-outlet",
+						// 		icon: "mdi-plus-circle",
+						// 		permission: "add outlet"
+						// 	}
+						// ]
 					},
 					{
 						name: "Product",
+						to: "/product/product-list",
 						icon: "mdi-cube",
 						permission: "view product",
 						children: [
@@ -174,127 +172,147 @@
 								icon: "mdi-view-list",
 								permission: "view product"
 							},
-							{
-								name: "Add Product",
-								to: "/product/add-product",
-								icon: "mdi-plus-circle",
-								permission: "add product"
-							},
+							// {
+							// 	name: "Add Product",
+							// 	to: "/product/add-product",
+							// 	icon: "mdi-plus-circle",
+							// 	permission: "add product"
+							// },
 							{
 								name: "Product Category",
 								to: "/product/category/",
 								icon: "mdi-apps",
 								permission: "view category"
-							},
-							{
-								name: "Add Category",
-								to: "/product/category/add_category",
-								icon: "mdi-plus-circle",
-								permission: "view product"
 							}
+							// {
+							// 	name: "Add Category",
+							// 	to: "/product/category/add_category",
+							// 	icon: "mdi-plus-circle",
+							// 	permission: "view product"
+							// }
 						]
 					},
 
 					{
 						name: "Order",
+						to: "/order/order-list",
 						icon: "mdi-cart-arrow-down",
-						permission: "view order",
-						children: [
-							{
-								name: "Order List",
-								to: "/order/order-list",
-								icon: "mdi-view-list",
-								permission: "view order"
-							},
-							{
-								name: "Add Order",
-								to: "/order/add-order",
-								icon: "mdi-plus-circle",
-								permission: "add order"
-							}
-						]
+						permission: "view order"
+						// children: [
+						// 	{
+						// 		name: "Order List",
+						// 		to: "/order/order-list",
+						// 		icon: "mdi-view-list",
+						// 		permission: "view order"
+						// 	},
+						// 	{
+						// 		name: "Add Order",
+						// 		to: "/order/add-order",
+						// 		icon: "mdi-plus-circle",
+						// 		permission: "add order"
+						// 	}
+						// ]
 					},
 					{
-						name: "Stock In",
+						name: "Stock Manager",
+						// to: "/stock-in/list",
 						icon: "mdi-clipboard-arrow-down-outline",
 						permission: "view stock-in",
 						children: [
 							{
-								name: "Stockin List",
+								name: "Stock In",
 								to: "/stock-in/list",
-								icon: "mdi-view-list",
+								icon: "mdi-clipboard-arrow-down-outline",
 								permission: "view stock-in"
+								// children: [
+								// 	{
+								// 		name: "Stockin List",
+								// 		to: "/stock-in/list",
+								// 		icon: "mdi-view-list",
+								// 		permission: "view stock-in"
+								// 	},
+								// 	// {
+								// 	// 	name: "Add Stock",
+								// 	// 	to: "/stock-in/add",
+								// 	// 	icon: "mdi-plus-circle",
+								// 	// 	permission: "view stock-in"
+								// 	// }
+								// ]
 							},
 							{
-								name: "Add Stock",
-								to: "/stock-in/add",
-								icon: "mdi-plus-circle",
-								permission: "view stock-in"
-							}
-						]
-					},
-					{
-						name: "Stock Out",
-						icon: "mdi-clipboard-arrow-up-outline",
-						permission: "view stock-out",
-						children: [
-							{
-								name: "Stock-out List",
+								name: "Stock-out",
 								to: "/stock-out/list",
-								icon: "mdi-view-list",
+								icon: "mdi-clipboard-arrow-up-outline",
 								permission: "view stock-out"
-							},
-							{
-								name: "Cut Stock",
-								to: "/stock-out/add",
-								icon: "mdi-plus-circle",
-								permission: "view stock-out"
+								// children: [
+								// 	{
+								// 		name: "Stock-out List",
+								// 		to: "/stock-out/list",
+								// 		icon: "mdi-view-list",
+								// 		permission: "view stock-out"
+								// 	},
+								// 	// {
+								// 	// 	name: "Cut Stock",
+								// 	// 	to: "/stock-out/add",
+								// 	// 	icon: "mdi-plus-circle",
+								// 	// 	permission: "view stock-out"
+								// 	// }
+								// ]
 							}
 						]
 					},
+
 					{
 						name: "Transfer",
+						to: "/transfer/transfers",
 						icon: "mdi-transfer-right",
-						permission: "view transfer",
-						children: [
-							{
-								name: "Transfer List",
-								icon: "mdi-view-list",
-								to: "/transfer/transfers",
-								permission: "view transfer"
-							},
-							{
-								name: "Add Transfer",
-								icon: "mdi-plus-circle",
-								to: "/transfer/add_transfer",
-								permission: "add transfer"
-							}
-							// {
-							// 	name: "Import Transfer By CSV",
-							// 	icon: "mdi-file-import",
-							// 	to: "/transfer/import_transfer",
-							// 	permission: "view transfer"
-							// }
-						]
+						permission: "view transfer"
+						// children: [
+						// 	{
+						// 		name: "Transfer List",
+						// 		icon: "mdi-view-list",
+						// 		to: "/transfer/transfers",
+						// 		permission: "view transfer"
+						// 	},
+						// 	// {
+						// 	// 	name: "Add Transfer",
+						// 	// 	icon: "mdi-plus-circle",
+						// 	// 	to: "/transfer/add_transfer",
+						// 	// 	permission: "add transfer"
+						// 	// }
+						// 	// {
+						// 	// 	name: "Import Transfer By CSV",
+						// 	// 	icon: "mdi-file-import",
+						// 	// 	to: "/transfer/import_transfer",
+						// 	// 	permission: "view transfer"
+						// 	// }
+						// ]
 					},
 					{
 						name: " Seller Location",
+						to: "/location/",
 						icon: "mdi-google-maps",
-						permission: "view location",
-						children: [
-							{
-								name: "Location List",
-								to: "/location/",
-								icon: "mdi-view-list",
-								permission: "view location"
-							},
-							{
-								name: "Add Location",
-								to: "/location/create",
-								icon: "mdi-plus-circle",
-								permission: "view location"
-							}
-						]
+						permission: "view location"
+						// children: [
+						// 	{
+						// 		name: "Location List",
+						// 		to: "/location/",
+						// 		icon: "mdi-view-list",
+						// 		permission: "view location"
+						// 	},
+						// 	{
+						// 		name: "Add Location",
+						// 		to: "/location/create",
+						// 		icon: "mdi-plus-circle",
+						// 		permission: "view location"
+						// 	}
+						// ]
+					},
+					{
+						name: "Supplier",
+						to: "/supplier/",
+						icon: "mdi-account-multiple",
+						permission: "view supplier"
 					},
 					{
 						name: "System Settings",
