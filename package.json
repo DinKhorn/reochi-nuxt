@@ -19,7 +19,7 @@
     "@nuxtjs/axios": "^5.8.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "laravel-permissions": "^1.5.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "numeral": "^2.0.6",
     "nuxt": "^2.0.0",
     "print-js": "^1.0.63",
